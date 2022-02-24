@@ -29,6 +29,7 @@ function createLayer(layerBelowIndex) {
 
     // add it to the document
     document.getElementById("layers").insertBefore(newCanvas, layers[layerBelowIndex]);
+    moveLayer(layerBelowIndex, layerBelowIndex);
 
     // set it up
     newCanvas.style.zIndex = newLayerIndex;
@@ -56,8 +57,11 @@ function removeLayer(layer) {
 
 }
 // moves the layer to the newPosition
-function moveLayer(layer, newPosition) {
-
+function moveLayer(oldPosition, newPosition) {
+    let min = Math.min(oldPosition, newPosition);
+    for (let i = min; i < layers.length; i++){
+        layers[i].style.zIndex = i;
+    }
 }
 // selects a layer for drawing on
 function setActiveLayer(newLayerIndex) {
@@ -221,4 +225,4 @@ document.addEventListener('keydown', function(event) {
     } if (event.key == 'Backspace') {
         removeLayer(activeLayerIndex);
     }
-  });
+});
