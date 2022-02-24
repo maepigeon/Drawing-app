@@ -1,0 +1,11 @@
+body {
+    background-color:rgb(148, 148, 148);
+    display: flex;
+    justify-content: space-between;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
