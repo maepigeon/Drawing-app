@@ -1,7 +1,7 @@
 Developer Manual
 
     Download the repo.
-    All code is in the canvas.js and index.html files.
+    All code is in the canvas.js, style.css, and index.html files.
 
 User Manual
 
