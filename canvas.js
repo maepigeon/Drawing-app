@@ -50,17 +50,21 @@ function initilizeLayer(layerIndex) {
     canvas.style.width = "1024px";
     canvas.height = 1024;
     canvas.width = 1024; // 4MB max per layer
-    saveLayer(layerIndex, "brush");
+    saveLayerMark(layerIndex);
 }
 // removes the specified layer
-function removeLayer(layer) {
-
+function removeLayer(layerIndex) {
+    layers.splice(layerIndex, 1);
+    if (layerIndex === 0) { // this one has a white background, the other ones are transparent
+        layers[0].style.backgroundColor = "white";
+    }
+    moveLayer(layerIndex, layerIndex); // update the z-index for each layer
 }
 // moves the layer to the newPosition
 function moveLayer(oldPosition, newPosition) {
     let min = Math.min(oldPosition, newPosition);
     for (let i = min; i < layers.length; i++){
-        layers[i].style.zIndex = i;
+        layers[i].style.zIndex = i; // update the z-index for each layer
     }
 }
 // selects a layer for drawing on
@@ -74,7 +78,6 @@ function setActiveLayer(newLayerIndex) {
     let layerIndicator = document.getElementById("selected-layer-indicator");
     layerIndicator.textContent = "Selected layer index: " + String(activeLayerIndex);
 
-
     //update the new active canvas
     canvas = layers[activeLayerIndex];
     ctx = canvas.getContext("2d");
@@ -86,10 +89,22 @@ function setActiveLayer(newLayerIndex) {
     console.log(activeLayerIndex);
 }
 // saves the state of a layer to the history stack
-function saveLayer(layeridx, operationName) {
+function saveLayerMark(layeridx) {
     var image = layers[layeridx].toDataURL("image/png");
-    undoHistory = []
-    history.push({operation: operationName, layer: layeridx, url: image});
+    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
+    history.push({operation: "canvasMark", layer: layeridx, url: image});
+}
+// saves the fact that layers[layerIdx] was removed and its state to the history stack
+function saveLayerRemove(layerIdx) {
+    history.push({operation: "layerRemoved", layer: layeridx, url: image});
+}
+// saves the fact that layers[layerIdx] was created to the history stack
+function saveLayerCreated(layerIdx) {
+    history.push({operation: "layerCreated", layer: layeridx});
+}
+// saves the fact that a layer was moved to the history stack
+function saveLayerMove(oldLayerIdx, newLayerIdx) {
+    history.push({operation: "layerMoved", oldIdx: oldLayerIdx, newIdx: newLayerIdx});
 }
 
 
@@ -105,7 +120,6 @@ function redo() {
     restoreLayerState(lastState);
 }
 
-
 // restores the state of the canvas since the last modifying operation
 function undo() {
     if (history.length <= 1) {
@@ -114,11 +128,22 @@ function undo() {
     }
     let lastState = history.pop();
     undoHistory.push(lastState); // backup this undo so it can be redone
-    restoreLayerState(history[history.length - 1]);
+    let operationType = lastState.operation;
+    switch (operationType) {
+        case "canvasMark":
+            restoreLayerState(history[history.length - 1]);
+            break;
+        case "layerRemoved":
+        case "layerMoved":
+        case "layerCreated":
+            break;
+        default:
+            break;
+    }
 }
 
 // restores a specified layer state (restores a previous image of that layer)
-// parameter must be of format {operation: operationName, layer: layeridx, url: image}
+// parameter must be of format {operation: "canvasMark", layer: layeridx, url: image}
 function restoreLayerState(lastState) {
     // get url to the stored image
     let lastCanvasState = lastState.url; 
@@ -156,7 +181,7 @@ function startPosition(e) {
 function finishedPosition() {
     painting = false;
     ctx.beginPath();
-    saveLayer(activeLayerIndex, "brush");
+    saveLayerMark(activeLayerIndex);
 }
 // when the cursor moves, draw a line to the specified point if we are drawing
 function draw(e) {
