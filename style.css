@@ -2,10 +2,13 @@ body {
     background-color:rgb(148, 148, 148);
     display: flex;
     justify-content: space-between;
+
+    /** disable scrolling **/
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
-/** Used to disable scrolling **/
-html, body {margin: 0; height: 100%; overflow: hidden}
 
 
 canvas {
