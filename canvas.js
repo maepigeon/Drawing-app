@@ -227,6 +227,16 @@ function toggle_eraser() {
     eraser = !eraser;
 }
 
+function increase_brush_thickness(amt)
+{
+    brush.size += amt;
+}
+
+function decrease_brush_thickness(amt)
+{
+    increase_brush_thickness(-amt);
+}
+
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
     if (event.key == 'r') {
@@ -237,7 +247,17 @@ document.addEventListener('keydown', function(event) {
         brush.color = "blue"
     } if (event.key == 'e') {
         toggle_eraser();
-    } if (event.ctrlKey && event.key === 'z') {
+    } 
+    if (event.key == '[')
+    {
+        decrease_brush_thickness(5);
+    }
+
+    if (event.key == ']')
+    {
+        increase_brush_thickness(5);
+    }
+    if (event.ctrlKey && event.key === 'z') {
         undo();
     } if (event.ctrlKey && event.key === 'y') {
         redo();
