@@ -7,14 +7,20 @@
         <title>Drawing canvas</title>
     </head>
     <body>
-        <div id="colors">
-            <button class="color-button" id="color-red"></button>
-            <button class="color-button" id="color-orange"></button>
-            <button class="color-button" id="color-yellow"></button>
-            <button class="color-button" id="color-green"></button>
-            <button class="color-button" id="color-blue"></button>
-            <button class="color-button" id="color-purple"></button>
-            <button class="color-button" id="color-black"></button>
+        <div id="tools">
+            <button class="tool-button" id="color-red"></button>
+            <button class="tool-button" id="color-orange"></button>
+            <button class="tool-button" id="color-yellow"></button>
+            <button class="tool-button" id="color-green"></button>
+            <button class="tool-button" id="color-blue"></button>
+            <button class="tool-button" id="color-purple"></button>
+            <button class="tool-button" id="color-black"></button>
+            <button class="tool-button" id="tool-erase"></button>
+        </div>
+        <div id="prompt-container">
+            <p>
+                Current Prompt: <span id="prompt">[insert prompt here]</span>
+            </p>
         </div>
         <div id="layers">
             <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>

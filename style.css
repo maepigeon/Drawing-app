@@ -9,7 +9,7 @@ body {
     overflow: hidden;
 }
 
-#colors
+#tools
 {
     position: absolute;
     right: 0;
@@ -54,7 +54,7 @@ body {
 }
 
 
-.color-button
+.tool-button
 {
     height: 20px;
     width: 20px;
@@ -63,7 +63,8 @@ body {
 
 canvas {
     position: absolute;
-    top: 0;
+    top: 100;
+    bottom: 0;
     left: 0;
 }
 

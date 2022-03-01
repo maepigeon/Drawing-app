@@ -240,6 +240,7 @@ function decrease_brush_thickness(amt)
 function set_color(color)
 {
     brush.color = color;
+    eraser = false;
 }
 
 // input management (todo: clean up and add gui input)
@@ -311,4 +312,10 @@ document.getElementById("color-purple").addEventListener("click", function()
 document.getElementById("color-black").addEventListener("click", function()
 {
     set_color("black");
+});
+
+
+document.getElementById("tool-erase").addEventListener("click", function()
+{
+    eraser = true;
 });
