@@ -83,9 +83,9 @@ function setActiveLayer(newLayerIndex) {
     ctx = canvas.getContext("2d");
 
     //EventListeners
-    canvas.addEventListener("mousedown", startPosition);
-    canvas.addEventListener("mouseup", finishedPosition);
-    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("pointerdown", startPosition);
+    canvas.addEventListener("pointerup", finishedPosition);
+    canvas.addEventListener("pointermove", draw);
     console.log(activeLayerIndex);
 }
 // saves the state of a layer to the history stack
