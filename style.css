@@ -4,8 +4,13 @@ body {
     justify-content: space-between;
 }
 
+/** Used to disable scrolling **/
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+
 canvas {
     position: absolute;
     top: 0;
     left: 0;
 }
+
