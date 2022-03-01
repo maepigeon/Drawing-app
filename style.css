@@ -9,6 +9,56 @@ body {
     overflow: hidden;
 }
 
+#colors
+{
+    position: absolute;
+    right: 0;
+}
+
+#color-red
+{
+    background-color: red;
+}
+
+#color-orange
+{
+    background-color: orange;
+}
+
+
+#color-yellow
+{
+    background-color: yellow;
+}
+
+#color-green
+{
+    background-color: green;
+}
+
+
+#color-blue
+{
+    background-color: blue;
+}
+
+
+#color-purple
+{
+    background-color: purple;
+}
+
+#color-black
+{
+    background-color: black;
+}
+
+
+.color-button
+{
+    height: 20px;
+    width: 20px;
+}
 
 
 canvas {

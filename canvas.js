@@ -237,6 +237,11 @@ function decrease_brush_thickness(amt)
     increase_brush_thickness(-amt);
 }
 
+function set_color(color)
+{
+    brush.color = color;
+}
+
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
     if (event.key == 'r') {
@@ -270,4 +275,40 @@ document.addEventListener('keydown', function(event) {
     } if (event.key == 'Backspace') {
         removeLayer(activeLayerIndex);
     }
+});
+
+document.getElementById("color-red").addEventListener("click", function()
+{
+    set_color("red");
+});
+
+document.getElementById("color-orange").addEventListener("click", function()
+{
+    set_color("orange");
+});
+
+document.getElementById("color-yellow").addEventListener("click", function()
+{
+    set_color("yellow");
+});
+
+document.getElementById("color-green").addEventListener("click", function()
+{
+    set_color("green");
+});
+
+
+document.getElementById("color-blue").addEventListener("click", function()
+{
+    set_color("blue");
+});
+
+document.getElementById("color-purple").addEventListener("click", function()
+{
+    set_color("purple");
+});
+
+document.getElementById("color-black").addEventListener("click", function()
+{
+    set_color("black");
 });
