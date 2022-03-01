@@ -17,15 +17,20 @@
             <button class="tool-button" id="color-black"></button>
             <button class="tool-button" id="tool-erase"></button>
         </div>
+        <div id="layers">
+            <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>
+        </div>
         <div id="prompt-container">
             <p>
                 Current Prompt: <span id="prompt">[insert prompt here]</span>
             </p>
         </div>
-        <div id="layers">
-            <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>
-        </div>
         <p id="selected-layer-indicator"></p>
+        <div id="line-thickness-container">
+            <p>
+                Line thickness: <span id="line-thickness">0</span>
+            </p>
+        </div>
         <script src="canvas.js"></script>
     </body>
 </html>

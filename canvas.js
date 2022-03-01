@@ -227,9 +227,15 @@ function toggle_eraser() {
     eraser = !eraser;
 }
 
+function set_brush_thickness(size)
+{
+    brush.size = Math.max(5, size);
+    document.getElementById("line-thickness").innerHTML = brush.size;
+}
+
 function increase_brush_thickness(amt)
 {
-    brush.size += amt;
+    set_brush_thickness(brush.size + amt);
 }
 
 function decrease_brush_thickness(amt)
@@ -319,3 +325,5 @@ document.getElementById("tool-erase").addEventListener("click", function()
 {
     eraser = true;
 });
+
+set_brush_thickness(brush.size);
