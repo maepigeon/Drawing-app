@@ -1,3 +1,6 @@
+// Note: https://www.youtube.com/watch?v=FduLSXEHLng was used as a basic starting point
+// for adding a websocket implemntation. It is a very easy tutorial to understanding
+// how to get websockets up and running on a local server
 const ws = new WebSocket("ws://localhost:8082");
 
 //your unique user index. -1 is not valid.
