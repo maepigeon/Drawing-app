@@ -12,7 +12,7 @@ Developer Manual
   
   
 TODO
-
+  
   Get it working on the internet, rather than a local node server
   Add usernames so users can rejoin sessions when they close a tab
   Add ability to remove users from a session
