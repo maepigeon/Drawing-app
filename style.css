@@ -67,5 +67,6 @@ canvas {
     top: 100;
     bottom: 0;
     left: 0;
+    touch-action: none;
 }
 
