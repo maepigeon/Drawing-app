@@ -284,51 +284,50 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-document.getElementById("color-red").addEventListener("click", function()
+$("#color-red").on("click", function()
 {
     set_color("red");
 });
 
-document.getElementById("color-orange").addEventListener("click", function()
+$("#color-orange").on("click", function()
 {
     set_color("orange");
 });
 
-document.getElementById("color-yellow").addEventListener("click", function()
+$("#color-yellow").on("click", function()
 {
     set_color("yellow");
 });
 
-document.getElementById("color-green").addEventListener("click", function()
+$("#color-green").on("click", function()
 {
     set_color("green");
 });
 
 
-document.getElementById("color-blue").addEventListener("click", function()
+$("#color-blue").on("click", function()
 {
     set_color("blue");
 });
 
-document.getElementById("color-purple").addEventListener("click", function()
+$("#color-purple").on("click", function()
 {
     set_color("purple");
 });
 
-document.getElementById("color-black").addEventListener("click", function()
+$("#color-black").on("click", function()
 {
     set_color("black");
 });
 
 
-document.getElementById("tool-erase").addEventListener("click", function()
+$("#tool-erase").on("click", function()
 {
     eraser = true;
 });
 
-
-document.getElementById("tool-undo").addEventListener("click", undo);
-document.getElementById("tool-redo").addEventListener("click", redo);
+$("#tool-undo").on("click", undo);
+$("#tool-redo").on("click", redo);
 
 
 set_brush_thickness(brush.size);
