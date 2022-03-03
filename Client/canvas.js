@@ -186,10 +186,9 @@ function finishedPosition() {
 // when the cursor moves, draw a line to the specified point if we are drawing
 function draw(e) {
     if (!painting) return; // don't do anything if we aren't drawing
-
     var pos = getMousePos(canvas, e);
 
-    ctx.lineWidth = brush.size;
+    ctx.lineWidth = brush.size * (e.pressure * 2);
     ctx.lineCap = "round";
 
     if (eraser) {
