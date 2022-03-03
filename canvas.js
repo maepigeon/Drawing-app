@@ -328,6 +328,14 @@ $("#tool-erase").on("click", function()
 
 $("#tool-undo").on("click", undo);
 $("#tool-redo").on("click", redo);
+$("#tool-increase-thickness").on("click", function()
+{
+    increase_brush_thickness(5);
+});
+$("#tool-decrease-thickness").on("click", function()
+{
+    decrease_brush_thickness(5);
+});
 
 
 set_brush_thickness(brush.size);
