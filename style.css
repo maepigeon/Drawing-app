@@ -13,6 +13,7 @@ body {
 {
     position: absolute;
     right: 0;
+    top: 100px;
 }
 
 #color-red
@@ -56,8 +57,8 @@ body {
 
 .tool-button
 {
-    height: 20px;
-    width: 20px;
+    height: 50px;
+    width: 50px;
 }
 
 

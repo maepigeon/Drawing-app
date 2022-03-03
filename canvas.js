@@ -326,4 +326,9 @@ document.getElementById("tool-erase").addEventListener("click", function()
     eraser = true;
 });
 
+
+document.getElementById("tool-undo").addEventListener("click", undo);
+document.getElementById("tool-redo").addEventListener("click", redo);
+
+
 set_brush_thickness(brush.size);
