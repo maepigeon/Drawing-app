@@ -15,7 +15,8 @@ wss.on("connection", ws => {
     connected_client_sockets.push(ws);
     let message = {
         messageType: "connectionConfirmation",
-        connectionMessage: "Your user index is: " + get_socket_id(ws).toString()
+        connectionMessage: "Your user index is: " + get_socket_id(ws).toString(),
+        userId: get_socket_id(ws)
     }
     ws.send(JSON.stringify(message));
 

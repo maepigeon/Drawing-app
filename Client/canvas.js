@@ -17,6 +17,30 @@ let undoHistory = [];
 let brush = {size: 10, color: "red"};
 let eraser = false;
 
+import {networking} from "./networking.js"
+
+// Interprets a message recieved from the network
+// that is relevant to the canvas.
+export function interpretCommand(message) {
+    if (networking.isYourUserId(message.userId)) {
+        return;
+    }
+    switch (message.messageType) {
+        case "startPosition":
+            startPosition(message.data);
+            break;
+        case "finishedPosition":
+            finishedPosition(message.data);
+            break;
+        case "draw":
+            draw(message.data);
+            break;
+        default:
+            alert("WARNING. Unknown message sent to the canvas. Unable to interpret it. Message type: " + message.messageType + ".");
+            break;
+    }
+}
+ 
 /* Layers */
 // creates a new layer above the layerBelow and sets it as the active layer
 function createLayer(layerBelowIndex) {
@@ -83,9 +107,9 @@ function setActiveLayer(newLayerIndex) {
     ctx = canvas.getContext("2d");
 
     //EventListeners
-    canvas.addEventListener("pointerdown", startPosition);
-    canvas.addEventListener("pointerup", finishedPosition);
-    canvas.addEventListener("pointermove", draw);
+    canvas.addEventListener("pointerdown", callStartPositionAll);
+    canvas.addEventListener("pointerup", callFinishedPositionAll);
+    canvas.addEventListener("pointermove", callDrawAll);
     console.log(activeLayerIndex);
 }
 // saves the state of a layer to the history stack
@@ -165,30 +189,63 @@ function restoreLayerState(lastState) {
     };
 }
 
-
 // drawing functionality
 
 //variables
 let painting = false;
 let canvas;
 let ctx;
-// when you press down the cursor
-function startPosition(e) {
-    painting = true;
-    draw(e);
+
+// Returns an object {position: {x, y}, pressure} from the event
+function getPencilData(e) {
+    return {position: getMousePos(canvas, e), pressure: e.pressure}
 }
+
+// when you press down the cursor
+function callStartPositionAll(e) {
+    let pencilData = getPencilData(e);
+    startPosition(pencilData);
+    let message = {
+        messageType: "startPosition",
+        data: pencilData,
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
+function startPosition(pencilData) {
+    painting = true;
+    draw(pencilData);
+}
+function callFinishedPositionAll(e) {
+    finishedPosition();
+    let message = {
+        messageType: "finishedPosition",
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
+
 // when you release the cursor 
 function finishedPosition() {
     painting = false;
     ctx.beginPath();
     saveLayerMark(activeLayerIndex);
 }
-// when the cursor moves, draw a line to the specified point if we are drawing
-function draw(e) {
-    if (!painting) return; // don't do anything if we aren't drawing
-    var pos = getMousePos(canvas, e);
 
-    ctx.lineWidth = brush.size * (e.pressure * 2);
+// draw on everyone's canvases
+function callDrawAll(e) {
+    let pencilData = getPencilData(e);
+    draw(pencilData);
+    let message = {
+        messageType: "draw",
+        data: pencilData
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
+// when the cursor moves, draw a line to the specified point if we are drawing
+function draw(pencilData) {
+    if (!painting) return; // don't do anything if we aren't drawing
+
+    ctx.lineWidth = brush.size * (pencilData.pressure * 2);
     ctx.lineCap = "round";
 
     if (eraser) {
@@ -199,10 +256,10 @@ function draw(e) {
         ctx.strokeStyle = brush.color;
     }
 
-    ctx.lineTo(pos.x, pos.y);
+    ctx.lineTo(pencilData.position.x, pencilData.position.y);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
+    ctx.moveTo(pencilData.position.x, pencilData.position.y);
 }
 // when the page is loaded, do this
 window.addEventListener("load", () => {
