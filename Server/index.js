@@ -22,13 +22,23 @@ wss.on("connection", ws => {
 
 
     ws.on('message', data => {
-        console.log('Client has sent us: ' + data.toString());
-        for (let i = 0; i < connected_client_sockets.length; i++) {
-            let message = {
-                messageType: "userConnectedMessage",
-                connectionMessage: "another person just joined! Their user index is: " + get_socket_id(ws).toString()
-            };
-            connected_client_sockets[i].send(JSON.stringify(message));
+        console.log('Client has sent us: ' + data);
+        if (data.messageType !== undefined) {
+            console.log('test');
+            for (let i = 0; i < connected_client_sockets.length; i++) {
+                connected_client_sockets[i].send(data);
+            }
+        } 
+        
+        else {
+            for (let i = 0; i < connected_client_sockets.length; i++) {
+                console.log('test2');
+                let message = {
+                    messageType: "userConnectedMessage",
+                    connectionMessage: "another person just joined! Their user index is: " + get_socket_id(ws).toString()
+                };
+                connected_client_sockets[i].send(JSON.stringify(message));
+            }
         }
     });
 

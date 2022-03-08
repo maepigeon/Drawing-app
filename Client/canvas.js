@@ -27,6 +27,7 @@ export function interpretCommand(message) {
     }
     switch (message.messageType) {
         case "startPosition":
+            alert("pressed down");
             startPosition(message.data);
             break;
         case "finishedPosition":
@@ -220,6 +221,7 @@ function callFinishedPositionAll(e) {
     finishedPosition();
     let message = {
         messageType: "finishedPosition",
+        userId: networking.getUserId()
     };
     networking.sendMessage(JSON.stringify(message));
 }
@@ -237,7 +239,8 @@ function callDrawAll(e) {
     draw(pencilData);
     let message = {
         messageType: "draw",
-        data: pencilData
+        data: pencilData,
+        userId: networking.getUserId()
     };
     networking.sendMessage(JSON.stringify(message));
 }
