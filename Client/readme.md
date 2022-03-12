@@ -2,7 +2,8 @@ Developer Manual
 
     Download the repo.
     All code is in the canvas.js, style.css, and index.html files.
-    A web server must be running, as the code uses modules.
+    A web server must be running, as the code uses modules. 
+        python -m http.server should be fine. When we set up a website, that will be using a server anyway.
 
 User Manual
 
