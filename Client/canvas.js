@@ -25,9 +25,9 @@ export function interpretCommand(message) {
     if (networking.isYourUserId(message.userId)) {
         return;
     }
+
     switch (message.messageType) {
         case "startPosition":
-            alert("pressed down");
             startPosition(message.data);
             break;
         case "finishedPosition":

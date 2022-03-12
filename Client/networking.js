@@ -22,6 +22,10 @@ class NetworkingObject {
     getUserId() {
         return userId;
     }
+    // sets your user id
+    setUserId(id) {
+        userId = id;
+    }
 }
 
 let networking = new NetworkingObject();
@@ -39,22 +43,27 @@ let userId = -1;
 ws.addEventListener("open", () => {
     console.log("We are connected!");
     // need to obtain user id here.
-    networking.sendMessage("Hey, how's it going?");
+    networking.sendMessage("connecting");
 });
 
 
 
 // User gets a message from the server
 ws.addEventListener("message", e => {
-    let message = JSON.parse(e.data);
-    console.log(message);
+    let message;
+    try {
+        message = JSON.parse(e.data);
+    } catch (error) {
+        console.warn("unable to understand the following message data from the network: " + e);
+        return;
+    }
 
-    console.log("Message type: " + message.messageType);
     switch (message.messageType) {
         case "userConnectedMessage":
-            userId = message.userId;
+            console.log(message.connectionMessage)
         case "connectionConfirmation":
             console.log(message.connectionMessage);
+            networking.setUserId(message.userId);
             break;
         default:
             interpretCommand(message);

@@ -22,17 +22,16 @@ wss.on("connection", ws => {
 
 
     ws.on('message', data => {
-        console.log('Client has sent us: ' + data);
-        if (data.messageType !== undefined) {
+        console.log('Client has sent us: ' + data.toString());
+        if (data !== "connecting") {
             console.log('test');
             for (let i = 0; i < connected_client_sockets.length; i++) {
-                connected_client_sockets[i].send(data);
+                connected_client_sockets[i].send(data.toString());
             }
         } 
         
         else {
             for (let i = 0; i < connected_client_sockets.length; i++) {
-                console.log('test2');
                 let message = {
                     messageType: "userConnectedMessage",
                     connectionMessage: "another person just joined! Their user index is: " + get_socket_id(ws).toString()
