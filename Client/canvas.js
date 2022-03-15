@@ -17,6 +17,8 @@ let undoHistory = [];
 let brush = {size: 10, color: "red"};
 let eraser = false;
 
+let words = [];
+
 import {networking} from "./networking.js"
 
 // Interprets a message recieved from the network
@@ -308,6 +310,29 @@ function set_color(color)
     eraser = false;
 }
 
+//This accesses a URL to generate a list of random words. todo: add other themes
+async function getWordList() {
+    const requestURL = 'https://random-word-api.herokuapp.com/word?number=250&swear=0';
+    const web = new Request(requestURL);
+    const response = await fetch(web);
+    words = await response.json();
+    let rn = Math.floor(Math.random() * words.length);
+    let word = words[rn];
+    document.getElementById('prompt').innerHTML = word;
+}
+
+//Generates a word
+function generate_word() {
+    if (words.length == 0) {
+        document.getElementById('prompt').innerHTML = 'Please start game first';
+    }
+    else {
+        let rn = Math.floor(Math.random() * words.length);
+        let word = words[rn];
+        document.getElementById('prompt').innerHTML = word;
+    }
+}
+
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
     if (event.key == 'r') {
@@ -385,6 +410,8 @@ $("#tool-erase").on("click", function()
     eraser = true;
 });
 
+$("#start-game-button").on("click", getWordList);
+$("#end-turn-button").on("click", generate_word);
 $("#tool-undo").on("click", undo);
 $("#tool-redo").on("click", redo);
 $("#tool-increase-thickness").on("click", function()
