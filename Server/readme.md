@@ -10,6 +10,14 @@ Developer Manual
     Start the server by entering the following in the command line:
     node index.js
   
+Forwarding localhost server to a public URL:
+
+    Install ngrok: https://ngrok.com/
+    Extract the zip
+    Run the exe in the extracted zip
+    With the node server running according to instructions above, run "ngrok.exe http 8082"
+    ngrok will then provide you with a URL that the localhost server will be forwarded to.
+    You'll need to then edit the websocket URL in networking.js to be the ngrok URL provided.
   
 TODO
   

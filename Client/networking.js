@@ -33,7 +33,8 @@ let networking = new NetworkingObject();
 // Note: https://www.youtube.com/watch?v=FduLSXEHLng was used as a basic starting point
 // for adding a websocket implemntation. It is a very easy tutorial to understanding
 // how to get websockets up and running on a local server
-const ws = new WebSocket("ws://localhost:8082");
+// put the URL address to the server here (with ws instead of http and wss instead of https)
+const ws = new WebSocket("ws://368d-2607-b400-26-0-8410-ccd7-64b9-639f.ngrok.io");
 
 //your unique user id. -1 is not valid.
 let userId = -1;
