@@ -1,7 +1,7 @@
 Developer Manual
 
     Download the repo.
-    All code is in the canvas.js, style.css, and index.html files.
+    All code is in the canvas.js, style.css, networking, and index.html files.
     A web server must be running, as the code uses modules. 
         python -m http.server should be fine. When we set up a website, that will be using a server anyway.
 
@@ -19,5 +19,5 @@ User Manual
         use mouse to draw (click to start drawing, release to stop)
         press E to toggle eraser mode on/off
         CTRL+Z and CTRL+Y to undo/redo respectively
-        press r, g, or b to select a red, green, or blue brush, respectively
+        Click a color button to select a color
         ALT+N to create a new layer, up and down arrows to select a layer
