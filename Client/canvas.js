@@ -38,6 +38,15 @@ export function interpretCommand(message) {
         case "draw":
             draw(message.data);
             break;
+        case "undo":
+            undo();
+            break;
+        case "redo":
+            redo();
+            break;
+        case "setColor":
+            setColor(message.data.color)
+            break;
         default:
             alert("WARNING. Unknown message sent to the canvas. Unable to interpret it. Message type: " + message.messageType + ".");
             break;
@@ -135,6 +144,16 @@ function saveLayerMove(oldLayerIdx, newLayerIdx) {
 }
 
 
+// Calls the undo function on all the clients' canvases
+function callRedoAll() {
+    redo();
+    let message = {
+        messageType: "redo",
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
+
 /* Canvas operations */
 // undos the last undo
 function redo() {
@@ -147,6 +166,17 @@ function redo() {
     restoreLayerState(lastState);
 }
 
+
+
+// Calls the undo function on all the clients' canvases
+function callUndoAll() {
+    undo();
+    let message = {
+        messageType: "undo",
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
 // restores the state of the canvas since the last modifying operation
 function undo() {
     if (history.length <= 1) {
@@ -284,27 +314,39 @@ function  getMousePos(canvas, evt) {
     }
   }
 // enables or disables eraser
-function toggle_eraser() {
+function toggleEraser() {
     eraser = !eraser;
 }
 
-function set_brush_thickness(size)
+function setBrushThickness(size)
 {
     brush.size = Math.max(5, size);
     document.getElementById("line-thickness").innerHTML = brush.size;
 }
 
-function increase_brush_thickness(amt)
+function increaseBrushThickness(amt)
 {
-    set_brush_thickness(brush.size + amt);
+    setBrushThickness(brush.size + amt);
 }
 
-function decrease_brush_thickness(amt)
+function decreaseBrushThickness(amt)
 {
-    increase_brush_thickness(-amt);
+    increaseBrushThickness(-amt);
+}
+// sets the color of the brush on all canvas instances connected to the server
+function callSetColorAll(color) {
+    setColor(color);
+
+    let message = {
+        messageType: "setColor",
+        data: {color: color},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
 }
 
-function set_color(color)
+// Sets the color of the brush for this canvas instance
+function setColor(color)
 {
     brush.color = color;
     eraser = false;
@@ -322,7 +364,7 @@ async function getWordList() {
 }
 
 //Generates a word
-function generate_word() {
+function generateWord() {
     if (words.length == 0) {
         document.getElementById('prompt').innerHTML = 'Please start game first';
     }
@@ -342,21 +384,21 @@ document.addEventListener('keydown', function(event) {
     } if (event.key == 'b') {
         brush.color = "blue"
     } if (event.key == 'e') {
-        toggle_eraser();
+        toggleEraser();
     } 
     if (event.key == '[')
     {
-        decrease_brush_thickness(5);
+        decreaseBrushThickness(5);
     }
 
     if (event.key == ']')
     {
-        increase_brush_thickness(5);
+        increaseBrushThickness(5);
     }
     if (event.ctrlKey && event.key === 'z') {
-        undo();
+        callUndoAll();
     } if (event.ctrlKey && event.key === 'y') {
-        redo();
+        callRedoAll();
     } if (event.altKey && event.key === 'n') {
         createLayer(activeLayerIndex);
     } if (event.key == 'ArrowUp') {
@@ -370,38 +412,38 @@ document.addEventListener('keydown', function(event) {
 
 $("#color-red").on("click", function()
 {
-    set_color("red");
+    callSetColorAll("red");
 });
 
 $("#color-orange").on("click", function()
 {
-    set_color("orange");
+    callSetColorAll("orange");
 });
 
 $("#color-yellow").on("click", function()
 {
-    set_color("yellow");
+    callSetColorAll("yellow");
 });
 
 $("#color-green").on("click", function()
 {
-    set_color("green");
+    callSetColorAll("green");
 });
 
 
 $("#color-blue").on("click", function()
 {
-    set_color("blue");
+    callSetColorAll("blue");
 });
 
 $("#color-purple").on("click", function()
 {
-    set_color("purple");
+    callSetColorAll("purple");
 });
 
 $("#color-black").on("click", function()
 {
-    set_color("black");
+    callSetColorAll("black");
 });
 
 
@@ -411,17 +453,17 @@ $("#tool-erase").on("click", function()
 });
 
 $("#start-game-button").on("click", getWordList);
-$("#end-turn-button").on("click", generate_word);
+$("#end-turn-button").on("click", generateWord);
 $("#tool-undo").on("click", undo);
 $("#tool-redo").on("click", redo);
 $("#tool-increase-thickness").on("click", function()
 {
-    increase_brush_thickness(5);
+    increaseBrushThickness(5);
 });
 $("#tool-decrease-thickness").on("click", function()
 {
-    decrease_brush_thickness(5);
+    decreaseBrushThickness(5);
 });
 
 
-set_brush_thickness(brush.size);
+setBrushThickness(brush.size);
