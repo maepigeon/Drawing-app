@@ -354,12 +354,12 @@ function setColor(color)
 
 //This accesses a URL to generate a list of random words. todo: add other themes
 async function getWordList() {
-    const requestURL = 'https://random-word-api.herokuapp.com/word?number=250&swear=0';
+    const requestURL = 'https://api.datamuse.com/words?topics=nature&max=250';
     const web = new Request(requestURL);
     const response = await fetch(web);
     words = await response.json();
     let rn = Math.floor(Math.random() * words.length);
-    let word = words[rn];
+    let word = words[rn].word;
     document.getElementById('prompt').innerHTML = word;
 }
 
@@ -370,7 +370,7 @@ function generateWord() {
     }
     else {
         let rn = Math.floor(Math.random() * words.length);
-        let word = words[rn];
+        let word = words[rn].word;
         document.getElementById('prompt').innerHTML = word;
     }
 }
