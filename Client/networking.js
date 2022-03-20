@@ -7,7 +7,7 @@ class NetworkingObject {
     }
     // sends a message to the server, which sends the message to all users
     sendMessage(messageString){
-        console.log("Sending message to server: " + messageString)
+        //console.log("Sending message to server: " + messageString)
         ws.send(messageString);
     }
     // returns whether the number specified is a valid user id
@@ -36,7 +36,8 @@ let networking = new NetworkingObject();
 // put the URL address to the server here (with ws instead of http and wss instead of https)
 
 //const ws = new WebSocket("ws://368d-2607-b400-26-0-8410-ccd7-64b9-639f.ngrok.io");
-const ws = new WebSocket("ws://localhost:8082");
+//const ws = new WebSocket("ws://localhost:8082");
+const ws = new WebSocket("ws://73.99.214.50:8082", "echo-protocol");
 
 //your unique user id. -1 is not valid.
 let userId = -1;
@@ -48,8 +49,6 @@ ws.addEventListener("open", () => {
     // need to obtain user id here.
     networking.sendMessage("connecting");
 });
-
-
 
 // User gets a message from the server
 ws.addEventListener("message", e => {

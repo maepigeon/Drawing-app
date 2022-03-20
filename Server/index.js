@@ -1,6 +1,10 @@
+const http = require('http');
 const WebSocket = require("ws");
 
-const wss = new WebSocket.Server({port: 8082});
+const wss = new WebSocket.Server({port: 8082}); ////
+
+console.log("Websocket server starting...");
+
 let connected_client_sockets = []; // extry format: {int socketID, Socket socket}
 
 //gets the index of a specified socket
@@ -22,9 +26,8 @@ wss.on("connection", ws => {
 
 
     ws.on('message', data => {
-        console.log('Client has sent us: ' + data.toString());
+        //console.log('Client has sent us: ' + data.toString());
         if (data !== "connecting") {
-            console.log('test');
             for (let i = 0; i < connected_client_sockets.length; i++) {
                 connected_client_sockets[i].send(data.toString());
             }

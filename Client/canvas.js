@@ -318,6 +318,13 @@ function toggleEraser() {
     eraser = !eraser;
 }
 
+
+// Updates the brush thickness for all users connected to the server
+function callSetBrushThicknessAll(size) {
+
+}
+
+// Sets the brush thickness for the current user
 function setBrushThickness(size)
 {
     brush.size = Math.max(5, size);
