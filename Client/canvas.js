@@ -107,7 +107,7 @@ function initilizeLayer(layerIndex) {
     // Note: HTML canvas resolution and css div resolution 
     // are technically 2 separate properties.
     canvas.style.height = "80vh";
-    canvas.style.width = "60vw";
+    canvas.style.width = "90vh";
     canvas.height = 1024;
     canvas.width = 1024; // 4MB max per layer
     canvas.style.position = "absolute";
