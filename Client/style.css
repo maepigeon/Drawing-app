@@ -2,6 +2,7 @@ body {
     background-color:rgb(148, 148, 148);
     display: flex;
     justify-content: space-between;
+    font-family: "IBM Plex Sans", sans-serif;
 
     /** disable scrolling **/
     margin: 0;
@@ -91,6 +92,7 @@ canvas {
     border: none;
     border-radius: 12px;
     height: 30px;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 .game-button:hover {
     background-color: #bdbdbd;
@@ -102,5 +104,9 @@ canvas {
     background-color: white;
     padding: 5px;
     border-radius: 12px;
+}
+
+.icon-button {
+    font-size: 1.5em;
 }
 
