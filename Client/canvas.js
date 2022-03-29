@@ -45,7 +45,21 @@ export function interpretCommand(message) {
             redo();
             break;
         case "setColor":
-            setColor(message.data.color)
+            setColor(message.data.color);
+            break;
+        case "setBrushThickness":
+            setBrushThickness(message.data.size);
+            break;
+        case "createLayer":
+            setActiveLayer(message.data.layerBelowIndex);
+            createLayer(getActiveLayer());
+            setActiveLayer(getActiveLayer());
+            break;
+        case "removeLayer":
+            removeLayer(message.data.layerIndex);
+            break;
+        case "moveLayer":
+            moveLayer(message.data.oldPosition, message.data.newPosition);
             break;
         default:
             alert("WARNING. Unknown message sent to the canvas. Unable to interpret it. Message type: " + message.messageType + ".");
@@ -53,6 +67,16 @@ export function interpretCommand(message) {
     }
 }
  
+// Creates a layer on top of the specified layer for all users.
+function createLayerAll(layerBelowIndex) {
+    createLayer(layerBelowIndex);
+    let message = {
+        messageType: "createLayer",
+        data: {layerBelowIndex: layerBelowIndex},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
 /* Layers */
 // creates a new layer above the layerBelow and sets it as the active layer
 function createLayer(layerBelowIndex) {
@@ -86,7 +110,19 @@ function initilizeLayer(layerIndex) {
     canvas.style.width = "1024px";
     canvas.height = 1024;
     canvas.width = 1024; // 4MB max per layer
+    canvas.style.position = "absolute";
     saveLayerMark(layerIndex);
+}
+
+// Deletes a layer for all users.
+function removeLayerAll(layerIndex) {
+    removeLayer(layerIndex);
+    let message = {
+        messageType: "removeLayer",
+        data: {layerIndex: layerIndex},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
 }
 // removes the specified layer
 function removeLayer(layerIndex) {
@@ -96,12 +132,26 @@ function removeLayer(layerIndex) {
     }
     moveLayer(layerIndex, layerIndex); // update the z-index for each layer
 }
+
+// Moves the layer for all users
+function moveLayerAll(oldPosition, newPosition) {
+    moveLayer(oldPosition, newPosition);
+    let message = {
+        messageType: "moveLayer",
+        data: {oldPosition: oldPosition, newPosition: newPosition},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
 // moves the layer to the newPosition
 function moveLayer(oldPosition, newPosition) {
     let min = Math.min(oldPosition, newPosition);
     for (let i = min; i < layers.length; i++){
         layers[i].style.zIndex = i; // update the z-index for each layer
     }
+
+    const element = layers.splice(oldPosition, 1)[0];
+    layers.splice(newPosition, 0, element);
 }
 // selects a layer for drawing on
 function setActiveLayer(newLayerIndex) {
@@ -124,6 +174,9 @@ function setActiveLayer(newLayerIndex) {
     canvas.addEventListener("pointermove", callDrawAll);
     console.log(activeLayerIndex);
 }
+function getActiveLayer() {
+    return activeLayerIndex;
+}
 // saves the state of a layer to the history stack
 function saveLayerMark(layeridx) {
     var image = layers[layeridx].toDataURL("image/png");
@@ -132,14 +185,18 @@ function saveLayerMark(layeridx) {
 }
 // saves the fact that layers[layerIdx] was removed and its state to the history stack
 function saveLayerRemove(layerIdx) {
+    var image = layers[layeridx].toDataURL("image/png");
+    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
     history.push({operation: "layerRemoved", layer: layeridx, url: image});
 }
 // saves the fact that layers[layerIdx] was created to the history stack
 function saveLayerCreated(layerIdx) {
+    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
     history.push({operation: "layerCreated", layer: layeridx});
 }
 // saves the fact that a layer was moved to the history stack
 function saveLayerMove(oldLayerIdx, newLayerIdx) {
+    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
     history.push({operation: "layerMoved", oldIdx: oldLayerIdx, newIdx: newLayerIdx});
 }
 
@@ -191,8 +248,14 @@ function undo() {
             restoreLayerState(history[history.length - 1]);
             break;
         case "layerRemoved":
+            callCreateLayerAll(lastState.layer - 1);
+            restoreLayerState(history[history.length - 1]);
+            break;
         case "layerMoved":
+            callMoveLayerAll(lastState.newIdx, lastState.oldIdx);
+            break;
         case "layerCreated":
+            callRemoveLayerAll(lastState.layer);
             break;
         default:
             break;
@@ -321,6 +384,13 @@ function toggleEraser() {
 
 // Updates the brush thickness for all users connected to the server
 function callSetBrushThicknessAll(size) {
+    setBrushThickness(size);
+    let message = {
+        messageType: "setBrushThickness",
+        data: {size: size},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
 
 }
 
@@ -333,7 +403,7 @@ function setBrushThickness(size)
 
 function increaseBrushThickness(amt)
 {
-    setBrushThickness(brush.size + amt);
+    callSetBrushThicknessAll(brush.size + amt);
 }
 
 function decreaseBrushThickness(amt)
@@ -385,11 +455,11 @@ function generateWord() {
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
     if (event.key == 'r') {
-        brush.color = "red"
+        callSetColorAll("red");
     } if (event.key == 'g') {
-        brush.color = "green"
+        callSetColorAll("green");
     } if (event.key == 'b') {
-        brush.color = "blue"
+        callSetColorAll("blue");
     } if (event.key == 'e') {
         toggleEraser();
     } 
@@ -407,13 +477,13 @@ document.addEventListener('keydown', function(event) {
     } if (event.ctrlKey && event.key === 'y') {
         callRedoAll();
     } if (event.altKey && event.key === 'n') {
-        createLayer(activeLayerIndex);
+        createLayerAll(activeLayerIndex);
     } if (event.key == 'ArrowUp') {
         setActiveLayer(activeLayerIndex + 1);
     } if (event.key == 'ArrowDown') {
         setActiveLayer(activeLayerIndex - 1);
     } if (event.key == 'Backspace') {
-        removeLayer(activeLayerIndex);
+        removeLayerAll(activeLayerIndex);
     }
 });
 
