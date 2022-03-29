@@ -531,8 +531,8 @@ $("#tool-erase").on("click", function()
 
 $("#start-game-button").on("click", getWordList);
 $("#end-turn-button").on("click", generateWord);
-$("#tool-undo").on("click", undo);
-$("#tool-redo").on("click", redo);
+$("#tool-undo").on("click", callUndoAll);
+$("#tool-redo").on("click", callRedoAll);
 $("#tool-increase-thickness").on("click", function()
 {
     increaseBrushThickness(5);
