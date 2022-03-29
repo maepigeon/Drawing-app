@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" context="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./style.css" />
         <title>DoodlLab</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/b7fca5f358.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM Plex Sans">
+        <link rel="stylesheet" href="./style.css?v=2" />
     </head>
     <body>
         <div id="tools">
@@ -16,9 +18,9 @@
             <button class="tool-button" id="color-blue"></button>
             <button class="tool-button" id="color-purple"></button>
             <button class="tool-button" id="color-black"></button>
-            <button class="tool-button" id="tool-erase">Erase</button>
-            <button class="tool-button" id="tool-undo">Undo</button>
-            <button class="tool-button" id="tool-redo">Redo</button>
+            <button class="tool-button" id="tool-erase"><i class="fa-solid fa-eraser fa-xl"></i></button>
+            <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-xl"></i></button>
+            <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-xl"></i></button>
             <button class="tool-button" id="tool-increase-thickness">+</button>
             <button class="tool-button" id="tool-decrease-thickness">-</button>
         </div>
@@ -37,11 +39,11 @@
             </p>
         </div>
         <div id="game-controls">
-            <button id="start-game-button">Start Game</button>
-            <button id="end-game-button">End Game</button>
-            <button id="end-turn-button">End Turn</button>
+            <button class="game-button" id="start-game-button">Start Game</button>
+            <button class="game-button"id="end-game-button">End Game</button>
+            <button class="game-button" id="end-turn-button">End Turn</button>
         </div>
-        <script type="module" src="canvas.js"></script>
+        <script type="module" src="canvas.js?v=1"></script>
 
     </body>
 </html>
