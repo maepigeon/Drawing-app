@@ -26,7 +26,7 @@ wss.on("connection", ws => {
 
 
     ws.on('message', data => {
-        //console.log('Client has sent us: ' + data.toString());
+        console.log('Client has sent us: ' + data.toString());
         if (data !== "connecting") {
             for (let i = 0; i < connected_client_sockets.length; i++) {
                 connected_client_sockets[i].send(data.toString());
