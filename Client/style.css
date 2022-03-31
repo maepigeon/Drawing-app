@@ -29,7 +29,7 @@ body {
 }
 #story-box {
     height: 400px;
-    width: 350px;
+    width: 20vw;
 }
 
 #tools
@@ -132,6 +132,12 @@ canvas {
     background-color: white;
     padding: 5px;
     border-radius: 12px;
+}
+
+#prompt-container {
+    font-size: x-large;
+    margin: 25px 0px;
+    margin-bottom: 30px;
 }
 
 .icon-button {
