@@ -17,8 +17,6 @@ let undoHistory = [];
 let brush = {size: 10, color: "red"};
 let eraser = false;
 
-let words = [];
-
 import {networking} from "./networking.js"
 
 // Interprets a message recieved from the network
@@ -33,7 +31,7 @@ export function interpretCommand(message) {
             startPosition(message.data);
             break;
         case "finishedPosition":
-            finishedPosition(message.data);
+            finishedPosition();
             break;
         case "draw":
             draw(message.data);
@@ -49,6 +47,9 @@ export function interpretCommand(message) {
             break;
         case "setBrushThickness":
             setBrushThickness(message.data.size);
+            break;
+        case "setActiveLayer":
+            setActiveLayer(message.data.layer);
             break;
         case "createLayer":
             setActiveLayer(message.data.layerBelowIndex);
@@ -80,9 +81,15 @@ function createLayerAll(layerBelowIndex) {
 /* Layers */
 // creates a new layer above the layerBelow and sets it as the active layer
 function createLayer(layerBelowIndex) {
+    if (painting) {
+        alert("Cannot create a new layer while currently drawing");
+        return;
+    }
     // create a new canvas for the layer
     let newCanvas = document.createElement("canvas");
     let newLayerIndex = layerBelowIndex + 1;
+
+    saveLayerCreated(newLayerIndex);
 
     // add it to the layers stack
     layers.splice(newLayerIndex, 0, newCanvas); 
@@ -93,14 +100,14 @@ function createLayer(layerBelowIndex) {
 
     // set it up
     newCanvas.style.zIndex = newLayerIndex;
-    initilizeLayer(newLayerIndex)
+    initializeLayer(newLayerIndex)
 
     // make it the active layer
     setActiveLayer(newLayerIndex);
 }
 
 // initializes the resolution for a specified layer
-function initilizeLayer(layerIndex) {
+function initializeLayer(layerIndex) {
     let canvas = layers[layerIndex];
 
     // Resizing. 
@@ -126,6 +133,7 @@ function removeLayerAll(layerIndex) {
 }
 // removes the specified layer
 function removeLayer(layerIndex) {
+    saveLayerRemoved(layerIndex);
     layers.splice(layerIndex, 1);
     if (layerIndex === 0) { // this one has a white background, the other ones are transparent
         layers[0].style.backgroundColor = "white";
@@ -143,8 +151,9 @@ function moveLayerAll(oldPosition, newPosition) {
     };
     networking.sendMessage(JSON.stringify(message));
 }
-// moves the layer to the newPosition
+// Moves the layer to the newPosition
 function moveLayer(oldPosition, newPosition) {
+    saveLayerMoved(oldPosition, newPosition);
     let min = Math.min(oldPosition, newPosition);
     for (let i = min; i < layers.length; i++){
         layers[i].style.zIndex = i; // update the z-index for each layer
@@ -153,8 +162,22 @@ function moveLayer(oldPosition, newPosition) {
     const element = layers.splice(oldPosition, 1)[0];
     layers.splice(newPosition, 0, element);
 }
-// selects a layer for drawing on
+// Selects a layer for drawing on for all users.
+function callSetActiveLayerAll(newLayerIndex) {
+    setActiveLayer(newLayerIndex)
+    let message = {
+        messageType: "setActiveLayer",
+        data: {oldPosition: oldPosition, newPosition: newPosition},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
+// Selects a layer for drawing on.
 function setActiveLayer(newLayerIndex) {
+    if (painting) {
+        alert("cannot change the selected layer while currently drawing");
+        return;
+    }
     if (newLayerIndex < 0) {
         newLayerIndex = 0;
     } else if (newLayerIndex >= layers.length) {
@@ -180,24 +203,26 @@ function getActiveLayer() {
 // saves the state of a layer to the history stack
 function saveLayerMark(layeridx) {
     var image = layers[layeridx].toDataURL("image/png");
-    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
-    history.push({operation: "canvasMark", layer: layeridx, url: image});
+    pushToHistory({operation: "canvasMark", layer: layeridx, url: image});
 }
 // saves the fact that layers[layerIdx] was removed and its state to the history stack
-function saveLayerRemove(layerIdx) {
+function saveLayerRemoved(layerIdx) {
     var image = layers[layeridx].toDataURL("image/png");
-    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
-    history.push({operation: "layerRemoved", layer: layeridx, url: image});
+    pushToHistory({operation: "layerRemoved", layer: layeridx, url: image});
 }
 // saves the fact that layers[layerIdx] was created to the history stack
 function saveLayerCreated(layerIdx) {
-    undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
-    history.push({operation: "layerCreated", layer: layeridx});
+    pushToHistory({operation: "layerCreated", layer: layeridx});
 }
 // saves the fact that a layer was moved to the history stack
-function saveLayerMove(oldLayerIdx, newLayerIdx) {
+function saveLayerMoved(oldLayerIdx, newLayerIdx) {
+    pushToHistory({operation: "layerMoved", oldIdx: oldLayerIdx, newIdx: newLayerIdx});
+}
+
+// Pushes the operation data to the history and clears the undo history
+function pushToHistory(operationData) {
     undoHistory = []; // undos get overriden when a layer is saved, you can't redo when you've edited a previous state
-    history.push({operation: "layerMoved", oldIdx: oldLayerIdx, newIdx: newLayerIdx});
+    history.push(operationData);
 }
 
 
@@ -223,8 +248,6 @@ function redo() {
     restoreLayerState(lastState);
 }
 
-
-
 // Calls the undo function on all the clients' canvases
 function callUndoAll() {
     undo();
@@ -237,7 +260,7 @@ function callUndoAll() {
 // restores the state of the canvas since the last modifying operation
 function undo() {
     if (history.length <= 1) {
-        alert("nothing left to undo.");
+        //alert("nothing left to undo.");
         return;
     }
     let lastState = history.pop();
@@ -288,7 +311,7 @@ function restoreLayerState(lastState) {
 // drawing functionality
 
 //variables
-let painting = false;
+let painting = false; //whether the user is currently painting
 let canvas;
 let ctx;
 
@@ -363,7 +386,7 @@ function draw(pencilData) {
 window.addEventListener("load", () => {
     layers[0] = document.querySelector("#canvas");
     setActiveLayer(0);
-    initilizeLayer(0);
+    initializeLayer(0);
 })
 // getMousePos Source: https://stackoverflow.com/a/17130415
 function  getMousePos(canvas, evt) {
@@ -391,23 +414,19 @@ function callSetBrushThicknessAll(size) {
         userId: networking.getUserId()
     };
     networking.sendMessage(JSON.stringify(message));
-
 }
 
 // Sets the brush thickness for the current user
-function setBrushThickness(size)
-{
+function setBrushThickness(size) {
     brush.size = Math.max(5, size);
     document.getElementById("line-thickness").innerHTML = brush.size;
 }
 
-function increaseBrushThickness(amt)
-{
+function increaseBrushThickness(amt) {
     callSetBrushThicknessAll(brush.size + amt);
 }
 
-function decreaseBrushThickness(amt)
-{
+function decreaseBrushThickness(amt) {
     increaseBrushThickness(-amt);
 }
 // sets the color of the brush on all canvas instances connected to the server
@@ -423,33 +442,9 @@ function callSetColorAll(color) {
 }
 
 // Sets the color of the brush for this canvas instance
-function setColor(color)
-{
+function setColor(color) {
     brush.color = color;
     eraser = false;
-}
-
-//This accesses a URL to generate a list of random words. todo: add other themes
-async function getWordList() {
-    const requestURL = 'https://api.datamuse.com/words?topics=nature&max=250';
-    const web = new Request(requestURL);
-    const response = await fetch(web);
-    words = await response.json();
-    let rn = Math.floor(Math.random() * words.length);
-    let word = words[rn].word;
-    document.getElementById('prompt').innerHTML = word;
-}
-
-//Generates a word
-function generateWord() {
-    if (words.length == 0) {
-        document.getElementById('prompt').innerHTML = 'Please start game first';
-    }
-    else {
-        let rn = Math.floor(Math.random() * words.length);
-        let word = words[rn].word;
-        document.getElementById('prompt').innerHTML = word;
-    }
 }
 
 // input management (todo: clean up and add gui input)
@@ -467,7 +462,6 @@ document.addEventListener('keydown', function(event) {
     {
         decreaseBrushThickness(5);
     }
-
     if (event.key == ']')
     {
         increaseBrushThickness(5);
@@ -479,9 +473,9 @@ document.addEventListener('keydown', function(event) {
     } if (event.altKey && event.key === 'n') {
         createLayerAll(activeLayerIndex);
     } if (event.key == 'ArrowUp') {
-        setActiveLayer(activeLayerIndex + 1);
+        callSetActiveLayerAll(activeLayerIndex + 1);
     } if (event.key == 'ArrowDown') {
-        setActiveLayer(activeLayerIndex - 1);
+        callSetActiveLayerAll(activeLayerIndex - 1);
     } if (event.key == 'Backspace') {
         removeLayerAll(activeLayerIndex);
     }
@@ -529,8 +523,7 @@ $("#tool-erase").on("click", function()
     eraser = true;
 });
 
-$("#start-game-button").on("click", getWordList);
-$("#end-turn-button").on("click", generateWord);
+
 $("#tool-undo").on("click", callUndoAll);
 $("#tool-redo").on("click", callRedoAll);
 $("#tool-increase-thickness").on("click", function()
