@@ -9,41 +9,49 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM Plex Sans">
         <link rel="stylesheet" href="./style.css?v=1" />
     </head>
-    <body>
-        <div id="overlay"></div>
-        <div id="tools">
-            <button class="tool-button" id="color-red"></button>
-            <button class="tool-button" id="color-orange"></button>
-            <button class="tool-button" id="color-yellow"></button>
-            <button class="tool-button" id="color-green"></button>
-            <button class="tool-button" id="color-blue"></button>
-            <button class="tool-button" id="color-purple"></button>
-            <button class="tool-button" id="color-black"></button>
-            <button class="tool-button" id="tool-erase"><i class="fa-solid fa-eraser fa-xl"></i></button>
-            <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-xl"></i></button>
-            <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-xl"></i></button>
-            <button class="tool-button" id="tool-increase-thickness">+</button>
-            <button class="tool-button" id="tool-decrease-thickness">-</button>
+    <body class="bckgrd">
+        <div class="app-layout">
+            <div id="left">
+                <div class="grid-box" id="players">
+
+                </div>
+            </div>
+            <div id="middle">
+                <div id="prompt-container">
+                    <p>
+                        Current Prompt: <span id="prompt">[insert prompt here]</span>
+                    </p>
+                </div>
+                <div id="layers">
+                    <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>
+                </div>
+                <div id="game-controls">
+                    <button class="game-button" id="start-game-button">Start Game</button>
+                    <button class="game-button"id="end-game-button">End Game</button>
+                    <button class="game-button" id="end-turn-button">End Turn</button>
+                </div>
+            </div>
+            <div id="right">
+                <div class="grid-box" id="tools">
+                    <button class="tool-button" id="color-red"></button>
+                    <button class="tool-button" id="color-orange"></button>
+                    <button class="tool-button" id="color-yellow"></button>
+                    <button class="tool-button" id="color-green"></button>
+                    <button class="tool-button" id="color-blue"></button>
+                    <button class="tool-button" id="color-purple"></button>
+                    <button class="tool-button" id="color-black"></button>
+                    <button class="tool-button" id="tool-erase"><i class="fa-solid fa-eraser fa-xl"></i></button>
+                    <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-xl"></i></button>
+                    <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-xl"></i></button>
+                    <div id="line-thickness-container">
+                        <button class="tool-button tool-small" id="tool-increase-thickness">+</button>
+                        <span id="line-thickness">0</span>
+                        <button class="tool-button tool-small" id="tool-decrease-thickness">-</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="layers">
-            <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>
-        </div>
-        <div id="prompt-container">
-            <p>
-                Current Prompt: <span id="prompt">[insert prompt here]</span>
-            </p>
-        </div>
-        <p id="selected-layer-indicator"></p>
-        <div id="line-thickness-container">
-            <p>
-                Line thickness: <span id="line-thickness">0</span>
-            </p>
-        </div>
-        <div id="game-controls">
-            <button class="game-button" id="start-game-button">Start Game</button>
-            <button class="game-button"id="end-game-button">End Game</button>
-            <button class="game-button" id="end-turn-button">End Turn</button>
-        </div>
+        <!--<p id="selected-layer-indicator"></p> -->
         <script type="module" src="canvas.js?v=1"></script>
         <script type="module" src="WordGenerator.js?v=1"></script>
 

@@ -116,11 +116,11 @@ function initializeLayer(layerIndex) {
     // Resizing. 
     // Note: HTML canvas resolution and css div resolution 
     // are technically 2 separate properties.
-    canvas.style.height = "80vh";
-    canvas.style.width = "90vh";
+    //canvas.style.height = "80vh";
+    //canvas.style.width = "90vh";
     canvas.height = 1024;
     canvas.width = 1024; // 4MB max per layer
-    canvas.style.position = "absolute";
+    //canvas.style.position = "absolute";
     saveLayerMark(layerIndex);
 }
 
@@ -188,7 +188,7 @@ function setActiveLayer(newLayerIndex) {
     }
     activeLayerIndex = newLayerIndex;
     let layerIndicator = document.getElementById("selected-layer-indicator");
-    layerIndicator.textContent = "Selected layer index: " + String(activeLayerIndex);
+    //layerIndicator.textContent = "Selected layer index: " + String(activeLayerIndex);
 
     //update the new active canvas
     canvas = layers[activeLayerIndex];
