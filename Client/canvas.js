@@ -551,3 +551,6 @@ $("#tool-decrease-thickness").on("click", function()
 
 
 setBrushThickness(brush.size);
+
+
+
