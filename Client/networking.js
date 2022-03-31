@@ -1,12 +1,24 @@
 export {networking};
 import {interpretCommand} from "./canvas.js";
+import { interpretGameControlCommand } from "./game-control.js";
 
 class NetworkingObject {
+    usersConnected;
+
     constructor() {
         // do nothing
     }
+    sendMessage(type, dataToSend)
+    {
+        let message = {
+            messageType: type,
+            data: dataToSend,
+            userId: networking.getUserId()
+        };
+        this.sendMessageJson(JSON.stringify(message));
+    }
     // sends a message to the server, which sends the message to all users
-    sendMessage(messageString){
+    sendMessageJson(messageString){
         //console.log("Sending message to server: " + messageString)
         ws.send(messageString);
     }
@@ -25,6 +37,7 @@ class NetworkingObject {
     // sets your user id
     setUserId(id) {
         userId = id;
+        console.log(id);
     }
 }
 
@@ -47,11 +60,12 @@ let userId = -1;
 ws.addEventListener("open", () => {
     console.log("We are connected!");
     // need to obtain user id here.
-    networking.sendMessage("connecting");
+    networking.sendMessageJson("connecting");
 });
 
 // User gets a message from the server
 ws.addEventListener("message", e => {
+    console.log("recieved message from server: " + e.data);
     let message;
     try {
         message = JSON.parse(e.data);
@@ -67,6 +81,8 @@ ws.addEventListener("message", e => {
             console.log(message.connectionMessage);
             networking.setUserId(message.userId);
             break;
+        case "gameControl":
+            interpretGameControlCommand(message);
         default:
             interpretCommand(message);
     }

@@ -79,7 +79,7 @@ function createLayerAll(layerBelowIndex) {
         data: {layerBelowIndex: layerBelowIndex},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 /* Layers */
 // creates a new layer above the layerBelow and sets it as the active layer
@@ -132,7 +132,7 @@ function removeLayerAll(layerIndex) {
         data: {layerIndex: layerIndex},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // removes the specified layer
 function removeLayer(layerIndex) {
@@ -152,7 +152,7 @@ function moveLayerAll(oldPosition, newPosition) {
         data: {oldPosition: oldPosition, newPosition: newPosition},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // Moves the layer to the newPosition
 function moveLayer(oldPosition, newPosition) {
@@ -173,7 +173,7 @@ function callSetActiveLayerAll(newLayerIndex) {
         data: {newPosition: newLayerIndex},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // Selects a layer for drawing on.
 function setActiveLayer(newLayerIndex) {
@@ -236,7 +236,7 @@ function callRedoAll() {
         messageType: "redo",
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 
 /* Canvas operations */
@@ -258,7 +258,7 @@ function callUndoAll() {
         messageType: "undo",
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // restores the state of the canvas since the last modifying operation
 function undo() {
@@ -315,6 +315,7 @@ function restoreLayerState(lastState) {
 
 //variables
 let painting = false; //whether the user is currently painting
+let drawingEnabled = true;
 let canvas;
 let ctx;
 
@@ -332,7 +333,7 @@ function callStartPositionAll(e) {
         data: pencilData,
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 function startPosition(pencilData) {
     painting = true;
@@ -344,7 +345,7 @@ function callFinishedPositionAll(e) {
         messageType: "finishedPosition",
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 
 // when you release the cursor 
@@ -363,11 +364,12 @@ function callDrawAll(e) {
         data: pencilData,
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // when the cursor moves, draw a line to the specified point if we are drawing
 function draw(pencilData) {
     if (!painting) return; // don't do anything if we aren't drawing
+    if (!drawingEnabled) return; //don't allow drawing if its not enabled.
 
     ctx.lineWidth = brush.size * (pencilData.pressure * 2);
     ctx.lineCap = "round";
@@ -411,7 +413,7 @@ function callSetEraserAll(useEraser) {
         data: {useEraser: useEraser},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 // enables or disables eraser
 function toggleEraser() {
@@ -427,7 +429,7 @@ function callSetBrushThicknessAll(size) {
         data: {size: size},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 
 // Sets the brush thickness for the current user
@@ -452,7 +454,7 @@ function callSetColorAll(color) {
         data: {color: color},
         userId: networking.getUserId()
     };
-    networking.sendMessage(JSON.stringify(message));
+    networking.sendMessageJson(JSON.stringify(message));
 }
 
 // Sets the color of the brush for this canvas instance
