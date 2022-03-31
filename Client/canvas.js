@@ -51,6 +51,9 @@ export function interpretCommand(message) {
         case "setActiveLayer":
             setActiveLayer(message.data.layer);
             break;
+        case "eraser":
+            eraser = message.data.useEraser;
+            break;
         case "createLayer":
             setActiveLayer(message.data.layerBelowIndex);
             createLayer(getActiveLayer());
@@ -167,7 +170,7 @@ function callSetActiveLayerAll(newLayerIndex) {
     setActiveLayer(newLayerIndex)
     let message = {
         messageType: "setActiveLayer",
-        data: {oldPosition: oldPosition, newPosition: newPosition},
+        data: {newPosition: newLayerIndex},
         userId: networking.getUserId()
     };
     networking.sendMessage(JSON.stringify(message));
@@ -206,12 +209,12 @@ function saveLayerMark(layeridx) {
     pushToHistory({operation: "canvasMark", layer: layeridx, url: image});
 }
 // saves the fact that layers[layerIdx] was removed and its state to the history stack
-function saveLayerRemoved(layerIdx) {
+function saveLayerRemoved(layeridx) {
     var image = layers[layeridx].toDataURL("image/png");
     pushToHistory({operation: "layerRemoved", layer: layeridx, url: image});
 }
 // saves the fact that layers[layerIdx] was created to the history stack
-function saveLayerCreated(layerIdx) {
+function saveLayerCreated(layeridx) {
     pushToHistory({operation: "layerCreated", layer: layeridx});
 }
 // saves the fact that a layer was moved to the history stack
@@ -240,7 +243,7 @@ function callRedoAll() {
 // undos the last undo
 function redo() {
     if (undoHistory.length === 0) {
-        alert("nothing left to be redone");
+        //alert("nothing left to be redone");
         return;
     }
     let lastState = undoHistory.pop();
@@ -399,9 +402,20 @@ function  getMousePos(canvas, evt) {
       y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
     }
   }
+
+// Sets the using eraser value for all users
+function callSetEraserAll(useEraser) {
+    eraser = useEraser;
+    let message = {
+        messageType: "eraser",
+        data: {useEraser: useEraser},
+        userId: networking.getUserId()
+    };
+    networking.sendMessage(JSON.stringify(message));
+}
 // enables or disables eraser
 function toggleEraser() {
-    eraser = !eraser;
+    callSetEraserAll(!eraser);
 }
 
 
@@ -444,7 +458,7 @@ function callSetColorAll(color) {
 // Sets the color of the brush for this canvas instance
 function setColor(color) {
     brush.color = color;
-    eraser = false;
+    callSetEraserAll(false);
 }
 
 // input management (todo: clean up and add gui input)
@@ -520,7 +534,7 @@ $("#color-black").on("click", function()
 
 $("#tool-erase").on("click", function()
 {
-    eraser = true;
+    callSetEraserAll(true);
 });
 
 
