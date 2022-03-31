@@ -1,7 +1,6 @@
 body {
-    background-color:rgb(148, 148, 148);
+    background-color:rgb(148, 148, 148, 1);
     background-image: url('Images/crumpled-paper.jpg');
-    display: flex;
     justify-content: space-between;
     font-family: "IBM Plex Sans", sans-serif;
 
@@ -10,25 +9,29 @@ body {
     height: 100vh;
     /* overflow: hidden; */
 }
+.app-layout {
+    display:grid;
+    background-color: rgba(131, 130, 130, 0.147);
+    height:100vh;
+    grid-template-columns: 1fr 3fr 1fr;
+}
 
-#overlay {
-    background-color: rgba(224, 224, 224, 0.3);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.grid-box {
+
+    background-color: white;
+    border-radius: 12px;
+}
+#players {
+    height: 500px;
+    width: 200px;
 }
 
 #tools
 {
-    position: absolute;
-    background-color: white;
     height: 700px;
     width: 100px;
     right: 0;
     top: 100px;
-    border-radius: 12px;
     margin-right: 20px;
     padding-top: 50px;
 }
@@ -89,9 +92,17 @@ body {
     background-color: #00000000;
     cursor: pointer;
 }
-
 .tool-button:hover {
     background-color: #0000000a;
+}
+.tool-small {
+    height: 25px;
+    width: 25px;
+    margin: 0px;
+}
+
+#line-thickness-container {
+    margin-left: 15px;
 }
 
 
@@ -99,8 +110,9 @@ canvas {
     top: 100;
     bottom: 0;
     left: 0;
+    height: 90vh;
+    width: 80vh;
     touch-action: none;
-    position: absolute;
     border: black solid 3px;
 }
 
