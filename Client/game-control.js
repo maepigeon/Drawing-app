@@ -4,6 +4,8 @@ import {getWordList} from "./WordGenerator.js";
 import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 
+let game;
+
 export function interpretGameControlCommand(message)
 {
     let eventType = message.data.event;
@@ -12,30 +14,40 @@ export function interpretGameControlCommand(message)
     {
         case "gameStart":
             console.log("game start recieved!");
+            intializeGame();
             game.onGameStart();
             break;
     }
 }
 
+function intializeGame(numPlayers)
+{
+    game = new GameManager(networking.usersConnected)
+}
 
-let game = new GameManager(1, 5);
-game.onGameStart = function()
+function onGameStart()
 {
     console.log("game start");
     getWordList();
 }
-game.onGameEnd = function()
+
+function onGameEnd()
 {
     console.log("game end")
+    
 }
-game.onTurnEnd = function()
+
+function onTurnEnd()
 {
     console.log("turn end");
     generateWord();
+
 }
-game.onTurnStart = function()
+
+function onTurnStart()
 {
     console.log("turn start");
+
 }
 
 $ (function ()
