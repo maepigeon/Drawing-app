@@ -73,6 +73,18 @@ function onTurnStart(turn)
 
 }
 
+function initiateGameForAll()
+{
+    networking.sendMessage(
+        "gameControl", 
+        {
+            "event": "gameStart", 
+            "turnsPerPlayer": 3
+        }
+    );
+    // game.onGameStart();
+}
+
 $ (function ()
 {
     
@@ -82,18 +94,11 @@ $ (function ()
     //TODO: make turns per player specified by the players in the game
     $("#start-game-button").on("click", () => {
         console.log("clicked game start");
-        networking.sendMessage(
-            "gameControl", 
-            {
-                "event": "gameStart", 
-                "turnsPerPlayer":3
-            }
-        );
-        // game.onGameStart();
+        initiateGameForAll();
     });
     $("#new-game-button").on("click", () => {
         console.log("clicked new game");
-        networking.sendMessage("gameControl", {"event": "gameStart"});
+        initiateGameForAll();
     });
     $("#end-turn-button").on("click", () => {
         networking.sendMessage("gameControl", {"event": "turnEnd"});
