@@ -13,7 +13,7 @@ function interpretGameControlCommand(message)
     switch (eventType)
     {
         case "gameStart":
-            initializeGame();
+            initializeGame(message.data.turnsPerPlayer);
             gameManager.startGame();
             break;
         // case "turnStart":
@@ -26,10 +26,10 @@ function interpretGameControlCommand(message)
 }
 
 
-function initializeGame()
+function initializeGame(turnsPerPlayer)
 {
     server = require("./index.js");
-    gameManager = new GameManager(server.connected_client_sockets.length, 3);
+    gameManager = new GameManager(server.connected_client_sockets.length, turnsPerPlayer);
     gameManager.onGameStart = () => startGame();
     gameManager.onTurnStart = () => startTurn();
     gameManager.onTurnEnd = () => endTurn();

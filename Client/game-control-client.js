@@ -38,6 +38,7 @@ function onGameEnd()
     console.log("game end")
     setDrawingEnabled(false);
     $("#new-game-button").removeClass("hidden");
+    $("#title").text("Game over!");
 
 }
 
@@ -57,9 +58,15 @@ function onTurnStart(turn)
         getWordList();
         setDrawingEnabled(true);
         $("#end-turn-button").removeClass("hidden");
+        $("#prompt-container").removeClass("hidden");
+
+        $("#title").text("It's your turn to draw!");
+
     }
     else
     {
+        $("#title").text("It's Player " + (turn + 1) + "'s turn to draw!");
+        $("#prompt-container").addClass("hidden");
         console.log("It's not my turn!");
         setDrawingEnabled(false);
     }
@@ -71,9 +78,17 @@ $ (function ()
     
 
     // $("#start-game-button").on("click", getWordList);
+    //for now, turns per player is hardcoded to 3
+    //TODO: make turns per player specified by the players in the game
     $("#start-game-button").on("click", () => {
         console.log("clicked game start");
-        networking.sendMessage("gameControl", {"event": "gameStart"});
+        networking.sendMessage(
+            "gameControl", 
+            {
+                "event": "gameStart", 
+                "turnsPerPlayer":3
+            }
+        );
         // game.onGameStart();
     });
     $("#new-game-button").on("click", () => {
