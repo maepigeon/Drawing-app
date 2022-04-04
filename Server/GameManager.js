@@ -1,18 +1,16 @@
-export {GameManager};
-
 class GameManager
 {
-    numTurnsPerPlayer;
-    numTurns;
-    currentTurn = -1;
-    numPlayers;
-    currentPlayer = -1;
-
-    onGameStart;
-    onGameEnd;
-    onTurnStart;
-    onTurnEnd;
-
+    // numTurnsPerPlayer = 0;
+    // numTurns = 0;
+    // currentTurn = -1;
+    // numPlayers;
+    // currentPlayer = -1;
+    
+    // onGameStart;
+    // onGameEnd;
+    // onTurnStart;
+    // onTurnEnd;
+    
     constructor(players, turnsPerPlayer)
     {
         this.initializeGame(players, turnsPerPlayer);
@@ -24,18 +22,18 @@ class GameManager
         this.numPlayers = players;
         this.numTurns = turnsPerPlayer * players;
     }
-
+    
     startGame()
     {
         this.currentTurn = 1;
         this.currentPlayer = 1;
         this.onGameStart();
     }
-
+    
     nextTurn()
     {
         this.currentTurn++;
-
+        
         if (this.currentTurn == this.numTurns)
         {
             this.endGame();
@@ -46,17 +44,17 @@ class GameManager
             this.startTurn(this.currentPlayer);
         }
     }
-
+    
     endGame()
     {
         this.onGameEnd();
     }
-
+    
     startTurn(player)
     {
         this.onTurnStart();
     }
-
+    
     endTurn()
     {
         this.onTurnEnd();

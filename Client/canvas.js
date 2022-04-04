@@ -70,7 +70,11 @@ export function interpretCommand(message) {
             break;
     }
 }
- 
+
+export function clearCanvas() {
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+}
+
 // Creates a layer on top of the specified layer for all users.
 function createLayerAll(layerBelowIndex) {
     createLayer(layerBelowIndex);
@@ -319,6 +323,22 @@ let drawingEnabled = true;
 let canvas;
 let ctx;
 
+export function setDrawingEnabled(enabled)
+{
+    drawingEnabled = enabled;
+    if (enabled)
+    {
+        $("#canvas").addClass("enabled");
+        $("#canvas").removeClass("disabled");
+        
+    }
+    else
+    {
+        $("#canvas").removeClass("enabled");
+        $("#canvas").addClass("disabled");
+    }
+}
+
 // Returns an object {position: {x, y}, pressure} from the event
 function getPencilData(e) {
     return {position: getMousePos(canvas, e), pressure: e.pressure}
@@ -326,6 +346,7 @@ function getPencilData(e) {
 
 // when you press down the cursor
 function callStartPositionAll(e) {
+    if (!drawingEnabled) return;
     let pencilData = getPencilData(e);
     startPosition(pencilData);
     let message = {
@@ -340,6 +361,7 @@ function startPosition(pencilData) {
     draw(pencilData);
 }
 function callFinishedPositionAll(e) {
+    if (!drawingEnabled) return;
     finishedPosition();
     let message = {
         messageType: "finishedPosition",
@@ -357,6 +379,7 @@ function finishedPosition() {
 
 // draw on everyone's canvases
 function callDrawAll(e) {
+    if (!drawingEnabled) return; //don't allow drawing if its not enabled.
     let pencilData = getPencilData(e);
     draw(pencilData);
     let message = {
@@ -369,7 +392,6 @@ function callDrawAll(e) {
 // when the cursor moves, draw a line to the specified point if we are drawing
 function draw(pencilData) {
     if (!painting) return; // don't do anything if we aren't drawing
-    if (!drawingEnabled) return; //don't allow drawing if its not enabled.
 
     ctx.lineWidth = brush.size * (pencilData.pressure * 2);
     ctx.lineCap = "round";

@@ -26,12 +26,13 @@
                     </p>
                 </div>
                 <div id="layers">
-                    <canvas id="canvas" style="background-color:white; z-index: 0;"></canvas>
+                    <canvas id="canvas" class="enabled" style="background-color:white; z-index: 0;"></canvas>
                 </div>
                 <div id="game-controls">
                     <button class="game-button" id="start-game-button">Start Game</button>
-                    <button class="game-button"id="end-game-button">End Game</button>
-                    <button class="game-button" id="end-turn-button">End Turn</button>
+                    <button class="game-button hidden" id="new-game-button">New Game</button>
+                    <button class="game-button hidden"id="end-game-button">End Game</button>
+                    <button class="game-button hidden" id="end-turn-button">End Turn</button>
                 </div>
             </div>
             <div id="right">
@@ -57,7 +58,7 @@
         <!--<p id="selected-layer-indicator"></p> -->
         <script type="module" src="canvas.js"></script>
         <script type="module" src="WordGenerator.js?v=1"></script>
-        <script type="module" src="game-control.js"></script>
+        <script type="module" src="game-control-client.js"></script>
 
 
     </body>

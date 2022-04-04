@@ -1,6 +1,6 @@
 export {networking};
 import {interpretCommand} from "./canvas.js";
-import { interpretGameControlCommand } from "./game-control.js";
+import { interpretGameControlCommand } from "./game-control-client.js";
 
 class NetworkingObject {
     usersConnected;
@@ -37,7 +37,6 @@ class NetworkingObject {
     // sets your user id
     setUserId(id) {
         userId = id;
-        console.log(id);
     }
 }
 
@@ -60,12 +59,13 @@ let userId = -1;
 ws.addEventListener("open", () => {
     console.log("We are connected!");
     // need to obtain user id here.
-    networking.sendMessageJson("connecting");
+    networking.sendMessage("connecting");
+    // networking.sendMessageJson("connecting");
 });
 
 // User gets a message from the server
 ws.addEventListener("message", e => {
-    console.log("recieved message from server: " + e.data);
+    // console.log("recieved message from server: " + e.data);
     let message;
     try {
         message = JSON.parse(e.data);
@@ -77,13 +77,16 @@ ws.addEventListener("message", e => {
     switch (message.messageType) {
         case "userConnectedMessage":
             console.log(message.connectionMessage)
+            break;
         case "connectionConfirmation":
             console.log(message.connectionMessage);
             networking.setUserId(message.userId);
             break;
         case "gameControl":
             interpretGameControlCommand(message);
+            break;
         default:
             interpretCommand(message);
+            break;
     }
 });

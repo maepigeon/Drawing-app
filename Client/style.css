@@ -112,8 +112,21 @@ canvas {
     height: 80vh;
     width: 95vh;
     touch-action: none;
-    border: black solid 3px;
+    border: black solid 10px;
 }
+
+canvas.enabled {
+    border-color: green;
+}
+
+canvas.disabled {
+    border-color: red;
+}
+
+.hidden {
+    display: none;
+}
+
 
 .game-button {
     background-color: white;
@@ -143,4 +156,3 @@ canvas {
 .icon-button {
     font-size: 1.5em;
 }
-
