@@ -12,18 +12,20 @@
     <body class="bckgrd">
         <div class="app-layout">
             <div id="left">
+                <h3 class="label grid-box" style="margin-top: 0px;">Players</h3>
                 <div class="grid-box" id="players">
 
                 </div>
+                <h3 class="label grid-box">Story</h3>
                 <div class="grid-box" id="story-box">
 
                 </div>
             </div>
             <div id="middle" style="align-self: stretch;">
                 <div id="title-container">
-                    <h1 id="title">
+                    <h2 id="title">
                         No active game. Click Start Game to begin a game.
-                    </h1>
+                    </h2>
                 </div>
                 <div id="prompt-container">
                     <p>
@@ -53,9 +55,9 @@
                     <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-xl"></i></button>
                     <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-xl"></i></button>
                     <div id="line-thickness-container">
-                        <button class="tool-button tool-small" id="tool-increase-thickness">+</button>
-                        <span id="line-thickness">0</span>
                         <button class="tool-button tool-small" id="tool-decrease-thickness">-</button>
+                        <span id="line-thickness">0</span>
+                        <button class="tool-button tool-small" id="tool-increase-thickness">+</button>
                     </div>
                 </div>
             </div>

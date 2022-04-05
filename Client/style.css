@@ -23,6 +23,12 @@ body {
     background-color: white;
     border-radius: 12px;
 }
+.label {
+    width:50%;
+    line-height: 3rem;
+}
+
+
 #players {
     height: 320px;
     width: 220px;
