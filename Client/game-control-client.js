@@ -31,6 +31,7 @@ function onGameStart()
     $("#start-game-button").addClass("hidden");
     $("#new-game-button").addClass("hidden");
     clearCanvas();
+    getWordList();
 }
 
 function onGameEnd()
@@ -51,11 +52,10 @@ function onGameEnd()
 
 function onTurnStart(turn)
 {
-    
+    generateWord();
     if (turn == networking.getUserId())
     {
         console.log("My turn!");
-        getWordList();
         setDrawingEnabled(true);
         $("#end-turn-button").removeClass("hidden");
         $("#prompt-container").removeClass("hidden");
