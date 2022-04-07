@@ -3,6 +3,7 @@ import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
+import { resetStory, setStoryWritingEnabled } from "./story-control-client.js";
 
 
 export function interpretGameControlCommand(message)
@@ -31,6 +32,7 @@ function onGameStart()
     $("#start-game-button").addClass("hidden");
     $("#new-game-button").addClass("hidden");
     clearCanvas();
+    resetStory();
     getWordList();
 }
 
@@ -62,6 +64,7 @@ function onTurnStart(turn)
         $("#tools").removeClass("hidden");
         $("#rating").addClass("hidden");
         $("#title").text("It's your turn to draw!");
+        setStoryWritingEnabled(false);
 
     }
     else
@@ -72,6 +75,7 @@ function onTurnStart(turn)
         $("#rating").removeClass("hidden");
         console.log("It's not my turn!");
         setDrawingEnabled(false);
+        setStoryWritingEnabled(true);
     }
 
 }
