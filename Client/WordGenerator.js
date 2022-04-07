@@ -20,7 +20,7 @@ function generateWord() {
     }
     else {
         let rn = Math.floor(Math.random() * words.length);
-        let word = words[rn].word;
+        let word = words[rn];
         document.getElementById('prompt').innerHTML = word;
     }
 }
