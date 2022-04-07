@@ -38,13 +38,18 @@ body {
     width: 20vw;
 }
 
-#tools
+.tool-box
 {
     height: 700px;
     width: 150px;
     right: 0;
     top: 100px;
+}
+#tools {
     padding-top: 50px;
+}
+#rating {
+    padding-top: 30px;
 }
 
 #game-controls
@@ -109,13 +114,27 @@ body {
     width: 25px;
 }
 
+.rating-button{
+    border-radius: 50%;
+    height: 75px;
+    width:75px;
+    border:none;
+    cursor:pointer;
+    background-color: #c4c4c4;
+    margin-top: 25px;
+    margin-bottom:25px;
+}
+.rating-button:hover {
+    background-color: #c4c4c4b1;
+}
+
 
 
 canvas {
     top: 100;
     bottom: 0;
     left: 0;
-    height: 80vh;
+    height: 75vh;
     width: 95vh;
     touch-action: none;
     border: black solid 10px;
@@ -138,7 +157,9 @@ canvas.disabled {
     background-color: white;
     border: none;
     border-radius: 12px;
-    height: 30px;
+    padding: 5px;
+    margin-top: 1rem;
+    font-size: 2.5vh;
     font-family: 'IBM Plex Sans', sans-serif;
 }
 .game-button:hover {
