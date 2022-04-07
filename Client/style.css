@@ -123,15 +123,15 @@ canvas {
     height: 80vh;
     width: 95vh;
     touch-action: none;
-    border: black solid 10px;
+    outline: black solid 10px;
 }
 
 canvas.enabled {
-    border-color: green;
+    outline-color: green;
 }
 
 canvas.disabled {
-    border-color: red;
+    outline-color: red;
 }
 
 .hidden {
