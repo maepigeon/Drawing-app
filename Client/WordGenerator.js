@@ -6,12 +6,10 @@ let words = [];
 
 //This accesses a URL to generate a list of random words. todo: add other themes
 async function getWordList() {
-    const requestURL = 'https://api.datamuse.com/words?topics=nature&max=250';
-    const web = new Request(requestURL);
-    const response = await fetch(web);
+    const response = await fetch("./themed-words/natureandanimals.json");
     words = await response.json();
     let rn = Math.floor(Math.random() * words.length);
-    let word = words[rn].word;
+    let word = words[rn];
     document.getElementById('prompt').innerHTML = word;
 }
 
@@ -27,5 +25,5 @@ function generateWord() {
     }
 }
 
-// $("#start-game-button").on("click", getWordList);
+$("#start-game-button").on("click", getWordList);
 // $("#end-turn-button").on("click", generateWord);
