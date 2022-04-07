@@ -1,6 +1,7 @@
 export {networking};
 import {interpretCommand} from "./canvas.js";
 import { interpretGameControlCommand } from "./game-control-client.js";
+import { interpretStoryControlCommand } from "./story-control-client.js";
 
 class NetworkingObject {
     usersConnected;
@@ -84,6 +85,9 @@ ws.addEventListener("message", e => {
             break;
         case "gameControl":
             interpretGameControlCommand(message);
+            break;
+        case "storyControl":
+            interpretStoryControlCommand(message);
             break;
         default:
             interpretCommand(message);

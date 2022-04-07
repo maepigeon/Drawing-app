@@ -1,5 +1,7 @@
-const gameControl = require("./game-control-server");
+const gameControl = require("./game-control-server.js");
 gameControl.initServer();
+const storyControl = require("./story-control-server.js");
+storyControl.storyInitServer();
 
 const http = require('http');
 const WebSocket = require("ws");
@@ -100,6 +102,9 @@ wss.on("connection", ws => {
                 break;
             case "gameControl":
                 gameControl.interpretGameControlCommand(data);
+                break;
+            case "storyControl":
+                storyControl.interpretStoryControlCommand(data);
                 break;
             default:
                 send_data_to_all_clients(data);
