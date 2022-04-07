@@ -495,6 +495,10 @@ document.addEventListener('keydown', function(event) {
         callSetColorAll("blue");
     } if (event.key == 'e') {
         toggleEraser();
+    } if (event.key == '-') {
+        showPage("enterName")
+    } if (event.key == '=') {
+        showPage("drawingMode");
     } 
     if (event.key == '[')
     {
@@ -573,11 +577,15 @@ $("#tool-decrease-thickness").on("click", function()
     decreaseBrushThickness(5);
 });
 
-function enterNamePopup() {
+function createEnterNamePopup() {
+    if (document.getElementById("enterNameBox")) {
+        return;
+    }
     var div = document.createElement('div');
+    div.id = "enterNameBox";
     let htmlText =
         '<br><br><br>' +
-        '<form id="enterNameBox">' +
+        '<form">' +
             '<label for="enterName">Type your name: </label>' +
             '<input type="text" id="enterName" name="playerName"><br>' +
             '<button type="button">Submit</button>'
@@ -585,16 +593,39 @@ function enterNamePopup() {
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
 }
-//enterNamePopup();
-//showCanvasFeatures(false);
+function deleteEnterNamePopup() {
+    document.getElementById("enterNameBox").remove();
+}
+
+
+// shows the relevant page: [drawingMode, enterName]
+function showPage(pageName) {
+    switch (pageName) {
+        case "enterName":
+            createEnterNamePopup();
+            showCanvasFeatures(false);
+            break;
+        case "drawingMode":
+        default:
+            showCanvasFeatures(true);
+            try {
+                deleteEnterNamePopup();
+            } catch (e) {
+                // do nothing
+            }
+
+            break;
+    }
+}
+showPage("drawingMode");
 
 
 // Hide the canvas
 function showCanvasFeatures(visible) {
-    document.getElementById("layers").style.display = visible ? "default" : "none";
-    document.getElementById("story-container").style.display = visible ? "default" : "none";
-    document.getElementById("tools").style.display = visible ? "default" : "none";
-    document.getElementById("prompt-container").style.display = visible ? "default" : "none";
+    document.getElementById("layers").style.display = visible ? "block" : "none";
+    document.getElementById("story-container").style.display = visible ? "block" : "none";
+    document.getElementById("tools").style.display = visible ? "block" : "none";
+    document.getElementById("prompt-container").style.display = visible ? "block" : "none";
 }
 
 
