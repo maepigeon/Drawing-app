@@ -573,6 +573,30 @@ $("#tool-decrease-thickness").on("click", function()
     decreaseBrushThickness(5);
 });
 
+function enterNamePopup() {
+    var div = document.createElement('div');
+    let htmlText =
+        '<br><br><br>' +
+        '<form id="enterNameBox">' +
+            '<label for="enterName">Type your name: </label>' +
+            '<input type="text" id="enterName" name="playerName"><br>' +
+            '<button type="button">Submit</button>'
+        '</form>'
+    div.innerHTML = htmlText.trim();
+    document.getElementById('middle').append(div);
+}
+//enterNamePopup();
+//showCanvasFeatures(false);
+
+
+// Hide the canvas
+function showCanvasFeatures(visible) {
+    document.getElementById("layers").style.display = visible ? "default" : "none";
+    document.getElementById("story-container").style.display = visible ? "default" : "none";
+    document.getElementById("tools").style.display = visible ? "default" : "none";
+    document.getElementById("prompt-container").style.display = visible ? "default" : "none";
+}
+
 
 setBrushThickness(brush.size);
 
