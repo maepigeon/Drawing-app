@@ -38,6 +38,11 @@ body {
     width: 20vw;
 }
 
+#story-input-container {
+    height: 400px;
+    width: 20vw;
+}
+
 #tools
 {
     height: 700px;
