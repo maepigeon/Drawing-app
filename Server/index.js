@@ -1,7 +1,5 @@
 const gameControl = require("./game-control-server.js");
-gameControl.initServer();
 const storyControl = require("./story-control-server.js");
-storyControl.storyInitServer();
 
 const http = require('http');
 const WebSocket = require("ws");

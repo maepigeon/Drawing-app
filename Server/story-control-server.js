@@ -1,7 +1,7 @@
 let server;
 let story = "";
 
-function storyInitServer()
+function initialize()
 {
     server = require("./index.js");
 }
@@ -24,7 +24,7 @@ function interpretStoryControlCommand(message)
 
 function addToStory(addition)
 {
-    server = require("./index.js");
+    initialize();
     console.log("adding: " + addition);
     story += addition;
     sendStoryUpdate();
@@ -32,6 +32,7 @@ function addToStory(addition)
 
 function resetStory()
 {
+    initialize();
     story = "";
     sendStoryUpdate();
 }
@@ -48,6 +49,5 @@ function sendStoryUpdate()
 }
 
 module.exports = {
-    interpretStoryControlCommand,
-    storyInitServer
+    interpretStoryControlCommand
 };

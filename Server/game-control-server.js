@@ -1,11 +1,6 @@
 let server;
 let gameManager;
 
-function initServer()
-{
-    server = require("./index.js");
-}
-
 function interpretGameControlCommand(message)
 {
     let eventType = message.data.event;
@@ -161,6 +156,5 @@ class GameManager
 }
 
 module.exports = {
-    interpretGameControlCommand,
-    initServer
+    interpretGameControlCommand
 };
