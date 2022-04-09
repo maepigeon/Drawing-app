@@ -4,7 +4,9 @@ import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 import { resetStory, setStoryWritingEnabled } from "./story-control-client.js";
+import { ClientGameState } from "./client-game-state.js";
 
+let currentPlayerTurn = 0;
 
 export function interpretGameControlCommand(message)
 {
@@ -14,17 +16,37 @@ export function interpretGameControlCommand(message)
     {
         case "gameStart":
             console.log("Game starting!");
+            // ClientGameState.updateGameState(ClientGameState.PlayerTurn);
             onGameStart();
             break;
         case "turnStart":
             console.log("Turn starting! It's player " + message.playerTurn + "'s turn");
-            onTurnStart(message.playerTurn);
+            currentPlayerTurn = message.playerTurn;
+            // onTurnStart(message.playerTurn);
             break;
         case "gameEnd":
-            onGameEnd();
+            // onGameEnd();
             break;
     }
 }
+
+addEventListener(ClientGameState.OnGameStateChanged, (e) =>
+{
+    console.log("game state changed");
+    switch (ClientGameState.currentGameState) {
+        case ClientGameState.PlayerTurn:
+            onMyTurn(currentPlayerTurn);
+            break;
+        case ClientGameState.OtherPlayerTurn:
+            onOtherPlayerTurn(currentPlayerTurn);
+            break;
+        case ClientGameState.GameOver:
+            onGameEnd();
+            break;
+        default:
+            break;
+    }
+});
 
 function onGameStart()
 {
@@ -57,26 +79,38 @@ function onTurnStart(turn)
     generateWord();
     if (turn == networking.getUserId())
     {
-        console.log("My turn!");
-        setDrawingEnabled(true);
-        $("#end-turn-button").removeClass("hidden");
-        $("#prompt-container").removeClass("hidden");
-        $("#tools").removeClass("hidden");
-        $("#rating").addClass("hidden");
-        $("#title").text("It's your turn to draw!");
-        setStoryWritingEnabled(false);
-
+        onMyTurn(turn);
     }
     else
     {
-        $("#title").text("It's Player " + (turn + 1) + "'s turn to draw!");
-        $("#prompt-container").addClass("hidden");
-        $("#tools").addClass("hidden");
-        $("#rating").removeClass("hidden");
-        console.log("It's not my turn!");
-        setDrawingEnabled(false);
-        setStoryWritingEnabled(true);
+        onOtherPlayerTurn(turn);
     }
+
+}
+
+function onMyTurn(playerId)
+{
+    console.log("My turn!");
+    setDrawingEnabled(true);
+    $("#end-turn-button").removeClass("hidden");
+    $("#prompt-container").removeClass("hidden");
+    $("#tools").removeClass("hidden");
+    $("#rating").addClass("hidden");
+    $("#title").text("It's your turn to draw!");
+    setStoryWritingEnabled(false);
+    ClientGameState.currentGameState = ClientGameState.onMyTurn;
+}
+
+function onOtherPlayerTurn(playerId)
+{
+    $("#title").text("It's Player " + (playerId + 1) + "'s turn to draw!");
+    $("#prompt-container").addClass("hidden");
+    $("#tools").addClass("hidden");
+    $("#rating").removeClass("hidden");
+    console.log("It's not my turn!");
+    setDrawingEnabled(false);
+    setStoryWritingEnabled(true);
+    ClientGameState.currentGameState = ClientGameState.onOtherPlayerTurn;
 
 }
 

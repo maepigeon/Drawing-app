@@ -1,5 +1,6 @@
 export {networking};
 import {interpretCommand} from "./canvas.js";
+import { interpretGameStateCommand } from "./client-game-state.js";
 import { interpretGameControlCommand } from "./game-control-client.js";
 import { interpretStoryControlCommand } from "./story-control-client.js";
 
@@ -88,6 +89,9 @@ ws.addEventListener("message", e => {
             break;
         case "storyControl":
             interpretStoryControlCommand(message);
+            break;
+        case "gameState":
+            interpretGameStateCommand(message);
             break;
         default:
             interpretCommand(message);

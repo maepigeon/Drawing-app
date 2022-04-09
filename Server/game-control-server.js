@@ -40,6 +40,12 @@ function startGame()
             "eventType":"gameStart",
         }
     );
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameState",
+            "gameState":"gameStart",
+        }
+    );
 }
 
 function startTurn()
@@ -53,6 +59,12 @@ function startTurn()
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
         }
     );
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameState",
+            "gameState":"turnStart",
+        }
+    );
 }
 
 function endTurn()
@@ -64,6 +76,12 @@ function endTurn()
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
         }
     );
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameState",
+            "gameState":"turnEnd",
+        }
+    );
     gameManager.nextTurn();
 }
 
@@ -73,6 +91,12 @@ function endGame()
         {
             "messageType":"gameControl",
             "eventType":"gameEnd"
+        }
+    );
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameState",
+            "gameState":"gameEnd",
         }
     );
 }
