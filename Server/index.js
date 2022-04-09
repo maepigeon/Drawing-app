@@ -99,10 +99,10 @@ wss.on("connection", ws => {
                 send_data_to_all_clients(message);
                 break;
             case "gameControl":
-                gameControl.interpretGameControlCommand(data);
+                gameControl.interpretGameControlCommand(get_socket_id(ws), data);
                 break;
             case "storyControl":
-                storyControl.interpretStoryControlCommand(data);
+                storyControl.interpretStoryControlCommand(get_socket_id(ws), data);
                 break;
             default:
                 send_data_to_all_clients(data);

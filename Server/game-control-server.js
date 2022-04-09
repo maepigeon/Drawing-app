@@ -1,7 +1,7 @@
 let server;
 let gameManager;
 
-function interpretGameControlCommand(message)
+function interpretGameControlCommand(player, message)
 {
     let eventType = message.data.event;
     console.log("interpreting game event: " + eventType);
@@ -15,7 +15,7 @@ function interpretGameControlCommand(message)
         //     gameManager.startTurn();
         //     break;
         case "turnEnd":
-            gameManager.endTurn();
+            gameManager.endTurnDrawing();
             break;
     }
 }
@@ -26,8 +26,8 @@ function initializeGame(turnsPerPlayer)
     server = require("./index.js");
     gameManager = new GameManager(server.connected_client_sockets.length, turnsPerPlayer);
     gameManager.onGameStart = () => startGame();
-    gameManager.onTurnStart = () => startTurn();
-    gameManager.onTurnEnd = () => endTurn();
+    gameManager.onTurnDrawingStart = () => startTurn();
+    gameManager.onTurnDrawingEnd = () => endTurn();
     gameManager.onGameEnd = () => endGame();
 }
 
@@ -64,6 +64,8 @@ function endTurn()
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
         }
     );
+    let story = require("./story-control-server.js");
+    story.addMostVotedAdditionToStory();
     gameManager.nextTurn();
 }
 
@@ -79,24 +81,6 @@ function endGame()
 
 class GameManager
 {
-    // numTurnsPerPlayer = 0;
-    // numTurns = 0;
-    // currentTurn = -1;
-    // numPlayers;
-    // currentPlayer = -1;
-    
-    // onGameStart()
-    // {
-    // }
-    // onGameEnd()
-    // {
-    // }
-    // onTurnStart()
-    // {
-    // }
-    // onTurnEnd()
-    // {
-    // }
     
     constructor(players, turnsPerPlayer)
     {
@@ -112,8 +96,8 @@ class GameManager
         this.currentPlayer = 0;
         this.onGameStart = () => {};
         this.onGameEnd = () => {};
-        this.onTurnStart = () => {};
-        this.onTurnEnd = () => {};
+        this.onTurnDrawingStart = () => {};
+        this.onTurnDrawingEnd = () => {};
     }
     
     startGame()
@@ -121,7 +105,7 @@ class GameManager
         this.currentTurn = 0;
         this.currentPlayer = 0;
         this.onGameStart();
-        this.startTurn(this.currentPlayer);
+        this.startTurnDrawing(this.currentPlayer);
     }
     
     nextTurn()
@@ -135,7 +119,7 @@ class GameManager
         else
         {
             this.currentPlayer = (this.currentPlayer + 1) % this.numPlayers;
-            this.startTurn(this.currentPlayer);
+            this.startTurnDrawing(this.currentPlayer);
         }
     }
     
@@ -144,14 +128,14 @@ class GameManager
         this.onGameEnd();
     }
     
-    startTurn()
+    startTurnDrawing()
     {
-        this.onTurnStart();
+        this.onTurnDrawingStart();
     }
     
-    endTurn()
+    endTurnDrawing()
     {
-        this.onTurnEnd();
+        this.onTurnDrawingEnd();
     }
 }
 
