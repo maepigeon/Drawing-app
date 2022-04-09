@@ -52,8 +52,24 @@ showPage("drawingMode");
 
 // Hide the canvas
 function showCanvasFeatures(visible) {
-    document.getElementById("layers").style.display = visible ? "block" : "none";
-    document.getElementById("story-container").style.display = visible ? "block" : "none";
-    document.getElementById("tools").style.display = visible ? "block" : "none";
-    document.getElementById("prompt-container").style.display = visible ? "block" : "none";
+    toggleVisible("#layers", visible);
+    toggleVisible("#story-container", visible);
+    toggleVisible("#tools", visible);
+    toggleVisible("#prompt-container", visible);
+    toggleVisible("#title-container", visible);
+    toggleVisible("#game-controls", visible);
+    toggleVisible("#story-input-container", visible);
+
+}
+
+function toggleVisible(element, visible)
+{
+    if (visible)
+    {
+        $(element).removeClass("hidden");
+    }
+    else
+    {
+        $(element).addClass("hidden");
+    }
 }
