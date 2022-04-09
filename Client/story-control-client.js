@@ -14,11 +14,42 @@ export function interpretStoryControlCommand(message)
         case "storyUpdate":
             updateStory(message.story);
             break;
-        case "":
+        case "getStorySubmissions":
+            showStorySubmissions(message.submissions)
             break;
         case "":
             break;
     }
+}
+
+function showStorySubmissions(submissions)
+{
+    $("#story-submissions-container").text("");
+    let idx = 0;
+    submissions.forEach(submission => {
+        
+        $("#story-submissions-container").html(
+            $("#story-submissions-container").html() + 
+            submission.addition + " votes: " + submission.votes +
+            '<button id="vote-for-addition-' + idx + '-button">Vote for this story addition (id: ' + idx + '</button>' +
+            "<br><br>"
+        );
+        $('#vote-for-addition-' + idx + '-button').on("click", () => {
+            voteForAddition(idx);
+        });
+        idx++;
+    });
+}
+
+function voteForAddition(additionId)
+{
+    networking.sendMessage(
+        "storyControl", 
+        {
+            "event": "storyVote", 
+            "additionId": additionId
+        }
+    );
 }
 
 function submitStoryAddition(addition)
@@ -67,5 +98,14 @@ $(function ()
     {
         console.log("submitting: " +  $("#story-input-area").val());
         submitStoryAddition($("#story-input-area").val());
+    });
+
+    $("#story-vote-button").on("click", () => {
+        networking.sendMessage(
+            "storyControl", 
+            {
+                "event": "storyVote"
+            }
+        );
     });
 });
