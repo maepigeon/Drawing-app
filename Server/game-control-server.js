@@ -64,6 +64,8 @@ function endTurn()
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
         }
     );
+    let story = require("./story-control-server.js");
+    story.addMostVotedAdditionToStory();
     gameManager.nextTurn();
 }
 

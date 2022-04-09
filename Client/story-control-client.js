@@ -30,15 +30,25 @@ function showStorySubmissions(submissions)
         
         $("#story-submissions-container").html(
             $("#story-submissions-container").html() + 
-            submission.addition + " votes: " + submission.votes +
+            "Player " + submission.player + "<br>" +
+            '"' + submission.addition + '"' +
+            "<br>" +
+            "votes: " + submission.votes +
             '<button id="vote-for-addition-' + idx + '-button">Vote for this story addition (id: ' + idx + '</button>' +
             "<br><br>"
         );
-        $('#vote-for-addition-' + idx + '-button').on("click", () => {
-            voteForAddition(idx);
-        });
+        
         idx++;
     });
+    idx--;
+    while (idx >= 0)
+    {
+        let id = idx
+        document.getElementById('vote-for-addition-' + id + '-button').addEventListener("click", () => {
+            voteForAddition(id);
+        });
+        idx--;
+    }
 }
 
 function voteForAddition(additionId)

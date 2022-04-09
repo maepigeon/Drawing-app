@@ -47,17 +47,17 @@ function submitStoryAddition(player, addition)
         entry.addition = addition;
     }
     console.log("new story submission: " + addition);
+    console.log("current story additions:");
+    storySubmissions.forEach(element => {
+        console.log(element);
+    });
     sendStorySubmissions();
 }
 
 function voteForStoryAddition(additionVotedOnId)
 {
-    let entry = storySubmissions.find(e => e.player == additionVotedOnId);
-    if (entry != null)
-    {
-        entry.votes += 1;
-        console.log(storySubmissions[storySubmissions.indexOf(entry)].votes);
-    }
+    storySubmissions[additionVotedOnId].votes++;
+    console.log(storySubmissions[additionVotedOnId]);
 }
 
 function sendStorySubmissions()
@@ -70,6 +70,26 @@ function sendStorySubmissions()
             "submissions": storySubmissions
         }
     )
+}
+
+function addMostVotedAdditionToStory()
+{
+    if (storySubmissions.length == 0) return;
+    let entry = storySubmissions[0];
+    storySubmissions.forEach(submission => {
+        if (submission.votes > entry.votes)
+        {
+            entry = submission;
+        }
+    });
+    addToStory(entry.addition);
+    resetStorySubmissions();
+}
+
+function resetStorySubmissions()
+{
+    storySubmissions = [];
+    sendStorySubmissions();
 }
 
 function addToStory(addition)
@@ -99,5 +119,6 @@ function sendStoryUpdate()
 }
 
 module.exports = {
-    interpretStoryControlCommand
+    interpretStoryControlCommand,
+    addMostVotedAdditionToStory
 };
