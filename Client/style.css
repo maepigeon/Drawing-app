@@ -193,3 +193,10 @@ canvas.disabled {
 .icon-button {
     font-size: 1.5em;
 }
+
+.selected {
+    /* border-radius: 5px; */
+    outline-color: rgb(85, 201, 85);
+    outline-style: solid;
+    outline-width: 5px;
+}
