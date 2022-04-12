@@ -577,4 +577,10 @@ $("#tool-decrease-thickness").on("click", function()
 setBrushThickness(brush.size);
 
 
+function onNameButtonPressed() {
+    networking.submitName(Document.getElementById("enterName").value);
+}
+
+
+
 

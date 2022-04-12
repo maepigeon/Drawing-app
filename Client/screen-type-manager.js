@@ -1,3 +1,7 @@
+import {networking} from "./networking.js"
+
+
+
 document.addEventListener('keydown', function(event) {
     if (event.key == '-') {
         showPage("enterName")
@@ -5,6 +9,8 @@ document.addEventListener('keydown', function(event) {
         showPage("drawingMode");
     } 
 });
+
+
 
 
 function createEnterNamePopup() {
@@ -17,11 +23,21 @@ function createEnterNamePopup() {
         '<br><br><br>' +
         '<form">' +
             '<label for="enterName">Type your name: </label>' +
-            '<input type="text" id="enterName" name="playerName"><br>' +
-            '<button type="button">Submit</button>'
+            '<input type="text" id="enter-name-field" name="playerName"><br>' +
+            '<button type="button" id="enter-name-button">Submit</button>'
         '</form>'
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
+
+    $("#enter-name-button").on("click", () =>
+    {
+        let playerName = $("#enter-name-field").val();
+        if (playerName.length < 3) {
+            window.alert("Your username must be at least 3 characters long. Please try again.");
+        } else {
+            networking.submitName(playerName);
+        }
+    });
 }
 function deleteEnterNamePopup() {
     document.getElementById("enterNameBox").remove();
@@ -62,6 +78,7 @@ function showCanvasFeatures(visible) {
 
 }
 
+// Toggles the visibility of an element
 function toggleVisible(element, visible)
 {
     if (visible)
@@ -73,3 +90,5 @@ function toggleVisible(element, visible)
         $(element).addClass("hidden");
     }
 }
+
+
