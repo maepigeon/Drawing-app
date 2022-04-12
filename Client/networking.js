@@ -2,6 +2,8 @@ export {networking};
 import {interpretCommand} from "./canvas.js";
 import { interpretGameControlCommand } from "./game-control-client.js";
 import { interpretStoryControlCommand } from "./story-control-client.js";
+import { updateNamesList } from "./story-control-client.js";
+
 
 class NetworkingObject {
     usersConnected;
@@ -46,7 +48,7 @@ class NetworkingObject {
     }
     // when the user submits their name
     submitName(name) {
-        window.alert(name);
+        this.sendMessage("changeUsername", {username: name});
     }
 }
 
@@ -97,6 +99,9 @@ ws.addEventListener("message", e => {
             break;
         case "storyControl":
             interpretStoryControlCommand(message);
+            break;
+        case "refreshUsernamesList":
+            updateNamesList(message);
             break;
         default:
             interpretCommand(message);

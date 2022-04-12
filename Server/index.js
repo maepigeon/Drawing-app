@@ -8,7 +8,7 @@ const wss = new WebSocket.Server({port: 8082}); ////
 
 console.log("Websocket server starting...");
 
-let connected_client_sockets = []; // extry format: {int socketID, Socket socket}
+let connected_client_sockets = []; // extry format: {int id, Socket socket, string username}
 
 
 //gets the index of a specified socket
@@ -49,6 +49,28 @@ function send_data_to_client(ws, data)
     ws.send(JSON.stringify(data));
 }
 
+
+// Changes the username stored for the user at the specified socket
+function changeUsername(ws, data) {
+    console.log(data.data.username);
+    connected_client_sockets[get_socket_id(ws)].username = data.data.username;
+    console.log("new username change: user id " +  get_socket_id(ws) + "'s name is now "+ connected_client_sockets[get_socket_id(ws)].username);
+    refreshNamesListAllClients();
+}
+// Refreshes the names list for all clients
+function refreshNamesListAllClients() {
+    usernames = [];
+    connected_client_sockets.forEach(element => usernames.push(element.username));
+    console.log(usernames);
+    let message = {
+        messageType: "refreshUsernamesList",
+        data: {usernames: usernames},
+        userId: -1 //server
+    };
+    send_data_to_all_clients(message);
+}
+
+
 function send_data_to_all_clients(data)
 {
     for (let i = 0; i < connected_client_sockets.length; i++) 
@@ -63,12 +85,20 @@ function send_data_to_all_clients(data)
 wss.on("connection", ws => {
     console.log("new client connected!");
     
+
+    // store the new player
+    let playerID = generate_socket_id();
     connected_client_sockets.push(
         {
-            "id":generate_socket_id(),
-            "socket":ws
+            "id": playerID,
+            "socket":ws,
+            "username": "User " + playerID.toString()
         }
     );
+    changeUsername(ws, {data: {username: "User " + playerID.toString()}});
+    
+
+    // display a list of connected clients
     console.log("connected clients:");
     for (let i = 0; i < connected_client_sockets.length; i++)
     {
@@ -104,6 +134,9 @@ wss.on("connection", ws => {
             case "storyControl":
                 storyControl.interpretStoryControlCommand(get_socket_id(ws), data);
                 break;
+            case "changeUsername":
+                changeUsername(ws, data);
+                break;
             default:
                 send_data_to_all_clients(data);
                 break;
@@ -123,6 +156,7 @@ wss.on("connection", ws => {
                 console.log(connected_client_sockets[i].id);
             }
         }
+        refreshNamesListAllClients();
     });
 });
 

@@ -7,6 +7,14 @@ import { clearCanvas } from "./canvas.js";
 let maxVotes = 3;
 let votes = maxVotes;
 
+// Updates the list of player names gui
+export function updateNamesList(message) {
+    let names = message.data.usernames;
+    console.log(names);
+    $("#players").empty();
+    names.forEach(name => $("#players").append("<p>" + name + "</p>"));
+}
+
 export function interpretStoryControlCommand(message)
 {
     let eventType = message.eventType;

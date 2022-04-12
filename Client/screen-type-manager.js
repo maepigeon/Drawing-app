@@ -36,6 +36,7 @@ function createEnterNamePopup() {
             window.alert("Your username must be at least 3 characters long. Please try again.");
         } else {
             networking.submitName(playerName);
+            showPage("drawingMode");
         }
     });
 }
@@ -45,7 +46,7 @@ function deleteEnterNamePopup() {
 
 
 // shows the relevant page: [drawingMode, enterName]
-function showPage(pageName) {
+export function showPage(pageName) {
     switch (pageName) {
         case "enterName":
             createEnterNamePopup();
@@ -63,7 +64,7 @@ function showPage(pageName) {
             break;
     }
 }
-showPage("drawingMode");
+showPage("enterName");
 
 
 // Hide the canvas
