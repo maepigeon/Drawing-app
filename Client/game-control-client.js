@@ -23,7 +23,18 @@ export function interpretGameControlCommand(message)
         case "gameEnd":
             onGameEnd();
             break;
+        case "updateScores":
+            updateScores(message.scores);
+            break;
     }
+}
+
+function updateScores(scores)
+{
+    console.log(scores);
+    let myScore = scores.find(e => e.playerId == networking.getUserId());
+    $("#score").text(myScore.score);
+
 }
 
 function onGameStart()
@@ -102,6 +113,17 @@ function initiateGameForAll()
     // game.onGameStart();
 }
 
+function submitRating(rating)
+{
+    networking.sendMessage(
+        "gameControl",
+        {
+            "event": "rateDrawing",
+            "rating": rating
+        }
+    );
+}
+
 $ (function ()
 {
     
@@ -125,6 +147,22 @@ $ (function ()
     $("#end-game-button").on("click", () =>
     {
         // game.onGameEnd();
+    });
+
+    $("#rating-button-1").on("click", () => {
+        submitRating(1);
+    });
+    $("#rating-button-2").on("click", () => {
+        submitRating(2);
+    });
+    $("#rating-button-3").on("click", () => {
+        submitRating(3);
+    });
+    $("#rating-button-4").on("click", () => {
+        submitRating(4);
+    });
+    $("#rating-button-5").on("click", () => {
+        submitRating(5);
     });
 
 });
