@@ -1,4 +1,17 @@
-["grill","stove","microwave","hamburger","ketchup","mustard","mayonnaise","ranch","cheese","milk","yogurt","crab","oysters","shrimp","sandwich",
- "chicken wings","barbeque","steak","chocolate","pizza","breadsticks","mozzarella sticks","sub","chicken nuggets","fryer","tacos","lettuce",
- "tomato","onion","mango","orange","lemonade","soda","water","pickle","waiter","chef","pan","pot","kabob","tortilla","quesadilla","knife",
- "fork","spoon","gummy bears","carrots","celery","sweet tea","tea","coffee"]
+["grill","stove","microwave","fryer","pan","pot","knife","fork","spoon","blender","mixing bowl","plate","bowl","Cutting board","whisk",
+    "ladle","spatula","pitcher","measuring cup","strainer","chopsticks","vending machine","mug","water bottle",
+    "hamburger","sandwich","chicken wings","barbeque","steak","chocolate","pizza","breadsticks","mozzarella sticks","sub","chicken nuggets",
+    "tacos","tortilla","quesadilla","kabob","gummy bears","rice","potato","meatball","dough","bread","macaroni and cheese","ramen","ice cream",
+    "shaved ice","cake","cupcake","cookie","waffle","pancake","french fries","chocolate chips","grilled cheese","hot dog","oatmeal","popcorn",
+    "turkey","eggs","scrambled eggs","omelette","peanut butter","peanuts","almonds","walnuts","cashews","mint","bacon","sausage","cereal",
+    "cheesecake","syrup","meatloaf","onion rings","nachos","croissant","bagel","doughnut","soup","salad","muffin","pie","gum","granola bar",
+    "spaghetti","beef jerky","porridge","bun","gucamole","ham","curry","fudge","jelly beans","cotton candy","funnel cake","liquorice","scone",
+    "lollipop","marshmallow","candy cane","corndog","tater tots","pot roast","fajita","banana split","potato chips","fortune cookie","S'mores",
+    "ribs","cobbler","ketchup","mustard","mayonnaise","ranch","relish","coleslaw","pico de gallo","salsa","hummus","hot sauce","honey","vinegar",
+    "cheese","milk","yogurt","butter","crab","oysters","shrimp","sushi","lobster","tuna","cod","salmon","sardines",
+    "lettuce","tomato","onion","pickle","garlic","salt","pepper","mango","orange","apple","carrots","celery","blackberry","raspberry","cranberry",
+    "cherry","watermelon","grape","strawberry","corn","eggplant","banana","lemon","lime","pineapple","kiwi","cantaloupe","blueberry","pear",
+    "grapefruit","cauliflower","spinach","cabbage","cucumber","radish","cranberry juice","beer","wine","waiter","chef"
+    "broccoli","turnip","pumpkin","peas","coconut","bell pepper","avocado","green beans","lemonade","soda","water","sweet tea","tea","coffee",
+    "apple juice","orange juice","milkshake","hot chocolate","smoothie","eggnog","martini","margarita",
+    ]
