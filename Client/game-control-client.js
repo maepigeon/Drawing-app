@@ -60,7 +60,8 @@ function onTurnStart(turn)
         console.log("My turn!");
         setDrawingEnabled(true);
         $("#end-turn-button").removeClass("hidden");
-        $("#prompt-container").removeClass("hidden");
+        $("#prompt").removeClass("hidden");
+        $("#prompt-text").css("color", "#000000");
         $("#tools").removeClass("hidden");
         $("#rating").addClass("hidden");
         $("#title").text("It's your turn to draw!");
@@ -70,7 +71,8 @@ function onTurnStart(turn)
     else
     {
         $("#title").text("It's Player " + (turn + 1) + "'s turn to draw!");
-        $("#prompt-container").addClass("hidden");
+        $("#prompt").addClass("hidden");
+        $("#prompt-text").css("color", "#00000000");
         $("#tools").addClass("hidden");
         $("#rating").removeClass("hidden");
         console.log("It's not my turn!");

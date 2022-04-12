@@ -15,7 +15,7 @@ body {
     align-items: center;
     background-color: rgba(131, 130, 130, 0.147);
     height:100vh;
-    grid-template-columns: 1.5fr 3fr 1fr;
+    grid-template-columns: 1.5fr 3fr 1.2fr;
 }
 
 .grid-box {
@@ -35,11 +35,13 @@ body {
 }
 #story-box {
     height: 400px;
-    width: 20vw;
+    width: 18vw;
+    overflow-wrap: break-word;
+    padding: 10px;
 }
 
 #story-input-container {
-    height: 400px;
+    height: 200px;
     width: 20vw;
 }
 
@@ -49,12 +51,15 @@ body {
     width: 150px;
     right: 0;
     top: 100px;
-}
-#tools {
     padding-top: 50px;
 }
+
 #rating {
-    padding-top: 30px;
+    height:300px;
+    padding-top:25px
+}
+#rating-title {
+    margin-top:0px;
 }
 
 #game-controls
@@ -121,13 +126,13 @@ body {
 
 .rating-button{
     border-radius: 50%;
-    height: 75px;
-    width:75px;
+    height: 40px;
+    width:40px;
     border:none;
     cursor:pointer;
     background-color: #c4c4c4;
-    margin-top: 25px;
-    margin-bottom:25px;
+    margin-top: 5px;
+    margin-bottom:5px;
 }
 .rating-button:hover {
     background-color: #c4c4c4b1;
