@@ -101,6 +101,7 @@ function onOtherPlayerTurn(playerId)
     setDrawingEnabled(false);
     setStoryWritingEnabled(true);
     resetVotes();
+    selectRating(3);
 }
 
 function initiateGameForAll()
@@ -124,6 +125,21 @@ function submitRating(rating)
             "rating": rating
         }
     );
+}
+
+function deselectRatings()
+{
+    for (let i = 1; i <= 5; i++)
+    {
+        $("#rating-button-" + i).removeClass("selected");
+    }
+}
+
+function selectRating(rating)
+{
+    deselectRatings();
+    $("#rating-button-" + rating).addClass("selected");
+    submitRating(rating);
 }
 
 $ (function ()
@@ -152,19 +168,19 @@ $ (function ()
     });
 
     $("#rating-button-1").on("click", () => {
-        submitRating(1);
+        selectRating(1);
     });
     $("#rating-button-2").on("click", () => {
-        submitRating(2);
+        selectRating(2);
     });
     $("#rating-button-3").on("click", () => {
-        submitRating(3);
+        selectRating(3);
     });
     $("#rating-button-4").on("click", () => {
-        submitRating(4);
+        selectRating(4);
     });
     $("#rating-button-5").on("click", () => {
-        submitRating(5);
+        selectRating(5);
     });
 
 });
