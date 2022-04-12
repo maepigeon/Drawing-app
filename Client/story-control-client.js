@@ -4,6 +4,8 @@ import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 
+let maxVotes = 3;
+let votes = maxVotes;
 
 export function interpretStoryControlCommand(message)
 {
@@ -53,13 +55,24 @@ function showStorySubmissions(submissions)
 
 function voteForAddition(additionId)
 {
-    networking.sendMessage(
-        "storyControl", 
-        {
-            "event": "storyVote", 
-            "additionId": additionId
-        }
-    );
+    if (votes > 0)
+    {
+        networking.sendMessage(
+            "storyControl", 
+            {
+                "event": "storyVote", 
+                "additionId": additionId
+            }
+        );
+        votes--;
+        $("#votes-remaining").text(votes);
+    }
+}
+
+export function resetVotes()
+{
+    votes = maxVotes;
+    $("#votes-remaining").text(votes);
 }
 
 function submitStoryAddition(addition)
@@ -104,6 +117,8 @@ export function setStoryWritingEnabled(enabled)
 
 $(function ()
 {
+    $("#votes-remaining").text(votes);
+
     $("#submit-story-button").on("click", () =>
     {
         console.log("submitting: " +  $("#story-input-area").val());

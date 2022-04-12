@@ -3,7 +3,7 @@ import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
-import { resetStory, setStoryWritingEnabled } from "./story-control-client.js";
+import { resetStory, resetVotes, setStoryWritingEnabled } from "./story-control-client.js";
 
 
 export function interpretGameControlCommand(message)
@@ -57,27 +57,37 @@ function onTurnStart(turn)
     generateWord();
     if (turn == networking.getUserId())
     {
-        console.log("My turn!");
-        setDrawingEnabled(true);
-        $("#end-turn-button").removeClass("hidden");
-        $("#prompt-container").removeClass("hidden");
-        $("#tools").removeClass("hidden");
-        $("#rating").addClass("hidden");
-        $("#title").text("It's your turn to draw!");
-        setStoryWritingEnabled(false);
-
+        onMyTurn();
     }
     else
     {
-        $("#title").text("It's Player " + (turn + 1) + "'s turn to draw!");
-        $("#prompt-container").addClass("hidden");
-        $("#tools").addClass("hidden");
-        $("#rating").removeClass("hidden");
-        console.log("It's not my turn!");
-        setDrawingEnabled(false);
-        setStoryWritingEnabled(true);
+        onOtherPlayerTurn(turn);
     }
 
+}
+
+function onMyTurn()
+{
+    console.log("My turn!");
+    setDrawingEnabled(true);
+    $("#end-turn-button").removeClass("hidden");
+    $("#prompt-container").removeClass("hidden");
+    $("#tools").removeClass("hidden");
+    $("#rating").addClass("hidden");
+    $("#title").text("It's your turn to draw!");
+    setStoryWritingEnabled(false);
+}
+
+function onOtherPlayerTurn(playerId)
+{
+    $("#title").text("It's Player " + (playerId + 1) + "'s turn to draw!");
+    $("#prompt-container").addClass("hidden");
+    $("#tools").addClass("hidden");
+    $("#rating").removeClass("hidden");
+    console.log("It's not my turn!");
+    setDrawingEnabled(false);
+    setStoryWritingEnabled(true);
+    resetVotes();
 }
 
 function initiateGameForAll()
