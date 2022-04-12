@@ -64,20 +64,23 @@
                 </div>
                 <div class="grid-box tool-box hidden" id="rating">
                     <p id="rating-title"><b>Rate the Drawing!</b></p>
-                    <button class="rating-button">1</button><br/>
-                    <button class="rating-button">2</button><br/>
-                    <button class="rating-button">3</button><br/>
-                    <button class="rating-button">4</button><br/>
-                    <button class="rating-button">5</button><br/>
+                    <button class="rating-button" id="rating-button-1">1</button><br/>
+                    <button class="rating-button" id="rating-button-2">2</button><br/>
+                    <button class="rating-button" id="rating-button-3">3</button><br/>
+                    <button class="rating-button" id="rating-button-4">4</button><br/>
+                    <button class="rating-button" id="rating-button-5">5</button><br/>
                 </div>
-                <div id="story-input-container">
-                    <h3>Add to the story:</h3>
-                    <textarea id="story-input-area"></textarea>
-                    <button id="submit-story-button">Submit</button>
-                    <button id="story-vote-button">Vote</button>
-                    <div id="story-submissions-container"></div>
-    
-                </div>
+            </div>
+            <div id="story-input-container">
+                <h3>Add to the story:</h3>
+                <textarea id="story-input-area"></textarea>
+                <button id="submit-story-button">Submit</button>
+                <p>Votes remaining: <span id="votes-remaining"></span></p>
+                <div id="story-submissions-container"></div>
+
+            </div>
+            <div>
+                <p>My score: <span id="score">0</span></p>
             </div>
         </div>
         <!--<p id="selected-layer-indicator"></p> -->

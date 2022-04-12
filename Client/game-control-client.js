@@ -3,7 +3,7 @@ import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
-import { resetStory, setStoryWritingEnabled } from "./story-control-client.js";
+import { resetStory, resetVotes, setStoryWritingEnabled } from "./story-control-client.js";
 
 
 export function interpretGameControlCommand(message)
@@ -23,7 +23,18 @@ export function interpretGameControlCommand(message)
         case "gameEnd":
             onGameEnd();
             break;
+        case "updateScores":
+            updateScores(message.scores);
+            break;
     }
+}
+
+function updateScores(scores)
+{
+    console.log(scores);
+    let myScore = scores.find(e => e.playerId == networking.getUserId());
+    $("#score").text(myScore.score);
+
 }
 
 function onGameStart()
@@ -57,29 +68,39 @@ function onTurnStart(turn)
     generateWord();
     if (turn == networking.getUserId())
     {
-        console.log("My turn!");
-        setDrawingEnabled(true);
-        $("#end-turn-button").removeClass("hidden");
-        $("#prompt").removeClass("hidden");
-        $("#prompt-text").css("color", "#000000");
-        $("#tools").removeClass("hidden");
-        $("#rating").addClass("hidden");
-        $("#title").text("It's your turn to draw!");
-        setStoryWritingEnabled(false);
-
+        onMyTurn();
     }
     else
     {
-        $("#title").text("It's Player " + (turn + 1) + "'s turn to draw!");
-        $("#prompt").addClass("hidden");
-        $("#prompt-text").css("color", "#00000000");
-        $("#tools").addClass("hidden");
-        $("#rating").removeClass("hidden");
-        console.log("It's not my turn!");
-        setDrawingEnabled(false);
-        setStoryWritingEnabled(true);
+        onOtherPlayerTurn(turn);
     }
 
+}
+
+function onMyTurn()
+{
+    console.log("My turn!");
+    setDrawingEnabled(true);
+    $("#end-turn-button").removeClass("hidden");
+    $("#prompt").removeClass("hidden");
+    $("#prompt-text").css("color", "#000000");
+    $("#tools").removeClass("hidden");
+    $("#rating").addClass("hidden");
+    $("#title").text("It's your turn to draw!");
+    setStoryWritingEnabled(false);
+}
+
+function onOtherPlayerTurn(playerId)
+{
+    $("#title").text("It's Player " + (playerId + 1) + "'s turn to draw!");
+    $("#prompt").addClass("hidden");
+    $("#prompt-text").css("color", "#00000000");
+    $("#tools").addClass("hidden");
+    $("#rating").removeClass("hidden");
+    console.log("It's not my turn!");
+    setDrawingEnabled(false);
+    setStoryWritingEnabled(true);
+    resetVotes();
 }
 
 function initiateGameForAll()
@@ -92,6 +113,17 @@ function initiateGameForAll()
         }
     );
     // game.onGameStart();
+}
+
+function submitRating(rating)
+{
+    networking.sendMessage(
+        "gameControl",
+        {
+            "event": "rateDrawing",
+            "rating": rating
+        }
+    );
 }
 
 $ (function ()
@@ -117,6 +149,22 @@ $ (function ()
     $("#end-game-button").on("click", () =>
     {
         // game.onGameEnd();
+    });
+
+    $("#rating-button-1").on("click", () => {
+        submitRating(1);
+    });
+    $("#rating-button-2").on("click", () => {
+        submitRating(2);
+    });
+    $("#rating-button-3").on("click", () => {
+        submitRating(3);
+    });
+    $("#rating-button-4").on("click", () => {
+        submitRating(4);
+    });
+    $("#rating-button-5").on("click", () => {
+        submitRating(5);
     });
 
 });

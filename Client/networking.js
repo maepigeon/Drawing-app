@@ -16,7 +16,12 @@ class NetworkingObject {
             data: dataToSend,
             userId: networking.getUserId()
         };
-        this.sendMessageJson(JSON.stringify(message));
+        try {
+            this.sendMessageJson(JSON.stringify(message));
+        }
+        catch (e) {
+            console.log(e.message);
+        }
     }
     // sends a message to the server, which sends the message to all users
     sendMessageJson(messageString){
@@ -38,6 +43,10 @@ class NetworkingObject {
     // sets your user id
     setUserId(id) {
         userId = id;
+    }
+    // when the user submits their name
+    submitName(name) {
+        window.alert(name);
     }
 }
 

@@ -1,6 +1,9 @@
 let server;
 let gameManager;
 
+let drawingRatings = [];
+let playerScores = [];
+
 function interpretGameControlCommand(player, message)
 {
     let eventType = message.data.event;
@@ -17,7 +20,60 @@ function interpretGameControlCommand(player, message)
         case "turnEnd":
             gameManager.endTurnDrawing();
             break;
+        case "rateDrawing":
+            submitDrawingRating(player, message.data.rating);
+            break;
     }
+}
+
+function submitDrawingRating(player, rating)
+{
+    let entry = drawingRatings.find(e => e.player == player);
+    if (entry == null)
+    {
+        drawingRatings.push(
+            {
+                "player":player, 
+                "rating":rating
+            }
+        );
+    }
+    else
+    {
+        entry.rating = rating;
+    }
+    console.log("current drawing ratings:");
+    drawingRatings.forEach(element => {
+        console.log(element);
+    });
+}
+
+function awardScoreForRatings()
+{
+    let amount = 0;
+    drawingRatings.forEach(element => {
+        amount += element.rating;
+    });
+    incrementScoreForPlayer(gameManager.currentPlayer, amount);
+}
+
+function incrementScoreForPlayer(player, amountToAward)
+{
+    let entry = playerScores.find(e => e.playerId == player);
+    if (entry != null)
+    {
+        entry.score += amountToAward;
+    }
+    sendScoreUpdate();
+}
+
+function sendScoreUpdate()
+{
+    server.send_data_to_all_clients({
+        "messageType":"gameControl",
+        "eventType":"updateScores",
+        "scores": playerScores
+    });
 }
 
 
@@ -40,6 +96,44 @@ function startGame()
             "eventType":"gameStart",
         }
     );
+    
+    initializeScores()
+}
+
+function initializeScores()
+{
+    playerScores = [];
+    server.connected_client_sockets.forEach(element => {
+        playerScores.push(
+            {
+                "playerId": element.id,
+                "score": 0
+            }
+        );
+    });
+    console.log("initialized player scores:");
+    playerScores.forEach(element => {
+        console.log(element);
+    });
+    sendScoreUpdate();
+}
+
+function initializeRatings()
+{
+    drawingRatings = [];
+    server.connected_client_sockets.forEach(element => {
+        let defaultScore = element.id == gameManager.currentPlayer ? 0 : 3;
+        drawingRatings.push(
+            {
+                "player":element.id,
+                "rating":defaultScore
+            }
+        );
+    });
+    console.log("initial drawing ratings:");
+    drawingRatings.forEach(element => {
+        console.log(element);
+    });
 }
 
 function startTurn()
@@ -53,6 +147,8 @@ function startTurn()
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
         }
     );
+    
+    initializeRatings();
 }
 
 function endTurn()
@@ -66,6 +162,7 @@ function endTurn()
     );
     let story = require("./story-control-server.js");
     story.addMostVotedAdditionToStory();
+    awardScoreForRatings();
     gameManager.nextTurn();
 }
 

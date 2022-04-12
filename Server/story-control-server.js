@@ -104,6 +104,7 @@ function resetStory()
 {
     initialize();
     story = "";
+    resetStorySubmissions();
     sendStoryUpdate();
 }
 

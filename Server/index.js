@@ -108,23 +108,6 @@ wss.on("connection", ws => {
                 send_data_to_all_clients(data);
                 break;
         }
-        // if (data.toString() != "connecting") {
-        //     // for (let i = 0; i < connected_client_sockets.length; i++) {
-        //     //     connected_client_sockets[i].send(data.toString());
-        //     // }
-        //     send_json_to_all_clients(data.toString());
-        // } 
-        
-        // else {
-        //     let message = {
-        //         messageType: "userConnectedMessage",
-        //         connectionMessage: "another person just joined! Their user index is: " + get_socket_id(ws).toString()
-        //     };
-        //     // for (let i = 0; i < connected_client_sockets.length; i++) {
-        //     //     connected_client_sockets[i].send(JSON.stringify(message));
-        //     // }
-        //     send_json_to_all_clients(JSON.stringify(message));
-        // }
     });
 
     ws.on("close", () => {
