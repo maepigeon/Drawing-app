@@ -9,7 +9,7 @@ body {
     height: 100vh;
     /* overflow: hidden; */
 }
-.app-layout {
+#app-layout {
     display:grid;
     justify-items: center;
     align-items: center;
