@@ -61,6 +61,9 @@ export function showPage(pageName) {
         case "drawingMode":
             showCanvasFeatures(false);
             break;
+        case "endGame":
+            deleteEndGameScreen();
+            break;
         default:
             break;
     }
@@ -75,6 +78,9 @@ export function showPage(pageName) {
             break;
         case "drawingMode":
             showCanvasFeatures(true);
+            break;
+        case "endGame":
+            createEndGameScreen();
             break;
         default:
             console.log("Attempted to load an invalid page name: " + pageName);
