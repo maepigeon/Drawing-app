@@ -12,7 +12,7 @@ export function updateNamesList(message) {
     let names = message.data.usernames;
     console.log(names);
     $("#players").empty();
-    names.forEach(name => $("#players").append("<p>" + name + "</p>"));
+    names.forEach(name => $("#players").append("<p><span class='scorebox'>0</span>" + name + "</p>"));
 }
 
 export function interpretStoryControlCommand(message)

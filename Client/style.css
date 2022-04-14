@@ -33,6 +33,13 @@ body {
     height: 320px;
     width: 220px;
 }
+
+.scorebox {
+    border: 1px solid black; 
+    margin-right:10px; 
+    padding:2px;
+}
+
 #story-box {
     height: 400px;
     width: 18vw;
