@@ -19,6 +19,14 @@ let eraser = false;
 
 import {networking} from "./networking.js"
 
+
+
+let canvasEnabled = true;
+// 
+export function setCanvasEnabled(isCanvasEnabled) {
+    canvasEnabled = isCanvasEnabled;
+}
+
 // Interprets a message recieved from the network
 // that is relevant to the canvas.
 export function interpretCommand(message) {
@@ -76,7 +84,7 @@ export function clearCanvas() {
 }
 
 // Creates a layer on top of the specified layer for all users.
-function createLayerAll(layerBelowIndex) {
+function callCreateLayerAll(layerBelowIndex) {
     createLayer(layerBelowIndex);
     let message = {
         messageType: "createLayer",
@@ -487,13 +495,10 @@ function setColor(color) {
 
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
-    if (event.key == 'r') {
-        callSetColorAll("red");
-    } if (event.key == 'g') {
-        callSetColorAll("green");
-    } if (event.key == 'b') {
-        callSetColorAll("blue");
-    } if (event.key == 'e') {
+    if (!canvasEnabled) { // Do nothing if the canvas is disabled.
+        return;
+    }
+    if (event.key == 'e') {
         toggleEraser();
     } 
     if (event.key == '[')
@@ -508,14 +513,6 @@ document.addEventListener('keydown', function(event) {
         callUndoAll();
     } if (event.ctrlKey && event.key === 'y') {
         callRedoAll();
-    } if (event.altKey && event.key === 'n') {
-        createLayerAll(activeLayerIndex);
-    } if (event.key == 'ArrowUp') {
-        callSetActiveLayerAll(activeLayerIndex + 1);
-    } if (event.key == 'ArrowDown') {
-        callSetActiveLayerAll(activeLayerIndex - 1);
-    } if (event.key == 'Backspace') {
-        removeLayerAll(activeLayerIndex);
     }
 });
 
@@ -575,12 +572,6 @@ $("#tool-decrease-thickness").on("click", function()
 
 
 setBrushThickness(brush.size);
-
-
-function onNameButtonPressed() {
-    networking.submitName(Document.getElementById("enterName").value);
-}
-
 
 
 

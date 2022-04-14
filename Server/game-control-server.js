@@ -90,6 +90,7 @@ function initializeGame(turnsPerPlayer)
 
 function startGame()
 {
+    console.log("Game started");
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
@@ -138,7 +139,6 @@ function initializeRatings()
 
 function startTurn()
 {
-    console.log(gameManager);
     console.log("current player is " + gameManager.currentPlayer);
     server.send_data_to_all_clients(
         {
@@ -168,6 +168,7 @@ function endTurn()
 
 function endGame()
 {
+    console.log("Game ended.");
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",

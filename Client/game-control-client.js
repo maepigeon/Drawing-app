@@ -4,7 +4,17 @@ import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 import { resetStory, resetVotes, setStoryWritingEnabled } from "./story-control-client.js";
+import { Timer } from "./timer.js";
 
+let drawTimer = new Timer();
+drawTimer.onTimerFinished = () =>
+{
+    if (isMyTurn)
+    {
+        endTurn();
+    }
+}
+let isMyTurn = false;
 
 export function interpretGameControlCommand(message)
 {
@@ -53,6 +63,7 @@ function onGameEnd()
     setDrawingEnabled(false);
     $("#new-game-button").removeClass("hidden");
     $("#title").text("Game over!");
+    drawTimer.cancelTimer();
 
 }
 
@@ -74,11 +85,13 @@ function onTurnStart(turn)
     {
         onOtherPlayerTurn(turn);
     }
+    drawTimer.startTimer(60);
 
 }
 
 function onMyTurn()
 {
+    isMyTurn = true;
     console.log("My turn!");
     setDrawingEnabled(true);
     $("#end-turn-button").removeClass("hidden");
@@ -92,6 +105,7 @@ function onMyTurn()
 
 function onOtherPlayerTurn(playerId)
 {
+    isMyTurn = false;
     $("#title").text("It's Player " + (playerId + 1) + "'s turn to draw!");
     $("#prompt").addClass("hidden");
     $("#prompt-text").css("color", "#00000000");
@@ -142,6 +156,12 @@ function selectRating(rating)
     submitRating(rating);
 }
 
+function endTurn()
+{
+    networking.sendMessage("gameControl", {"event": "turnEnd"});
+    $("#end-turn-button").addClass("hidden");
+}
+
 $ (function ()
 {
     
@@ -158,13 +178,7 @@ $ (function ()
         initiateGameForAll();
     });
     $("#end-turn-button").on("click", () => {
-        networking.sendMessage("gameControl", {"event": "turnEnd"});
-        $("#end-turn-button").addClass("hidden");
-        // game.onTurnEnd();
-    });
-    $("#end-game-button").on("click", () =>
-    {
-        // game.onGameEnd();
+        endTurn();
     });
 
     $("#rating-button-1").on("click", () => {

@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="./style.css?v=1" />
     </head>
     <body class="bckgrd">
-        <div class="app-layout">
+        <div id="app-layout">
             <div id="left">
                 <div id="players-container">
                     <h3 class="label grid-box" style="margin-top: 0px;">Players</h3>
@@ -33,6 +33,9 @@
                     <p id="prompt-text">
                         Current Prompt: <span id="prompt">[insert prompt here]</span>
                     </p>
+                </div>
+                <div id="timer-container">
+                    Time: <span id="timer">0</span>
                 </div>
                 <div id="layers">
                     <canvas id="canvas" class="enabled" style="background-color:white; z-index: 0;"></canvas>
