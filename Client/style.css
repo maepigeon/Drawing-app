@@ -47,9 +47,10 @@ body {
     padding: 10px;
 }
 
-#story-input-container {
-    height: 200px;
-    width: 20vw;
+
+#story-input-area {
+    height: 40vh;
+    width: 200px;
 }
 
 .tool-box
@@ -62,7 +63,8 @@ body {
 }
 
 #rating {
-    height:300px;
+    width:16vw;
+    height:100px;
     padding-top:25px
 }
 #rating-title {
@@ -183,6 +185,10 @@ canvas.disabled {
     background-color: #bdbdbd;
     cursor: pointer;
     border: none;
+}
+
+#submit-story-button {
+    font-size: medium;
 }
 
 #prompt {
