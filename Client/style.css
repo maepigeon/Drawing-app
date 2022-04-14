@@ -155,6 +155,7 @@ canvas {
     width: 95vh;
     touch-action: none;
     outline: black solid 10px;
+    margin: 10px;
 }
 
 canvas.enabled {
