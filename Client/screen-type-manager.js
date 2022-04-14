@@ -1,8 +1,10 @@
 import {networking} from "./networking.js"
+import {setCanvasEnabled} from "./canvas.js"
+
 // Window manager that loads/unloads pages without needing to refresh the page.
 
 // Each user should enter their name when they join.
-let currentPage = "";
+let currentPage = "drawingMode";
 showPage("enterName");
 
 // Developer shortcuts to enter each page on commang
@@ -60,6 +62,7 @@ export function showPage(pageName) {
             break;
         case "drawingMode":
             showCanvasFeatures(false);
+            setCanvasEnabled(false);
             break;
         case "endGame":
             deleteEndGameScreen();
@@ -78,6 +81,7 @@ export function showPage(pageName) {
             break;
         case "drawingMode":
             showCanvasFeatures(true);
+            setCanvasEnabled(true);
             break;
         case "endGame":
             createEndGameScreen();

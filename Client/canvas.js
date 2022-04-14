@@ -19,6 +19,14 @@ let eraser = false;
 
 import {networking} from "./networking.js"
 
+
+
+let canvasEnabled = true;
+// 
+export function setCanvasEnabled(isCanvasEnabled) {
+    canvasEnabled = isCanvasEnabled;
+}
+
 // Interprets a message recieved from the network
 // that is relevant to the canvas.
 export function interpretCommand(message) {
@@ -487,6 +495,9 @@ function setColor(color) {
 
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
+    if (!canvasEnabled) { // Do nothing if the canvas is disabled.
+        return;
+    }
     if (event.key == 'e') {
         toggleEraser();
     } 
