@@ -6,13 +6,13 @@ let currentPage = "";
 showPage("enterName");
 
 // Developer shortcuts to enter each page on commang
-document.addEventListener('keydown', function(event) {
+/*document.addEventListener('keydown', function(event) {
     if (event.key == '-') {
         showPage("enterName")
     } if (event.key == '=') {
         showPage("drawingMode");
     } 
-});
+});*/
 
 // Creates an enter name box and adds it to the window.
 function createEnterNameBox() {
@@ -21,9 +21,9 @@ function createEnterNameBox() {
     let htmlText =
         '<br><br><br>' +
         '<form">' +
-            '<label for="enterName">Type your name: </label>' +
+            '<label for="enterName" id="enter-name-text">Type your name: </label>' +
             '<input type="text" id="enter-name-field" name="playerName"><br>' +
-            '<button type="button" id="enter-name-button">Submit</button>'
+            '<button type="button" class="game-button" id="enter-name-button">Submit</button>'
         '</form>'
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
@@ -64,6 +64,8 @@ export function showPage(pageName) {
         default:
             break;
     }
+
+    currentPage = pageName;
 
     // Adds the new page to the window.
     switch (pageName) {
