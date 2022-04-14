@@ -197,6 +197,10 @@ canvas.disabled {
     margin-bottom: 30px;
 }
 
+#enter-name-text {
+    font-size: x-large;
+}
+
 .icon-button {
     font-size: 1.5em;
 }
