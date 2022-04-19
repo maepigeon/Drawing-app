@@ -63,6 +63,7 @@ export function showPage(pageName) {
             deleteEnterNameBox();
             break;
         case "drawingMode":
+            $("#title-container").addClass("hidden");
             showCanvasFeatures(false);
             setCanvasEnabled(false);
             break;
@@ -84,6 +85,7 @@ export function showPage(pageName) {
             showCanvasFeatures(false);
             break;
         case "drawingMode":
+            $("#title-container").removeClass("hidden");
             showCanvasFeatures(true);
             setCanvasEnabled(true);
             break;
@@ -103,6 +105,16 @@ function createEndGameScreen() {
     $("#canvas").addClass("end-game");
     $("#players-container").addClass("hidden");
     $("#prompt-container").addClass("hidden");
+    $("#title-container").addClass("hidden");
+    $("#timer-container").addClass("hidden");
+    $("#tools").addClass("hidden");
+    $("#rating").addClass("hidden");
+    $("#story-input-container").addClass("hidden");
+    $("#game-controls").addClass("hidden");
+    $("#download-canvas").removeClass("hidden");
+    $("#download-story").removeClass("hidden");
+
+    $("#title").text("DoodlLab");
 
 
     //rearrange
@@ -117,7 +129,17 @@ function deleteEndGameScreen() {
     $("#app-layout").removeClass("end-game");
     $("#canvas").removeClass("end-game");
     $("#players-container").removeClass("hidden");
-    $("#prompt-container").addClass("hidden");
+    $("#prompt-container").removeClass("hidden");
+    $("#title-container").removeClass("hidden");
+    $("#timer-container").removeClass("hidden");
+    $("#tools").removeClass("hidden");
+    $("#rating").removeClass("hidden");
+    $("#story-input-container").removeClass("hidden");
+    $("#game-controls").removeClass("hidden");
+    $("#download-canvas").addClass("hidden");
+    $("#download-story").addClass("hidden");
+
+    $("#title").text("No active game. Click Start Game to begin a game.");
 
     //rearrange
     $("#left").attr("id", "temp-middle");

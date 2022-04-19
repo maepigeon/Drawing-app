@@ -202,10 +202,11 @@ body {
 }
 
 #canvas.end-game {
-    height: calc(75vh*.5);
-    width: calc(95vh*.5);  
+    height: calc(75vh*.6);
+    width: calc(95vh*.6);  
     top: 50%;
     bottom: 50%;
+    margin-top: 50%;
 }
 
 #canvas.enabled {
@@ -234,6 +235,20 @@ body {
     background-color: #bdbdbd;
     cursor: pointer;
     border: none;
+}
+.game-button.download {
+    color: white;
+    background-color: green;
+    font-size: 2em;
+    padding: 20px;
+    bottom: 20px;
+}
+.game-button.download:hover {
+    background-color: rgb(6, 77, 6);
+}
+
+.download-button-container {
+    /* empty */    
 }
 
 #prompt {
