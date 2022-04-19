@@ -41,9 +41,10 @@ export function interpretGameControlCommand(message)
 
 function updateScores(scores)
 {
-    console.log(scores);
-    let myScore = scores.find(e => e.playerId == networking.getUserId());
-    $("#score").text(myScore.score);
+    for (let i = 0; i < scores.length; i++)
+    {
+        $("#player-" + i + "-scorebox").text(scores[i].score);
+    }
 
 }
 
