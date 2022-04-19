@@ -39,6 +39,9 @@ body {
     margin-right:10px; 
     padding:2px;
 }
+.scorebox-small {
+    margin-right: 2px !important;
+}
 
 #story-box {
     height: 400px;
@@ -49,9 +52,44 @@ body {
 
 
 #story-input-area {
-    height: 40vh;
+    height: 20vh;
     width: 200px;
 }
+
+#submit-story-button {
+    font-size: medium;
+}
+
+#story-submissions-container {
+    height: 20vh;
+    width:16vw;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    justify-items: center;
+    align-items: center;
+    padding:5px;
+}
+
+#story-submissions-container::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+#submission-section {
+    width: 70%;
+    float: left;
+    padding:7px;
+}
+
+#vote-section {
+    width: 25%;
+    float: left;
+}
+
+.tool-button-small {
+    height: 35px !important;
+    width: 35px !important;
+}
+
 
 .tool-box
 {
@@ -186,10 +224,6 @@ canvas.disabled {
     background-color: #bdbdbd;
     cursor: pointer;
     border: none;
-}
-
-#submit-story-button {
-    font-size: medium;
 }
 
 #prompt {

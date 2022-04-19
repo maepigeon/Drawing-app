@@ -40,11 +40,9 @@ function showStorySubmissions(submissions)
         
         $("#story-submissions-container").html(
             $("#story-submissions-container").html() + 
-            "Player " + submission.player + "<br>" +
-            '"' + submission.addition + '"' +
-            "<br>" +
-            "votes: " + submission.votes +
-            '<button id="vote-for-addition-' + idx + '-button">Vote for this story addition (id: ' + idx + '</button>' +
+            '<div id = "submission-section">' + submission.addition + '</div>' +
+            '<div id = "vote-section"><span class="scorebox scorebox-small" >' + submission.votes + '</span>' +
+            '<button class="tool-button-small tool-button" id="vote-for-addition-' + idx + '-button"><i class="fa-solid fa-thumbs-up fa-lg"></i></button></div>' +
             "<br><br>"
         );
         

@@ -101,7 +101,6 @@ function showCanvasFeatures(visible) {
     toggleVisible("#prompt-container", visible);
     toggleVisible("#title-container", visible);
     toggleVisible("#game-controls", visible);
-    toggleVisible("#story-input-container", visible);
 
 }
 
