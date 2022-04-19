@@ -9,10 +9,15 @@ let votes = maxVotes;
 
 // Updates the list of player names gui
 export function updateNamesList(message) {
-    let names = message.data.usernames;
-    console.log(names);
+    let players = message.data.players;
+    console.log(players);
     $("#players").empty();
-    names.forEach(name => $("#players").append("<p><span class='scorebox'>0</span>" + name + "</p>"));
+    players.forEach(player => {   
+        $("#players").append(
+            "<p><span class='scorebox' id='player-" + player.id + "-scorebox'>0</span>" + player.username + "</p>"
+            );
+
+    });
 }
 
 export function interpretStoryControlCommand(message)
