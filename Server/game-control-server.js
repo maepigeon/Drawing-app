@@ -140,11 +140,16 @@ function initializeRatings()
 function startTurn()
 {
     console.log("current player is " + gameManager.currentPlayer);
+    let player = server.connected_client_sockets[gameManager.currentPlayer];
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
             "eventType":"turnStart",
-            "playerTurn":server.connected_client_sockets[gameManager.currentPlayer]
+            "player":
+            {
+                "id": player.id,
+                "name": player.username
+            }
         }
     );
     

@@ -27,8 +27,8 @@ export function interpretGameControlCommand(message)
             onGameStart();
             break;
         case "turnStart":
-            console.log("Turn starting! It's player " + message.playerTurn.id + "'s turn");
-            onTurnStart(message.playerTurn);
+            console.log("Turn starting! It's player " + message.player.id + "'s turn");
+            onTurnStart(message.player);
             break;
         case "gameEnd":
             onGameEnd();
@@ -75,16 +75,16 @@ function onGameEnd()
 //     $("#end-turn-button").addClass("hidden");
 // }
 
-function onTurnStart(turn)
+function onTurnStart(player)
 {
     generateWord();
-    if (turn.id == networking.getUserId())
+    if (player.id == networking.getUserId())
     {
         onMyTurn();
     }
     else
     {
-        onOtherPlayerTurn(turn);
+        onOtherPlayerTurn(player);
     }
     drawTimer.startTimer(600000000);
 
@@ -107,7 +107,7 @@ function onMyTurn()
 function onOtherPlayerTurn(player)
 {
     isMyTurn = false;
-    $("#title").text("It's " + player.username + "'s turn to draw!");
+    $("#title").text("It's " + player.name + "'s turn to draw!");
     $("#prompt").addClass("hidden");
     $("#prompt-text").css("color", "#00000000");
     $("#tools").addClass("hidden");
