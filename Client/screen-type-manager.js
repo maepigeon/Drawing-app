@@ -23,11 +23,12 @@ function createEnterNameBox() {
     var div = document.createElement('div');
     div.id = "enterNameBox";
     let htmlText =
-        '<br><br><br>' +
-        '<form">' +
-            '<label for="enterName" id="enter-name-text">Type your name: </label>' +
+        '<h1 id = "logo-title">DoodlLab</h1>' +
+        '<br>' +
+        '<form class="grid-box" style="padding: 20px 30px 30px;">' +
+            '<label for="enterName" id="enter-name-text">Type your name: </label><br/>' +
             '<input type="text" id="enter-name-field" name="playerName"><br>' +
-            '<button type="button" class="game-button" id="enter-name-button">Submit</button>'
+            '<button type="button" class="game-button download" id="enter-name-button">Start</button>'
         '</form>'
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
@@ -158,6 +159,7 @@ function showCanvasFeatures(visible) {
     toggleVisible("#prompt-container", visible);
     toggleVisible("#title-container", visible);
     toggleVisible("#game-controls", visible);
+    toggleVisible("#timer-container", visible);
 
 }
 

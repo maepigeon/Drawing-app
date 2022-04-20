@@ -31,6 +31,11 @@ body {
     line-height: 3rem;
 }
 
+#logo-title {
+    font-size: 6em;
+    color: teal;
+}
+
 
 #players {
     height: 320px;
@@ -304,7 +309,20 @@ body {
 }
 
 #enter-name-text {
-    font-size: x-large;
+    font-size: xx-large;
+    display:block;
+    margin: 25px 0px;
+}
+
+#enter-name-field {
+    height: 1.8em;
+    width: 12vw;
+    font-size: 1.5em;
+}
+
+#enter-name-button {
+    padding: 0px 20px;
+    margin-top: 50px;
 }
 
 .icon-button {
