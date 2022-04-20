@@ -52,20 +52,28 @@
             </div>
             <div id="right">
                 <div id="timer-container">
+                    <i class="fa-regular fa-hourglass fa-lg"></i>
                     Time: <span id="timer">0</span>
                 </div>
                 <div class="grid-box tool-box" id="tools">
                     <button class="tool-button" id="color-red"></button>
+                    <button class="tool-button" id="color-salmon"></button>
                     <button class="tool-button" id="color-orange"></button>
+                    <button class="tool-button" id="color-pink"></button>
                     <button class="tool-button" id="color-yellow"></button>
+                    <button class="tool-button" id="color-gold"></button>
                     <button class="tool-button" id="color-green"></button>
+                    <button class="tool-button" id="color-yg"></button>
                     <button class="tool-button" id="color-blue"></button>
+                    <button class="tool-button" id="color-cyan"></button>
                     <button class="tool-button" id="color-purple"></button>
+                    <button class="tool-button" id="color-indigo"></button>
+                    <button class="tool-button" id="color-grey"></button>
                     <button class="tool-button" id="color-black"></button>
-                    <button class="tool-button" id="tool-erase"><i class="fa-solid fa-eraser fa-xl"></i></button>
-                    <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-xl"></i></button>
-                    <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-xl"></i></button>
-                    <div id="line-thickness-container">
+                    <button class="tool-button" id="tool-erase"><i class="fa-solid fa-eraser fa-2xl"></i></button> <br/>
+                    <button class="tool-button" id="tool-undo"><i class="fa-solid fa-rotate-left fa-2xl"></i></button>
+                    <button class="tool-button" id="tool-redo"><i class="fa-solid fa-rotate-right fa-2xl"></i></button>
+                    <div id="line-thickness-container" style="font-size: large;">
                         <button class="tool-button tool-small" id="tool-decrease-thickness">-</button>
                         <span id="line-thickness">0</span>
                         <button class="tool-button tool-small" id="tool-increase-thickness">+</button>
@@ -80,7 +88,7 @@
                     <button class="rating-button" id="rating-button-5">5</button>
                 </div>
                 <div id="story-input-container" class="hidden">
-                    <h3 class="label grid-box">Add to the story:</h3>
+                    <h3 class="label grid-box" style="margin-bottom: 10px;">Add to the story:</h3>
                     <textarea id="story-input-area"></textarea><br/>
                     <button class="game-button" id="submit-story-button">Submit</button>
                     <p>Votes remaining: <span id="votes-remaining"></span></p>

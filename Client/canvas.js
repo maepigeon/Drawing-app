@@ -552,6 +552,39 @@ $("#color-black").on("click", function()
     callSetColorAll("black");
 });
 
+$("#color-salmon").on("click", function()
+{
+    callSetColorAll("#ff5349");
+});
+
+$("#color-gold").on("click", function()
+{
+    callSetColorAll("#FFD700");
+});
+
+$("#color-yg").on("click", function()
+{
+    callSetColorAll("#bada55");
+});
+
+$("#color-cyan").on("click", function()
+{
+    callSetColorAll("#40e0d0");
+});
+
+$("#color-indigo").on("click", function()
+{
+    callSetColorAll("#170a47");
+});
+
+$("#color-pink").on("click", function()
+{
+    callSetColorAll("pink");
+});
+$("#color-grey").on("click", function()
+{
+    callSetColorAll("grey");
+});
 
 $("#tool-erase").on("click", function()
 {

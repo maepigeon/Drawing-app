@@ -47,7 +47,7 @@ body {
 }
 
 #story-box {
-    height: 400px;
+    height: 40vh;
     width: 18vw;
     overflow-wrap: break-word;
     overflow-y: scroll;
@@ -62,16 +62,25 @@ body {
 
 #submit-story-button {
     font-size: medium;
+    margin-bottom: 40px;
+    margin-top: 10px;
 }
 
 #story-submissions-container {
-    height: 23vh;
+    height: 28vh;
     width:16vw;
     overflow-y: scroll;
     overflow-wrap: break-word;
     justify-items: center;
     align-items: center;
     padding:5px;
+}
+
+#timer-container {
+    font-size: large;
+    position: relative;
+    top: -1vh;
+    margin-bottom: 40px;
 }
 
 
@@ -97,7 +106,7 @@ body {
 
 .tool-box
 {
-    height: 700px;
+    height: 65vh;
     width: 150px;
     right: 0;
     top: 100px;
@@ -107,7 +116,8 @@ body {
 #rating {
     width:16vw;
     height:100px;
-    padding-top:25px
+    padding-top:25px;
+    margin-bottom: 50px;
 }
 #rating-title {
     margin-top:0px;
@@ -157,6 +167,33 @@ body {
     background-color: black;
 }
 
+#color-salmon {
+    background-color: #ff5349;
+}
+
+#color-gold {
+    background-color: #FFD700;
+}
+#color-yg {
+    background-color: #bada55;
+}
+
+#color-cyan {
+    background-color: #40e0d0;
+}
+
+#color-indigo {
+    background-color: #170a47;
+}
+
+#color-pink {
+    background-color: pink;
+}
+
+#color-grey {
+    background-color: grey;
+}
+
 
 .tool-button
 {
@@ -166,13 +203,15 @@ body {
     border: none;
     background-color: #00000000;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 .tool-button:hover {
     background-color: #0000000a;
 }
 .tool-small {
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 35px;
+    font-size: large;
 }
 
 .rating-button{
