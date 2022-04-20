@@ -86,7 +86,7 @@ function onTurnStart(player)
     {
         onOtherPlayerTurn(player);
     }
-    drawTimer.startTimer(6000000);
+    drawTimer.startTimer(60);
 
 }
 
