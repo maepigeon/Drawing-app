@@ -40,11 +40,15 @@ function showStorySubmissions(submissions)
         
         $("#story-submissions-container").html(
             $("#story-submissions-container").html() + 
-            '<div id = "submission-section">' + submission.addition + '</div>' +
-            '<div id = "vote-section"><span class="scorebox scorebox-small" >' + submission.votes + '</span>' +
-            '<button class="tool-button-small tool-button" id="vote-for-addition-' + idx + '-button"><i class="fa-solid fa-thumbs-up fa-lg"></i></button></div>' +
+            '<div class = "submission-section" id = "submission-section'+ idx+'">' + submission.addition + '</div>' +
+            '<div class = "vote-section" id = "vote-section'+idx+'"><span class="scorebox scorebox-small" style="margin: auto;">' + 
+                submission.votes + '</span>' +
+            '<button class="tool-button-small tool-button" style="margin: auto;" id="vote-for-addition-' + 
+                idx + '-button"><i class="fa-solid fa-thumbs-up fa-lg"></i></button></div>' +
             "<br><br>"
         );
+        var additionHeight = $("#submission-section"+ idx).height();
+        $("#vote-section" + idx).height(additionHeight);
         
         idx++;
     });

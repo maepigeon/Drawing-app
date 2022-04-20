@@ -47,12 +47,13 @@ body {
     height: 400px;
     width: 18vw;
     overflow-wrap: break-word;
+    overflow-y: scroll;
     padding: 10px;
 }
 
 
 #story-input-area {
-    height: 20vh;
+    height: 12vh;
     width: 200px;
 }
 
@@ -61,7 +62,7 @@ body {
 }
 
 #story-submissions-container {
-    height: 20vh;
+    height: 23vh;
     width:16vw;
     overflow-y: scroll;
     overflow-wrap: break-word;
@@ -70,19 +71,19 @@ body {
     padding:5px;
 }
 
-#story-submissions-container::-webkit-scrollbar {
-    width: 0 !important;
-}
 
-#submission-section {
-    width: 70%;
+
+.submission-section {
+    width: 64%;
     float: left;
     padding:7px;
 }
 
-#vote-section {
-    width: 25%;
+.vote-section {
+    width: 24%;
     float: left;
+    display:flex;
+    padding:7px;
 }
 
 .tool-button-small {
