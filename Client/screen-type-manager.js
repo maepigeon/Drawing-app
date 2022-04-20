@@ -32,6 +32,7 @@ function createEnterNameBox() {
         '</form>'
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
+    $("#instructions-container").removeClass("hidden");
 
     $("#enter-name-button").on("click", () =>
     {
@@ -47,6 +48,7 @@ function createEnterNameBox() {
 // Removes and deletes the enter name box from the window.
 function deleteEnterNameBox() {
     document.getElementById("enterNameBox").remove();
+    $("#instructions-container").addClass("hidden");
 }
 
 
