@@ -59,12 +59,25 @@ function changeUsername(ws, data) {
 }
 // Refreshes the names list for all clients
 function refreshNamesListAllClients() {
-    usernames = [];
-    connected_client_sockets.forEach(element => usernames.push(element.username));
-    console.log(usernames);
+    players = [];
+    connected_client_sockets.forEach(element =>
+    {
+        players.push(
+            {
+                "username": element.username,
+                "id": element.id
+            }
+        );
+
+    } );
+    console.log("sending players:");
+    console.log(players);
     let message = {
         messageType: "refreshUsernamesList",
-        data: {usernames: usernames},
+        data: 
+        {
+            "players": players
+        },
         userId: -1 //server
     };
     send_data_to_all_clients(message);

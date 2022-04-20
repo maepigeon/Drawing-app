@@ -144,7 +144,7 @@ function startTurn()
         {
             "messageType":"gameControl",
             "eventType":"turnStart",
-            "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
+            "playerTurn":server.connected_client_sockets[gameManager.currentPlayer]
         }
     );
     

@@ -27,7 +27,7 @@ export function interpretGameControlCommand(message)
             onGameStart();
             break;
         case "turnStart":
-            console.log("Turn starting! It's player " + message.playerTurn + "'s turn");
+            console.log("Turn starting! It's player " + message.playerTurn.id + "'s turn");
             onTurnStart(message.playerTurn);
             break;
         case "gameEnd":
@@ -41,9 +41,10 @@ export function interpretGameControlCommand(message)
 
 function updateScores(scores)
 {
-    console.log(scores);
-    let myScore = scores.find(e => e.playerId == networking.getUserId());
-    $("#score").text(myScore.score);
+    for (let i = 0; i < scores.length; i++)
+    {
+        $("#player-" + i + "-scorebox").text(scores[i].score);
+    }
 
 }
 
@@ -77,7 +78,7 @@ function onGameEnd()
 function onTurnStart(turn)
 {
     generateWord();
-    if (turn == networking.getUserId())
+    if (turn.id == networking.getUserId())
     {
         onMyTurn();
     }
@@ -103,10 +104,10 @@ function onMyTurn()
     setStoryWritingEnabled(false);
 }
 
-function onOtherPlayerTurn(playerId)
+function onOtherPlayerTurn(player)
 {
     isMyTurn = false;
-    $("#title").text("It's Player " + (playerId + 1) + "'s turn to draw!");
+    $("#title").text("It's " + player.username + "'s turn to draw!");
     $("#prompt").addClass("hidden");
     $("#prompt-text").css("color", "#00000000");
     $("#tools").addClass("hidden");

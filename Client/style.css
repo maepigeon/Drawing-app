@@ -17,6 +17,9 @@ body {
     height:100vh;
     grid-template-columns: 1.5fr 3fr 1.2fr;
 }
+#app-layout.end-game {
+    grid-template-columns: 4fr 3fr 4fr;
+}
 
 .grid-box {
     display: inline-block;
@@ -188,7 +191,7 @@ body {
 
 
 
-canvas {
+#canvas {
     top: 100;
     bottom: 0;
     left: 0;
@@ -199,11 +202,19 @@ canvas {
     margin: 10px;
 }
 
-canvas.enabled {
+#canvas.end-game {
+    height: calc(75vh*.6);
+    width: calc(95vh*.6);  
+    top: 50%;
+    bottom: 50%;
+    margin-top: 50%;
+}
+
+#canvas.enabled {
     outline-color: green;
 }
 
-canvas.disabled {
+#canvas.disabled {
     outline-color: red;
 }
 
@@ -225,6 +236,20 @@ canvas.disabled {
     background-color: #bdbdbd;
     cursor: pointer;
     border: none;
+}
+.game-button.download {
+    color: white;
+    background-color: green;
+    font-size: 2em;
+    padding: 20px;
+    bottom: 20px;
+}
+.game-button.download:hover {
+    background-color: rgb(6, 77, 6);
+}
+
+.download-button-container {
+    /* empty */    
 }
 
 #prompt {

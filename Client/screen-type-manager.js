@@ -8,13 +8,15 @@ let currentPage = "drawingMode";
 showPage("enterName");
 
 // Developer shortcuts to enter each page on commang
-/*document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function(event) {
     if (event.key == '-') {
         showPage("enterName")
     } if (event.key == '=') {
         showPage("drawingMode");
-    } 
-});*/
+    } if (event.key == '0') {
+        showPage("endGame");
+    }
+});
 
 // Creates an enter name box and adds it to the window.
 function createEnterNameBox() {
@@ -61,11 +63,14 @@ export function showPage(pageName) {
             deleteEnterNameBox();
             break;
         case "drawingMode":
+            $("#title-container").addClass("hidden");
             showCanvasFeatures(false);
             setCanvasEnabled(false);
             break;
         case "endGame":
             deleteEndGameScreen();
+            showCanvasFeatures(false);
+
             break;
         default:
             break;
@@ -80,16 +85,68 @@ export function showPage(pageName) {
             showCanvasFeatures(false);
             break;
         case "drawingMode":
+            $("#title-container").removeClass("hidden");
             showCanvasFeatures(true);
             setCanvasEnabled(true);
             break;
         case "endGame":
+            showCanvasFeatures(true);
             createEndGameScreen();
             break;
         default:
             console.log("Attempted to load an invalid page name: " + pageName);
             break;
     }
+}
+
+// Creates the end game screen
+function createEndGameScreen() {
+    $("#app-layout").addClass("end-game");
+    $("#canvas").addClass("end-game");
+    $("#players-container").addClass("hidden");
+    $("#prompt-container").addClass("hidden");
+    $("#title-container").addClass("hidden");
+    $("#timer-container").addClass("hidden");
+    $("#tools").addClass("hidden");
+    $("#rating").addClass("hidden");
+    $("#story-input-container").addClass("hidden");
+    $("#game-controls").addClass("hidden");
+    $("#download-canvas").removeClass("hidden");
+    $("#download-story").removeClass("hidden");
+
+    $("#title").text("DoodlLab");
+
+
+    //rearrange
+    $("#left").attr("id", "temp-middle");
+    $("#middle").attr("id", "left");
+    $("#temp-middle").attr("id", "middle");
+    $('#left').insertBefore('#middle');
+}
+
+// Deletes the end game screen
+function deleteEndGameScreen() {
+    $("#app-layout").removeClass("end-game");
+    $("#canvas").removeClass("end-game");
+    $("#players-container").removeClass("hidden");
+    $("#prompt-container").removeClass("hidden");
+    $("#title-container").removeClass("hidden");
+    $("#timer-container").removeClass("hidden");
+    $("#tools").removeClass("hidden");
+    $("#rating").removeClass("hidden");
+    $("#story-input-container").removeClass("hidden");
+    $("#game-controls").removeClass("hidden");
+    $("#download-canvas").addClass("hidden");
+    $("#download-story").addClass("hidden");
+
+    $("#title").text("No active game. Click Start Game to begin a game.");
+
+    //rearrange
+    $("#left").attr("id", "temp-middle");
+    $("#middle").attr("id", "left");
+    $("#temp-middle").attr("id", "middle");
+    $('#left').insertBefore('#middle');
+
 }
 
 
