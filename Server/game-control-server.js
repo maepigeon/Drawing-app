@@ -83,7 +83,7 @@ function initializeGame(turnsPerPlayer)
     gameManager = new GameManager(server.connected_client_sockets.length, turnsPerPlayer);
     gameManager.onGameStart = () => startGame();
     gameManager.onTurnDrawingStart = () => startTurn();
-    gameManager.onTurnDrawingEnd = () => endTurn();
+    gameManager.onTurnDrawingEnd = () => endTurnDrawing();
     gameManager.onGameEnd = () => endGame();
 }
 
@@ -156,13 +156,62 @@ function startTurn()
     initializeRatings();
 }
 
-function endTurn()
+function endTurnDrawing()
 {
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
-            "eventType":"turnEnd",
+            "eventType":"turnEndDrawing",
             "playerTurn":server.connected_client_sockets[gameManager.currentPlayer].id
+        }
+    );
+    startStorySubmitPhase();
+}
+
+function startStorySubmitPhase()
+{
+    let duration = 20;
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameControl",
+            "eventType":"storySubmitPhaseStart",
+            "duration": duration
+        }
+    );
+    setTimeout(endStorySubmitPhase, duration*100);
+}
+
+function endStorySubmitPhase()
+{
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameControl",
+            "eventType":"storySubmitPhaseEnd"
+        }
+    );
+    startStoryVotePhase();
+}
+
+function startStoryVotePhase()
+{
+    let duration = 20;
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameControl",
+            "eventType":"storyVotePhaseStart",
+            "duration": duration
+        }
+    );
+    setTimeout(endStoryVotePhase, duration*100);
+
+}
+
+function endStoryVotePhase()
+{
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameControl",
+            "eventType":"storyVotePhaseEnd"
         }
     );
     let story = require("./story-control-server.js");
