@@ -1,4 +1,5 @@
 import { networking } from "./networking.js";
+import { deleteThemeScreen } from "./screen-type-manager.js";
 
 export {getWordList};
 export {generateWord}
@@ -29,7 +30,7 @@ async function getWordList(theme) {
     let rn = Math.floor(Math.random() * words.length);
     let word = words[rn];
     document.getElementById('prompt').innerHTML = word;
-    
+    deleteThemeScreen();
 }
 
 export function setThemeForAll(theme)

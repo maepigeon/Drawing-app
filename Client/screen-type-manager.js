@@ -5,20 +5,7 @@ import {initiateGameForAll} from "./game-control-client.js"
 
 // Window manager that loads/unloads pages without needing to refresh the page.
 
-// Each user should enter their name when they join.
-let currentPage = "drawingMode";
-showPage("enterName");
 
-// Developer shortcuts to enter each page on commang
-document.addEventListener('keydown', function(event) {
-    if (event.key == '-') {
-        showPage("enterName")
-    } if (event.key == '=') {
-        showPage("drawingMode");
-    } if (event.key == '0') {
-        showPage("endGame");
-    }
-});
 
 // Creates an enter name box and adds it to the window.
 function createEnterNameBox() {
@@ -134,7 +121,7 @@ function createThemeScreen() {
     });
 }
 //removes theme screen
-function deleteThemeScreen() {
+export function deleteThemeScreen() {
     $("#theme-button").addClass("hidden");
     showCanvasFeatures(true);
 }
@@ -224,5 +211,27 @@ function toggleVisible(element, visible)
         $(element).addClass("hidden");
     }
 }
-$("#start-game-button").on("click", createThemeScreen);
-$("#new-game-button").on("click", createThemeScreen);
+
+
+let currentPage = "drawingMode";
+$ (function ()
+{
+    $("#start-game-button").on("click", createThemeScreen);
+    $("#new-game-button").on("click", createThemeScreen);
+
+    
+    // Each user should enter their name when they join.
+    showPage("enterName");
+
+    
+    // Developer shortcuts to enter each page on commang
+    document.addEventListener('keydown', function(event) {
+        if (event.key == '-') {
+            showPage("enterName")
+        } if (event.key == '=') {
+            showPage("drawingMode");
+        } if (event.key == '0') {
+            showPage("endGame");
+        }
+    });
+});
