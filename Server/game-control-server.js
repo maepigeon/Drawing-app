@@ -222,6 +222,7 @@ function endStorySubmitPhase()
     startStoryVotePhase();
 }
 
+let storyVoteTimer;
 function startStoryVotePhase()
 {
     
@@ -229,7 +230,7 @@ function startStoryVotePhase()
     if (story.getStorySubmissionCount() > 1)
     {
         let duration = 60;
-        setTimeout(endStoryVotePhase, duration*1000);
+        storyVoteTimer = setTimeout(endStoryVotePhase, duration*1000);
         server.send_data_to_all_clients(
             {
                 "messageType":"gameControl",
@@ -269,6 +270,9 @@ function endGame()
         }
     );
     gameManager.gameIsActive = false;
+    
+    clearTimeout(storyVoteTimer);
+    clearTimeout(storySubmitTimer);
 }
 
 function gameIsActive()
