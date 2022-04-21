@@ -506,11 +506,12 @@ function deselectTools()
 
 // input management (todo: clean up and add gui input)
 document.addEventListener('keydown', function(event) {
-    if (!canvasEnabled) { // Do nothing if the canvas is disabled.
+    if (!canvasEnabled || !drawingEnabled) { // Do nothing if the canvas is disabled.
         return;
     }
     if (event.key == 'e') {
-        toggleEraser();
+        // toggleEraser();
+        $("#tool-erase").trigger("click");
     } 
     if (event.key == '[')
     {
