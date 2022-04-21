@@ -106,6 +106,7 @@ export function showPage(pageName) {
 
 function createThemeScreen() {
     $("#theme-button").removeClass("hidden");
+    showCanvasFeatures(false);
     $("#nature-button").on("click", () =>
     {
         getWordList(1);
@@ -130,6 +131,7 @@ function createThemeScreen() {
 //removes theme screen
 function deleteThemeScreen() {
     $("#theme-button").addClass("hidden");
+    showCanvasFeatures(true);
 }
 
 // Creates the end game screen
