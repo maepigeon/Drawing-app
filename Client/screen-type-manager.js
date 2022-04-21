@@ -1,6 +1,7 @@
 import {networking} from "./networking.js"
 import {setCanvasEnabled} from "./canvas.js"
-import {getWordList} from "./WordGenerator.js"
+import {getWordList, setThemeForAll} from "./WordGenerator.js"
+import {initiateGameForAll} from "./game-control-client.js"
 
 // Window manager that loads/unloads pages without needing to refresh the page.
 
@@ -109,23 +110,27 @@ function createThemeScreen() {
     showCanvasFeatures(false);
     $("#nature-button").on("click", () =>
     {
-        getWordList(1);
+        setThemeForAll(1);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#food-button").on("click", () =>
     {
-        getWordList(2);
+        setThemeForAll(2);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#spooky-button").on("click", () =>
     {
-        getWordList(3);
+        setThemeForAll(3);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#random-button").on("click", () =>
     {
-        getWordList(4);
+        setThemeForAll(4);
         deleteThemeScreen();
+        initiateGameForAll();
     });
 }
 //removes theme screen

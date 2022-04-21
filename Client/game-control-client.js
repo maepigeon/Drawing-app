@@ -50,8 +50,16 @@ export function interpretGameControlCommand(message)
         case "storyVotePhaseEnd":
             storyVotePhaseEnd();
             break;
+        case "setTheme":
+            setTheme(message.theme);
+            break;
 
     }
+}
+
+function setTheme(theme)
+{
+    getWordList(theme);
 }
 
 function storySubmitPhaseStart(duration)
@@ -106,7 +114,7 @@ function onGameStart(numTurns)
     $("#new-game-button").addClass("hidden");
     clearCanvas();
     resetStory();
-    getWordList();
+    // getWordList();
     $("#total-turn-number").text(numTurns);
 }
 
@@ -177,7 +185,7 @@ function onOtherPlayerTurn(player)
     setStoryWritingEnabled(true);
 }
 
-function initiateGameForAll()
+export function initiateGameForAll()
 {
     networking.sendMessage(
         "gameControl", 
@@ -232,10 +240,10 @@ $ (function ()
     // $("#start-game-button").on("click", getWordList);
     //for now, turns per player is hardcoded to 3
     //TODO: make turns per player specified by the players in the game
-    $("#start-game-button").on("click", () => {
-        console.log("clicked game start");
-        initiateGameForAll();
-    });
+    // $("#start-game-button").on("click", () => {
+    //     console.log("clicked game start");
+    //     initiateGameForAll();
+    // });
     $("#new-game-button").on("click", () => {
         console.log("clicked new game");
         initiateGameForAll();
