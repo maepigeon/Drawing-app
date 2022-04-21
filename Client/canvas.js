@@ -612,6 +612,16 @@ $("#color-grey").on("click", function()
     callSetColorAll("grey");
 });
 
+$("#color-pastelpurple").on("click", function()
+{
+    callSetColorAll("#C3B1E1");
+});
+
+$("#color-brown").on("click", function()
+{
+    callSetColorAll("#5f3f14");
+});
+
 $("#tool-erase").on("click", function()
 {
     callSetEraserAll(true);
