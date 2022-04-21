@@ -36,6 +36,11 @@ body {
     color: teal;
 }
 
+.mvp-label {
+    width: 100%;
+    padding: 8px;
+}
+
 
 #players {
     height: 320px;

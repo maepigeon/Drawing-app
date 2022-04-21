@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div id="download-story" class="download-button-container hidden">
-                    <button class="game-button download"> Export story </button>
+                    <button class="game-button download" id="download-story-button"> Export story </button>
                 </div>
             </div>
             <div id="middle" style="align-self: stretch;">
@@ -48,7 +48,7 @@
                     <button class="game-button hidden" id="end-turn-button">End Turn</button>
                 </div>
                 <div id="download-canvas" class="download-button-container hidden">
-                    <button class="game-button download"> Export canvas </button>
+                    <button class="game-button download" id="download-canvas-button"> Export canvas </button>
                 </div>
             </div>
             <div id="right">
@@ -116,6 +116,16 @@
                     <button class="rating-button" id="rating-button-4">4</button>
                     <button class="rating-button" id="rating-button-5">5</button>
                 </div>
+                <div id="mvp-container" class="hidden">
+                    <div id="mvp-storyteller-container">
+                        <h3 class="mvp-label grid-box" style="margin-bottom: 10px;">MVP Storyteller:</h3>
+                        <h4 id="mvp-storyteller-name">name here</h4>
+                    </div>
+                    <div id="mvp-artist-container">
+                        <h3 class="mvp-label grid-box" style="margin-bottom: 10px;">MVP Artist:</h3>
+                        <h4 id="mvp-artist-name">name here</h4>
+                    </div>
+                </div>
                 <div id="story-input-container" class="hidden">
                     <div id="story-submit-container">
                         <h3 class="label grid-box" style="margin-bottom: 10px;">Add to the story:</h3>
@@ -141,7 +151,7 @@
         <script type="module" src="WordGenerator.js?v=1"></script>
         <script type="module" src="game-control-client.js"></script>
         <script type="module" src="screen-type-manager.js"></script>
-
+        <script type="module" src="download-buttons.js"></script>
 
     </body>
 </html>

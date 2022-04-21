@@ -240,6 +240,9 @@ $ (function ()
         console.log("clicked new game");
         initiateGameForAll();
     });
+    $("#end-game-button").on("click", () => {
+        console.log("clicked new game");
+    });
     $("#end-turn-button").on("click", () => {
         endTurn();
     });

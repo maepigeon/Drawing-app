@@ -37,8 +37,8 @@ function createEnterNameBox() {
     $("#enter-name-button").on("click", () =>
     {
         let playerName = $("#enter-name-field").val();
-        if (playerName.length < 3) {
-            window.alert("Your username must be at least 3 characters long. Please try again.");
+        if (playerName.length < 1) {
+            window.alert("Your username must be at least 1 character long. Please try again.");
         } else {
             networking.submitName(playerName);
             showPage("drawingMode");
@@ -52,7 +52,7 @@ function deleteEnterNameBox() {
 }
 
 
-// shows the relevant page: [drawingMode, enterName]
+// shows the relevant page: [drawingMode, enterName, endGame]
 export function showPage(pageName) {
     // No need to show a page if it is already there.
     if (pageName === currentPage) {
@@ -114,6 +114,10 @@ function createEndGameScreen() {
     $("#rating").addClass("hidden");
     $("#story-input-container").addClass("hidden");
     $("#game-controls").addClass("hidden");
+    $("#turn-container").addClass("hidden");
+
+    $("#mvp-container").removeClass("hidden");
+
     $("#download-canvas").removeClass("hidden");
     $("#download-story").removeClass("hidden");
 
@@ -138,6 +142,11 @@ function deleteEndGameScreen() {
     $("#tools").removeClass("hidden");
     $("#rating").removeClass("hidden");
     $("#story-input-container").removeClass("hidden");
+    $("#turn-container").removeClass("hidden");
+
+    $("#mvp-container").addClass("hidden");
+
+
     $("#game-controls").removeClass("hidden");
     $("#download-canvas").addClass("hidden");
     $("#download-story").addClass("hidden");
@@ -151,6 +160,7 @@ function deleteEndGameScreen() {
     $('#left').insertBefore('#middle');
 
 }
+
 
 
 // Hide the canvas
