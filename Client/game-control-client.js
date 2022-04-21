@@ -244,10 +244,10 @@ $ (function ()
     //     console.log("clicked game start");
     //     initiateGameForAll();
     // });
-    $("#new-game-button").on("click", () => {
-        console.log("clicked new game");
-        initiateGameForAll();
-    });
+    // $("#new-game-button").on("click", () => {
+    //     console.log("clicked new game");
+    //     initiateGameForAll();
+    // });
     $("#end-game-button").on("click", () => {
         console.log("clicked new game");
     });

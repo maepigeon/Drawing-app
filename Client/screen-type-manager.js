@@ -225,3 +225,4 @@ function toggleVisible(element, visible)
     }
 }
 $("#start-game-button").on("click", createThemeScreen);
+$("#new-game-button").on("click", createThemeScreen);
