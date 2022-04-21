@@ -97,6 +97,7 @@ function startGame()
         {
             "messageType":"gameControl",
             "eventType":"gameStart",
+            "totalTurns": gameManager.numTurns
         }
     );
     
@@ -151,7 +152,8 @@ function startTurn()
             {
                 "id": player.id,
                 "name": player.username
-            }
+            },
+            "turnNumber": gameManager.currentTurn
         }
     );
     

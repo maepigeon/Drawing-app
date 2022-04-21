@@ -26,11 +26,11 @@ export function interpretGameControlCommand(message)
     {
         case "gameStart":
             console.log("Game starting!");
-            onGameStart();
+            onGameStart(message.totalTurns);
             break;
         case "turnStart":
             console.log("Turn starting! It's player " + message.player.id + "'s turn");
-            onTurnStart(message.player);
+            onTurnStart(message.player, message.turnNumber);
             break;
         case "gameEnd":
             onGameEnd();
@@ -99,7 +99,7 @@ function updateScores(scores)
 
 }
 
-function onGameStart()
+function onGameStart(numTurns)
 {
     console.log("game start");
     $("#start-game-button").addClass("hidden");
@@ -107,6 +107,7 @@ function onGameStart()
     clearCanvas();
     resetStory();
     getWordList();
+    $("#total-turn-number").text(numTurns);
 }
 
 function onGameEnd()
@@ -126,7 +127,7 @@ function onGameEnd()
 //     $("#end-turn-button").addClass("hidden");
 // }
 
-function onTurnStart(player)
+function onTurnStart(player, turn)
 {
     generateWord();
     isDrawPhase = true;
@@ -139,7 +140,7 @@ function onTurnStart(player)
         onOtherPlayerTurn(player);
     }
     drawTimer.startTimer(60);
-    
+    $("#turn-number").text(turn + 1);
 
 }
 
