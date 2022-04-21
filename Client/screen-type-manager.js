@@ -223,7 +223,10 @@ $ (function ()
 {
     $("#start-game-button").on("click", createThemeScreen);
     $("#new-game-button").on("click", createThemeScreen);
-
+    $("#end-game-button").on("click", function ()
+    {
+        showPage("endGame")
+    });
     
     // Each user should enter their name when they join.
     showPage("enterName");
@@ -239,4 +242,5 @@ $ (function ()
             showPage("endGame");
         }
     });
+    
 });
