@@ -170,6 +170,10 @@ wss.on("connection", ws => {
             }
         }
         refreshNamesListAllClients();
+        if (gameControl.gameIsActive())
+        {
+            gameControl.endGame();
+        }
     });
 });
 

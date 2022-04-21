@@ -268,6 +268,19 @@ function endGame()
             "eventType":"gameEnd"
         }
     );
+    gameManager.gameIsActive = false;
+}
+
+function gameIsActive()
+{
+    if (gameManager != null)
+    {
+        return gameManager.gameIsActive;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 class GameManager
@@ -289,6 +302,7 @@ class GameManager
         this.onGameEnd = () => {};
         this.onTurnDrawingStart = () => {};
         this.onTurnDrawingEnd = () => {};
+        this.gameIsActive = false;
     }
     
     startGame()
@@ -297,6 +311,7 @@ class GameManager
         this.currentPlayer = 0;
         this.onGameStart();
         this.startTurnDrawing(this.currentPlayer);
+        this.gameIsActive = true;
     }
     
     nextTurn()
@@ -317,6 +332,7 @@ class GameManager
     endGame()
     {
         this.onGameEnd();
+        this.gameIsActive = false;
     }
     
     startTurnDrawing()
@@ -332,5 +348,8 @@ class GameManager
 
 module.exports = {
     interpretGameControlCommand,
-    onAllPlayersSubmittedStory
+    onAllPlayersSubmittedStory,
+    gameIsActive,
+    endGame
+
 };
