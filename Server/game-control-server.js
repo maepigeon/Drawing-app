@@ -4,6 +4,7 @@ let gameManager;
 
 let drawingRatings = [];
 let playerScores = [];
+let theme = 1;
 
 function interpretGameControlCommand(player, message)
 {
@@ -13,7 +14,7 @@ function interpretGameControlCommand(player, message)
     {
         case "gameStart":
             initializeGame(message.data.turnsPerPlayer);
-            gameManager.startGame();
+            gameManager.startGame(message.data.theme);
             break;
         // case "turnStart":
         //     gameManager.startTurn();
@@ -23,6 +24,9 @@ function interpretGameControlCommand(player, message)
             break;
         case "rateDrawing":
             submitDrawingRating(player, message.data.rating);
+            break;
+        case "setTheme":
+            setTheme(message.data.theme);
             break;
     }
 }
@@ -89,6 +93,18 @@ function initializeGame(turnsPerPlayer)
     gameManager.onGameEnd = () => endGame();
 }
 
+function setTheme(selectedTheme)
+{
+    server = require("./index.js");
+    theme = selectedTheme;
+    server.send_data_to_all_clients(
+        {
+            "messageType":"gameControl",
+            "eventType":"setTheme",
+            "theme": theme
+        }
+    );
+}
 
 function startGame()
 {

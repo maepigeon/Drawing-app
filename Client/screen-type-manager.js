@@ -1,23 +1,11 @@
 import {networking} from "./networking.js"
 import {setCanvasEnabled} from "./canvas.js"
-import {getWordList} from "./WordGenerator.js"
+import {getWordList, setThemeForAll} from "./WordGenerator.js"
+import {initiateGameForAll} from "./game-control-client.js"
 
 // Window manager that loads/unloads pages without needing to refresh the page.
 
-// Each user should enter their name when they join.
-let currentPage = "drawingMode";
-showPage("enterName");
 
-// Developer shortcuts to enter each page on commang
-document.addEventListener('keydown', function(event) {
-    if (event.key == '-') {
-        showPage("enterName")
-    } if (event.key == '=') {
-        showPage("drawingMode");
-    } if (event.key == '0') {
-        showPage("endGame");
-    }
-});
 
 
 // Creates an enter name box and adds it to the window.
@@ -110,29 +98,33 @@ function createThemeScreen() {
     showCanvasFeatures(false);
     $("#nature-button").on("click", () =>
     {
-        getWordList(1);
+        setThemeForAll(1);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#food-button").on("click", () =>
     {
-        getWordList(2);
+        setThemeForAll(2);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#spooky-button").on("click", () =>
     {
-        getWordList(3);
+        setThemeForAll(3);
         deleteThemeScreen();
+        initiateGameForAll();
     });
     $("#random-button").on("click", () =>
     {
-        getWordList(4);
+        setThemeForAll(4);
         deleteThemeScreen();
+        initiateGameForAll();
     });
 }
 //removes theme screen
-function deleteThemeScreen() {
+export function deleteThemeScreen() {
     $("#theme-button").addClass("hidden");
-    showCanvasFeatures(true);
+    showCanvas(true);
 }
 
 // Creates the end game screen
@@ -194,15 +186,21 @@ function deleteEndGameScreen() {
 
 }
 
-// Hide the canvas
-function showCanvasFeatures(visible) {
-    toggleVisible("#layers", visible);
-    toggleVisible("#story-container", visible);
-    toggleVisible("#tools", visible);
+function showCanvas(visible)
+{
     toggleVisible("#prompt-container", visible);
     toggleVisible("#title-container", visible);
+    toggleVisible("#layers", visible);
+    toggleVisible("#story-container", visible);
     toggleVisible("#game-controls", visible);
     toggleVisible("#timer-container", visible);
+
+}
+
+// Hide the canvas
+function showCanvasFeatures(visible) {
+    showCanvas(visible);
+    toggleVisible("#tools", visible);
 
 }
 
@@ -218,5 +216,27 @@ function toggleVisible(element, visible)
         $(element).addClass("hidden");
     }
 }
-$("#start-game-button").on("click", createThemeScreen);
 
+
+let currentPage = "drawingMode";
+$ (function ()
+{
+    $("#start-game-button").on("click", createThemeScreen);
+    $("#new-game-button").on("click", createThemeScreen);
+
+    
+    // Each user should enter their name when they join.
+    showPage("enterName");
+
+    
+    // Developer shortcuts to enter each page on commang
+    document.addEventListener('keydown', function(event) {
+        if (event.key == '-') {
+            showPage("enterName")
+        } if (event.key == '=') {
+            showPage("drawingMode");
+        } if (event.key == '0') {
+            showPage("endGame");
+        }
+    });
+});

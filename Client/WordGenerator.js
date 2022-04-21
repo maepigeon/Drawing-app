@@ -1,3 +1,6 @@
+import { networking } from "./networking.js";
+import { deleteThemeScreen } from "./screen-type-manager.js";
+
 export {getWordList};
 export {generateWord}
 
@@ -10,19 +13,35 @@ async function getWordList(theme) {
         case 1:
             const response = await fetch("./themed-words/natureandanimals.json");
             words = await response.json();
+            break;
         case 2:
             const response2 = await fetch("./themed-words/foodanddrink.json");
             words = await response2.json();
+            break;
         case 3:
             const response3 = await fetch("./themed-words/spooky.json");
             words = await response3.json();
+            break;
         case 4:
             const response4 = await fetch("./themed-words/truerandom.json");
             words = await response4.json();
+            break;
     }
     let rn = Math.floor(Math.random() * words.length);
     let word = words[rn];
     document.getElementById('prompt').innerHTML = word;
+    deleteThemeScreen();
+}
+
+export function setThemeForAll(theme)
+{
+    networking.sendMessage(
+        "gameControl",
+        {
+            "event": "setTheme",
+            "theme": theme
+        }
+    );
 }
 
 //Generates a word
