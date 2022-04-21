@@ -1,4 +1,5 @@
 let server;
+let story;
 let gameManager;
 
 let drawingRatings = [];
@@ -80,6 +81,7 @@ function sendScoreUpdate()
 function initializeGame(turnsPerPlayer)
 {
     server = require("./index.js");
+    story = require("./story-control-server.js");
     gameManager = new GameManager(server.connected_client_sockets.length, turnsPerPlayer);
     gameManager.onGameStart = () => startGame();
     gameManager.onTurnDrawingStart = () => startTurn();
@@ -168,9 +170,18 @@ function endTurnDrawing()
     startStorySubmitPhase();
 }
 
+let storySubmitTimer;
+let isStorySubmitPhase = false;
+let allPlayersSubmittedStory = false;
 function startStorySubmitPhase()
 {
-    let duration = 20;
+    isStorySubmitPhase = true;
+    let duration = 60;
+    if (allPlayersSubmittedStory)
+    {
+        duration = 10;
+        console.log("reset all player submission state");
+    }
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
@@ -178,11 +189,28 @@ function startStorySubmitPhase()
             "duration": duration
         }
     );
-    setTimeout(endStorySubmitPhase, duration*100);
+    storySubmitTimer = setTimeout(endStorySubmitPhase, duration*1000);
+}
+
+function onAllPlayersSubmittedStory()
+{
+    console.log("all players submitted story!");
+    if (isStorySubmitPhase)
+    {
+        clearTimeout(storySubmitTimer);
+        endStorySubmitPhase();
+        allPlayersSubmittedStory = false;
+    }
+    else
+    {
+        allPlayersSubmittedStory = true;
+    }
+
 }
 
 function endStorySubmitPhase()
 {
+    isStorySubmitPhase = false;
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
@@ -194,15 +222,24 @@ function endStorySubmitPhase()
 
 function startStoryVotePhase()
 {
-    let duration = 20;
-    server.send_data_to_all_clients(
-        {
-            "messageType":"gameControl",
-            "eventType":"storyVotePhaseStart",
-            "duration": duration
-        }
-    );
-    setTimeout(endStoryVotePhase, duration*100);
+    
+    
+    if (story.getStorySubmissionCount() > 1)
+    {
+        let duration = 60;
+        setTimeout(endStoryVotePhase, duration*1000);
+        server.send_data_to_all_clients(
+            {
+                "messageType":"gameControl",
+                "eventType":"storyVotePhaseStart",
+                "duration": duration
+            }
+        );
+    }
+    else
+    {
+        endStoryVotePhase();
+    }
 
 }
 
@@ -214,7 +251,7 @@ function endStoryVotePhase()
             "eventType":"storyVotePhaseEnd"
         }
     );
-    let story = require("./story-control-server.js");
+    // let story = require("./story-control-server.js");
     story.addMostVotedAdditionToStory();
     awardScoreForRatings();
     gameManager.nextTurn();
@@ -292,5 +329,6 @@ class GameManager
 }
 
 module.exports = {
-    interpretGameControlCommand
+    interpretGameControlCommand,
+    onAllPlayersSubmittedStory
 };

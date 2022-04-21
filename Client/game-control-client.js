@@ -3,18 +3,20 @@ import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
-import { resetStory, resetVotes, setStoryWritingEnabled } from "./story-control-client.js";
+import { resetStory, resetVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
 import { Timer } from "./timer.js";
 
 let drawTimer = new Timer();
 drawTimer.onTimerFinished = () =>
 {
-    if (isMyTurn)
+    if (isMyTurn && isDrawPhase)
     {
         endTurn();
     }
 }
+drawTimer.onTimerFinished;
 let isMyTurn = false;
+let isDrawPhase = false;
 
 export function interpretGameControlCommand(message)
 {
@@ -36,7 +38,56 @@ export function interpretGameControlCommand(message)
         case "updateScores":
             updateScores(message.scores);
             break;
+        case "storySubmitPhaseStart":
+            storySubmitPhaseStart(message.duration);
+            break;
+        case "storySubmitPhaseEnd":
+            storySubmitPhaseEnd();
+            break;
+        case "storyVotePhaseStart":
+            storyVotePhaseStart(message.duration);
+            break;
+        case "storyVotePhaseEnd":
+            storyVotePhaseEnd();
+            break;
+
     }
+}
+
+function storySubmitPhaseStart(duration)
+{
+    drawTimer.startTimer(duration);
+    if (isMyTurn)
+    {
+        $("#title").text("Wait while the other players finish writing additions to the story!");
+
+    }
+    else
+    {
+        $("#title").text("Finish writing your story submission!");
+    }
+}
+
+function storySubmitPhaseEnd()
+{
+    
+}
+
+function storyVotePhaseStart(duration)
+{
+
+    drawTimer.startTimer(duration);
+    $("#title").text("Vote for your favorite story submissions!");
+    setStoryVotingEnabled(true);
+    setStoryWritingEnabled(false);
+    resetVotes();
+
+
+}
+
+function storyVotePhaseEnd()
+{
+
 }
 
 function updateScores(scores)
@@ -78,6 +129,7 @@ function onGameEnd()
 function onTurnStart(player)
 {
     generateWord();
+    isDrawPhase = true;
     if (player.id == networking.getUserId())
     {
         onMyTurn();
@@ -87,6 +139,7 @@ function onTurnStart(player)
         onOtherPlayerTurn(player);
     }
     drawTimer.startTimer(60);
+    
 
 }
 
@@ -98,10 +151,11 @@ function onMyTurn()
     $("#end-turn-button").removeClass("hidden");
     $("#prompt").removeClass("hidden");
     $("#prompt-text").css("color", "#000000");
-    $("#tools").removeClass("hidden");
+    // $("#tools").removeClass("hidden");
     $("#rating").addClass("hidden");
     $("#title").text("It's your turn to draw!");
     setStoryWritingEnabled(false);
+    setStoryVotingEnabled(false);
 }
 
 function onOtherPlayerTurn(player)
@@ -110,13 +164,15 @@ function onOtherPlayerTurn(player)
     $("#title").text("It's " + player.name + "'s turn to draw!");
     $("#prompt").addClass("hidden");
     $("#prompt-text").css("color", "#00000000");
-    $("#tools").addClass("hidden");
+    // $("#tools").addClass("hidden");
     $("#rating").removeClass("hidden");
     console.log("It's not my turn!");
     setDrawingEnabled(false);
     setStoryWritingEnabled(true);
-    resetVotes();
     selectRating(3);
+
+    setStoryVotingEnabled(false);
+    setStoryWritingEnabled(true);
 }
 
 function initiateGameForAll()
@@ -161,6 +217,10 @@ function endTurn()
 {
     networking.sendMessage("gameControl", {"event": "turnEnd"});
     $("#end-turn-button").addClass("hidden");
+    setDrawingEnabled(false);
+    // isMyTurn = false;
+    isDrawPhase = false;
+    drawTimer.cancelTimer();
 }
 
 $ (function ()

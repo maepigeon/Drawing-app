@@ -99,6 +99,8 @@ function submitStoryAddition(addition)
             "addition": addition
         }
     );
+    $("#submitted-story").text(addition);
+    $("#submitted-story-title").removeClass("hidden");
 }
 
 function updateStory(story)
@@ -122,11 +124,34 @@ export function setStoryWritingEnabled(enabled)
 {
     if (enabled)
     {
+        $("#story-submit-container").removeClass("hidden");
         $("#story-input-container").removeClass("hidden");
+        $("#submitted-story-title").addClass("hidden");
+        $("#submitted-story").text("");
+        $("#story-input-area").val("");
+
     }
     else
     {
-        $("#story-input-container").addClass("hidden");
+        $("#story-submit-container").addClass("hidden");
+        // $("#story-input-container").addClass("hidden");
+
+    }
+}
+
+export function setStoryVotingEnabled(enabled)
+{
+    if (enabled)
+    {
+        $("#story-vote-container").removeClass("hidden");
+        $("#story-input-container").removeClass("hidden");
+
+    }
+    else
+    {
+        $("#story-vote-container").addClass("hidden");
+        // $("#story-input-container").addClass("hidden");
+
     }
 }
 

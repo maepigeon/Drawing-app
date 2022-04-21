@@ -1,3 +1,5 @@
+const { onAllPlayersSubmittedStory } = require("./game-control-server.js");
+
 let server;
 let story = "";
 let storySubmissions = [];
@@ -52,6 +54,15 @@ function submitStoryAddition(player, addition)
         console.log(element);
     });
     sendStorySubmissions();
+    if (storySubmissions.length >= server.connected_client_sockets.length - 1)
+    {
+        onAllPlayersSubmittedStory();
+    }
+}
+
+function getStorySubmissionCount()
+{
+    return storySubmissions.length;
 }
 
 function voteForStoryAddition(additionVotedOnId)
@@ -121,5 +132,7 @@ function sendStoryUpdate()
 
 module.exports = {
     interpretStoryControlCommand,
-    addMostVotedAdditionToStory
+    addMostVotedAdditionToStory,
+    storySubmissions,
+    getStorySubmissionCount
 };

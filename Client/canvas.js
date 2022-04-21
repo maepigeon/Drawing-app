@@ -338,12 +338,16 @@ export function setDrawingEnabled(enabled)
     {
         $("#canvas").addClass("enabled");
         $("#canvas").removeClass("disabled");
+        $("#tools").removeClass("hidden");
+
         
     }
     else
     {
         $("#canvas").removeClass("enabled");
         $("#canvas").addClass("disabled");
+        $("#tools").addClass("hidden");
+
     }
 }
 
