@@ -25,5 +25,3 @@ function generateWord() {
     }
 }
 
-$("#start-game-button").on("click", getWordList);
-// $("#end-turn-button").on("click", generateWord);
