@@ -352,6 +352,13 @@ body {
     background-color: white;
     z-index: 2;
     margin-top: 50px;
-    font-size: large;
+    font-size: x-large;
     padding: 32px 16px;
+    border: none;
+}
+
+.theme:hover {
+    background-color: #bdbdbd;
+    cursor: pointer;
+    border: none;
 }
