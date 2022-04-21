@@ -123,7 +123,7 @@ function createThemeScreen() {
 //removes theme screen
 export function deleteThemeScreen() {
     $("#theme-button").addClass("hidden");
-    showCanvasFeatures(true);
+    showCanvas(true);
 }
 
 // Creates the end game screen
@@ -185,17 +185,21 @@ function deleteEndGameScreen() {
 
 }
 
+function showCanvas(visible)
+{
+    toggleVisible("#prompt-container", visible);
+    toggleVisible("#title-container", visible);
+    toggleVisible("#layers", visible);
+    toggleVisible("#story-container", visible);
+    toggleVisible("#game-controls", visible);
+    toggleVisible("#timer-container", visible);
 
+}
 
 // Hide the canvas
 function showCanvasFeatures(visible) {
-    toggleVisible("#layers", visible);
-    toggleVisible("#story-container", visible);
+    showCanvas(visible);
     toggleVisible("#tools", visible);
-    toggleVisible("#prompt-container", visible);
-    toggleVisible("#title-container", visible);
-    toggleVisible("#game-controls", visible);
-    toggleVisible("#timer-container", visible);
 
 }
 
