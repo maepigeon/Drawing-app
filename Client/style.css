@@ -348,3 +348,10 @@ body {
     outline-style: solid;
     outline-width: 5px;
 }
+.theme {
+    background-color: white;
+    z-index: 2;
+    margin-top: 50px;
+    font-size: large;
+    padding: 32px 16px;
+}

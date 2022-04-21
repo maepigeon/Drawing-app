@@ -1,5 +1,6 @@
 import {networking} from "./networking.js"
 import {setCanvasEnabled} from "./canvas.js"
+import {getWordList} from "./WordGenerator.js"
 
 // Window manager that loads/unloads pages without needing to refresh the page.
 
@@ -101,6 +102,37 @@ export function showPage(pageName) {
             break;
     }
 }
+//adds theme screen
+
+function createThemeScreen() {
+    $("#theme-button").removeClass("hidden");
+    showCanvasFeatures(false);
+    $("#nature-button").on("click", () =>
+    {
+        getWordList(1);
+        deleteThemeScreen();
+    });
+    $("#food-button").on("click", () =>
+    {
+        getWordList(2);
+        deleteThemeScreen();
+    });
+    $("#spooky-button").on("click", () =>
+    {
+        getWordList(3);
+        deleteThemeScreen();
+    });
+    $("#random-button").on("click", () =>
+    {
+        getWordList(4);
+        deleteThemeScreen();
+    });
+}
+//removes theme screen
+function deleteThemeScreen() {
+    $("#theme-button").addClass("hidden");
+    showCanvasFeatures(true);
+}
 
 // Creates the end game screen
 function createEndGameScreen() {
@@ -187,3 +219,4 @@ function toggleVisible(element, visible)
         $(element).addClass("hidden");
     }
 }
+$("#start-game-button").on("click", createThemeScreen);
