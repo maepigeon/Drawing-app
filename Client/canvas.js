@@ -14,7 +14,7 @@ let activeLayerIndex = 0;
 let history = [];
 let undoHistory = [];
 
-let brush = {size: 10, color: "red"};
+let brush = {size: 10, color: "black"};
 let eraser = false;
 
 import {networking} from "./networking.js"
@@ -480,7 +480,7 @@ function decreaseBrushThickness(amt) {
     increaseBrushThickness(-amt);
 }
 // sets the color of the brush on all canvas instances connected to the server
-function callSetColorAll(color) {
+export function callSetColorAll(color) {
     setColor(color);
 
     let message = {
@@ -495,6 +495,13 @@ function callSetColorAll(color) {
 function setColor(color) {
     brush.color = color;
     callSetEraserAll(false);
+}
+
+function deselectTools()
+{
+    $(".tool-button").each(function(i, obj) {
+        $(this).removeClass("selected");
+    });
 }
 
 // input management (todo: clean up and add gui input)
@@ -517,6 +524,20 @@ document.addEventListener('keydown', function(event) {
         callUndoAll();
     } if (event.ctrlKey && event.key === 'y') {
         callRedoAll();
+    }
+});
+
+$(".tool-button").on("click", function ()
+{
+    if (
+        !$(this).is("#tool-undo") &&
+        !$(this).is("#tool-redo") &&
+        !$(this).is("#tool-decrease-thickness") &&
+        !$(this).is("#tool-increase-thickness")
+    )
+    {
+        deselectTools();
+        $(this).addClass("selected");
     }
 });
 

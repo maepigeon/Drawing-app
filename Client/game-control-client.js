@@ -1,7 +1,7 @@
 import {getWordList} from "./WordGenerator.js";
 import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
-import { setDrawingEnabled } from "./canvas.js";
+import { callSetColorAll, setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 import { resetStory, resetVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
 import { Timer } from "./timer.js";
@@ -156,6 +156,7 @@ function onMyTurn()
     $("#title").text("It's your turn to draw!");
     setStoryWritingEnabled(false);
     setStoryVotingEnabled(false);
+    $("#color-black").trigger("click");
 }
 
 function onOtherPlayerTurn(player)
