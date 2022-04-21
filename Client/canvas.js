@@ -583,7 +583,7 @@ $("#color-salmon").on("click", function()
     callSetColorAll("#ff5349");
 });
 
-$("#color-gold").on("click", function()
+$("#color-lightbrown").on("click", function()
 {
     callSetColorAll("#FFD700");
 });

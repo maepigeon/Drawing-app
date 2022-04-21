@@ -115,6 +115,7 @@ function onGameEnd()
     console.log("game end")
     setDrawingEnabled(false);
     $("#new-game-button").removeClass("hidden");
+    $("#end-game-button").removeClass("hidden");
     $("#title").text("Game over!");
     drawTimer.cancelTimer();
 
@@ -241,7 +242,7 @@ $ (function ()
         initiateGameForAll();
     });
     $("#end-game-button").on("click", () => {
-        console.log("clicked new game");
+        console.log("end game clicked");
     });
     $("#end-turn-button").on("click", () => {
         endTurn();

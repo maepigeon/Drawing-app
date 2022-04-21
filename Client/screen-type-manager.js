@@ -19,6 +19,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+
 // Creates an enter name box and adds it to the window.
 function createEnterNameBox() {
     var div = document.createElement('div');
@@ -193,8 +194,6 @@ function deleteEndGameScreen() {
 
 }
 
-
-
 // Hide the canvas
 function showCanvasFeatures(visible) {
     toggleVisible("#layers", visible);
@@ -220,3 +219,4 @@ function toggleVisible(element, visible)
     }
 }
 $("#start-game-button").on("click", createThemeScreen);
+
