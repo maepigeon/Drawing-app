@@ -80,7 +80,9 @@ export function interpretCommand(message) {
 }
 
 export function clearCanvas() {
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    //canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height); transparent
+    canvas.getContext("2d").fillStyle = "white";
+    canvas.getContext("2d").fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // Creates a layer on top of the specified layer for all users.
@@ -409,7 +411,7 @@ function draw(pencilData) {
     ctx.lineCap = "round";
 
     if (eraser) {
-        ctx.globalCompositeOperation = "destination-out";
+        ctx.globalCompositeOperation = "source-over";
         ctx.strokeStyle = "rgba(255,255,255,1)";
     } else {
         ctx.globalCompositeOperation = "source-over";
@@ -495,6 +497,7 @@ export function callSetColorAll(color) {
 function setColor(color) {
     brush.color = color;
     callSetEraserAll(false);
+
 }
 
 function deselectTools()
@@ -641,6 +644,5 @@ $("#tool-decrease-thickness").on("click", function()
 
 
 setBrushThickness(brush.size);
-
 
 

@@ -7,9 +7,16 @@ import { clearCanvas } from "./canvas.js";
 let maxVotes = 3;
 let votes = maxVotes;
 
+let playersList = [];
+
+// gets a list of the players in format {player.id, player.username}
+export function getPlayersList() {
+    return playersList;
+}
 // Updates the list of player names gui
 export function updateNamesList(message) {
     let players = message.data.players;
+    playersList = players;
     console.log(players);
     $("#players").empty();
     players.forEach(player => {   

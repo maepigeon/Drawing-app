@@ -5,6 +5,7 @@ import { callSetColorAll, setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 import { resetStory, resetVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
 import { Timer } from "./timer.js";
+import {getPlayersList} from "./story-control-client.js" // {id, username}
 
 let drawTimer = new Timer();
 drawTimer.onTimerFinished = () =>
@@ -17,6 +18,8 @@ drawTimer.onTimerFinished = () =>
 drawTimer.onTimerFinished;
 let isMyTurn = false;
 let isDrawPhase = false;
+
+let playerScores = [];
 
 export function interpretGameControlCommand(message)
 {
@@ -104,7 +107,7 @@ function updateScores(scores)
     {
         $("#player-" + i + "-scorebox").text(scores[i].score);
     }
-
+    playerScores = scores;
 }
 
 function onGameStart(numTurns)
@@ -151,6 +154,24 @@ function onTurnStart(player, turn)
     drawTimer.startTimer(60);
     $("#turn-number").text(turn + 1);
 
+}
+
+// Gets the MVP artists's username
+export function getMVPArtist() {
+    let maxScoreID = 0;
+    for (let i = 0; i < playerScores.length; i++) {
+        if (playerScores[i].score > playerScores[maxScoreID].score) {
+            maxScoreID = i;
+        }
+    }
+    let players = getPlayersList();
+    let mvpName = "error: mvp artist's name not found";
+    for (let i = 0; i < players.length; i++){
+        if (players[i].id === maxScoreID) {
+             mvpName = players[i].username;
+        }
+    }
+    return mvpName;
 }
 
 function onMyTurn()

@@ -2,6 +2,7 @@ import {networking} from "./networking.js"
 import {setCanvasEnabled} from "./canvas.js"
 import {getWordList, setThemeForAll} from "./WordGenerator.js"
 import {initiateGameForAll} from "./game-control-client.js"
+import {getMVPArtist} from "./game-control-client.js"
 
 // Window manager that loads/unloads pages without needing to refresh the page.
 
@@ -184,6 +185,8 @@ function deleteEndGameScreen() {
     $("#temp-middle").attr("id", "middle");
     $('#left').insertBefore('#middle');
 
+    //get the mvp artist
+    $("#mvp-artist-name").text(getMVPArtist);
 }
 
 function showCanvas(visible)
@@ -233,7 +236,7 @@ $ (function ()
 
     
     // Developer shortcuts to enter each page on commang
-    document.addEventListener('keydown', function(event) {
+    /*document.addEventListener('keydown', function(event) {
         if (event.key == '-') {
             showPage("enterName")
         } if (event.key == '=') {
@@ -241,6 +244,6 @@ $ (function ()
         } if (event.key == '0') {
             showPage("endGame");
         }
-    });
+    });*/
     
 });
