@@ -61,8 +61,8 @@ let networking = new NetworkingObject();
 
 //const ws = new WebSocket("ws://368d-2607-b400-26-0-8410-ccd7-64b9-639f.ngrok.io");
 //const ws = new WebSocket("ws://localhost:8082");
-const ws = new WebSocket("ws://localhost:8082", "echo-protocol");
-//const ws = new WebSocket("ws://73.99.214.50:8082", "echo-protocol");
+//const ws = new WebSocket("ws://localhost:8082", "echo-protocol");
+const ws = new WebSocket("ws://73.99.214.50:8082", "echo-protocol");
 
 
 //your unique user id. -1 is not valid.

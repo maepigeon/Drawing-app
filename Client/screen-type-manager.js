@@ -72,6 +72,7 @@ export function showPage(pageName) {
 
     currentPage = pageName;
 
+
     // Adds the new page to the window.
     switch (pageName) {
         case "enterName":
@@ -154,7 +155,8 @@ function createEndGameScreen() {
     $("#left").attr("id", "temp-middle");
     $("#middle").attr("id", "left");
     $("#temp-middle").attr("id", "middle");
-    $('#left').insertBefore('#middle');
+    $("#left").insertBefore("#middle");
+    $("#mvp-artist-name").text(getMVPArtist());
 }
 
 // Deletes the end game screen
@@ -179,14 +181,12 @@ function deleteEndGameScreen() {
 
     $("#title").text("No active game. Click Start Game to begin a game.");
 
+
     //rearrange
     $("#left").attr("id", "temp-middle");
     $("#middle").attr("id", "left");
     $("#temp-middle").attr("id", "middle");
     $('#left').insertBefore('#middle');
-
-    //get the mvp artist
-    $("#mvp-artist-name").text(getMVPArtist);
 }
 
 function showCanvas(visible)
@@ -228,15 +228,15 @@ $ (function ()
     $("#new-game-button").on("click", createThemeScreen);
     $("#end-game-button").on("click", function ()
     {
-        showPage("endGame")
+        showPage("endGame");
     });
     
     // Each user should enter their name when they join.
     showPage("enterName");
 
-    
+    /*
     // Developer shortcuts to enter each page on commang
-    /*document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function(event) {
         if (event.key == '-') {
             showPage("enterName")
         } if (event.key == '=') {
