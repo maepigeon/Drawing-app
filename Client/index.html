@@ -43,8 +43,8 @@
                 </div>
                 <div id="game-controls">
                     <button class="game-button" id="start-game-button">Start Game</button>
-                    <button class="game-button hidden" id="new-game-button">New Game</button>
-                    <button class="game-button hidden"id="end-game-button">End Game</button>
+                    <!-- <button class="game-button hidden" id="new-game-button">New Game</button> -->
+                    <!-- <button class="game-button hidden"id="end-game-button">End Game</button> -->
                     <button class="game-button hidden" id="end-turn-button">End Turn</button>
                 </div>
                 <div id="download-canvas" class="download-button-container hidden">
@@ -83,7 +83,7 @@
                         After each player draws 3 times, the game is over and the player with the most points wins!
                     </p>
                 </div>
-                <div id="turn-container">
+                <div id="turn-container" class="hidden">
                     Turn <span id="turn-number">0</span>/<span id="total-turn-number">0</span>
                 </div>
                 <br>
@@ -127,9 +127,11 @@
                 </div>
                 <div id="mvp-container" class="hidden">
                     <div id="mvp-artist-container">
-                        <h3 class="mvp-label grid-box" style="margin-bottom: 10px;">MVP Artist:</h3>
+                        <h3 class="mvp-label grid-box">MVP Artist:</h3>
                         <h4 id="mvp-artist-name">name here</h4>
                     </div>
+                    <button class="game-button download" id="new-game-button">New Game</button>
+
                 </div>
                 <div id="story-input-container" class="hidden">
                     <div id="story-submit-container">

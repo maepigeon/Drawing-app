@@ -1,6 +1,7 @@
 export {networking};
 import {interpretCommand} from "./canvas.js";
 import { interpretGameControlCommand } from "./game-control-client.js";
+import { showPage } from "./screen-type-manager.js";
 import { interpretStoryControlCommand } from "./story-control-client.js";
 import { updateNamesList } from "./story-control-client.js";
 
@@ -89,6 +90,9 @@ ws.addEventListener("message", e => {
     }
 
     switch (message.messageType) {
+        case "connectionFailed":
+            onConnectionFailed(message)
+            break;
         case "userConnectedMessage":
             console.log(message.connectionMessage)
             break;
@@ -110,3 +114,8 @@ ws.addEventListener("message", e => {
             break;
     }
 });
+
+function onConnectionFailed(message)
+{
+    showPage("waitingRoom");
+}

@@ -12,6 +12,8 @@ function createWaitingRoomMessage() {
     var div = document.createElement('div');
     div.id = "waiting-room-container";
     let htmlText =
+        '<h1 id = "logo-title">DoodlLab</h1>' +
+        '<br>' +
         '<h1>There is a game currently ongoing. Please check back later to join the game.</h1>'
     div.innerHTML = htmlText.trim();
     document.getElementById('middle').append(div);
@@ -119,6 +121,9 @@ export function showPage(pageName) {
 
 function createThemeScreen() {
     $("#theme-button").removeClass("hidden");
+    toggleVisible("#rating", false);
+    toggleVisible("#story-input-container", false);
+    toggleVisible("#turn-container", false);
     showCanvasFeatures(false);
     $("#nature-button").on("click", () =>
     {
@@ -157,7 +162,7 @@ function createEndGameScreen() {
     $("#canvas").addClass("end-game");
     $("#players-container").addClass("hidden");
     $("#prompt-container").addClass("hidden");
-    $("#title-container").addClass("hidden");
+    // $("#title-container").addClass("hidden");
     $("#timer-container").addClass("hidden");
     $("#tools").addClass("hidden");
     $("#rating").addClass("hidden");
@@ -170,14 +175,14 @@ function createEndGameScreen() {
     $("#download-canvas").removeClass("hidden");
     $("#download-story").removeClass("hidden");
 
-    $("#title").text("DoodlLab");
+    $("#title").text("Game Over!");
 
 
     //rearrange
-    $("#left").attr("id", "temp-middle");
-    $("#middle").attr("id", "left");
-    $("#temp-middle").attr("id", "middle");
-    $("#left").insertBefore("#middle");
+    // $("#left").attr("id", "temp-middle");
+    // $("#middle").attr("id", "left");
+    // $("#temp-middle").attr("id", "middle");
+    // $("#left").insertBefore("#middle");
     $("#mvp-artist-name").text(getMVPArtist());
 }
 
@@ -187,7 +192,7 @@ function deleteEndGameScreen() {
     $("#canvas").removeClass("end-game");
     $("#players-container").removeClass("hidden");
     $("#prompt-container").removeClass("hidden");
-    $("#title-container").removeClass("hidden");
+    // $("#title-container").removeClass("hidden");
     $("#timer-container").removeClass("hidden");
     $("#tools").removeClass("hidden");
     $("#rating").removeClass("hidden");
@@ -205,10 +210,10 @@ function deleteEndGameScreen() {
 
 
     //rearrange
-    $("#left").attr("id", "temp-middle");
-    $("#middle").attr("id", "left");
-    $("#temp-middle").attr("id", "middle");
-    $('#left').insertBefore('#middle');
+    // $("#left").attr("id", "temp-middle");
+    // $("#middle").attr("id", "left");
+    // $("#temp-middle").attr("id", "middle");
+    // $('#left').insertBefore('#middle');
 }
 
 function showCanvas(visible)
@@ -219,6 +224,7 @@ function showCanvas(visible)
     toggleVisible("#story-container", visible);
     toggleVisible("#game-controls", visible);
     toggleVisible("#timer-container", visible);
+    toggleVisible("#turn-container", visible);
 
 }
 
@@ -247,7 +253,11 @@ let currentPage = "drawingMode";
 $ (function ()
 {
     $("#start-game-button").on("click", createThemeScreen);
-    $("#new-game-button").on("click", createThemeScreen);
+    $("#new-game-button").on("click", function()
+    {
+        showPage("drawingMode");
+        createThemeScreen();
+    });
     $("#end-game-button").on("click", function ()
     {
         showPage("endGame");

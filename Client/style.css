@@ -39,6 +39,18 @@ body {
 .mvp-label {
     width: 100%;
     padding: 8px;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#mvp-artist-name
+{
+    font-size: 2em;
+}
+
+#mvp-artist-container
+{
+    margin-bottom: 300px;
 }
 
 
@@ -264,7 +276,7 @@ body {
     width: calc(95vh*.6);  
     top: 50%;
     bottom: 50%;
-    margin-top: 50%;
+    margin-top: 30%;
 }
 
 #canvas.enabled {

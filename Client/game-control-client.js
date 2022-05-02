@@ -6,6 +6,7 @@ import { clearCanvas } from "./canvas.js";
 import { resetStory, resetVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
 import { Timer } from "./timer.js";
 import {getPlayersList} from "./story-control-client.js" // {id, username}
+import { showPage } from "./screen-type-manager.js";
 
 let drawTimer = new Timer();
 drawTimer.onTimerFinished = () =>
@@ -129,6 +130,8 @@ function onGameEnd()
     $("#end-game-button").removeClass("hidden");
     $("#title").text("Game over!");
     drawTimer.cancelTimer();
+    showPage("endGame");
+
 
 }
 
