@@ -70,6 +70,11 @@ function generate_socket_id()
     return id;
 }
 
+function getNumPlayers()
+{
+    return connected_client_sockets.length;
+}
+
 function send_data_to_client(ws, data)
 {
     ws.send(JSON.stringify(data));
@@ -221,5 +226,6 @@ module.exports =
     connected_client_sockets,
     send_data_to_all_clients,
     send_data_to_client,
-    get_player_id
+    get_player_id,
+    getNumPlayers
 };

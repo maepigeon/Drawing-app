@@ -200,6 +200,10 @@ function startStorySubmitPhase()
         duration = 10;
         console.log("reset all player submission state");
     }
+    if (server.getNumPlayers() <= 1)
+    {
+        duration = 0;
+    }
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
