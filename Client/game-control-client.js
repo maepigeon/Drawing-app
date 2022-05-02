@@ -3,7 +3,7 @@ import {generateWord} from "./WordGenerator.js";
 import {networking} from "./networking.js";
 import { callSetColorAll, setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
-import { resetStory, resetVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
+import { resetStory, setVotes, setStoryVotingEnabled, setStoryWritingEnabled } from "./story-control-client.js";
 import { Timer } from "./timer.js";
 import {getPlayersList} from "./story-control-client.js" // {id, username}
 import { showPage } from "./screen-type-manager.js";
@@ -49,7 +49,7 @@ export function interpretGameControlCommand(message)
             storySubmitPhaseEnd();
             break;
         case "storyVotePhaseStart":
-            storyVotePhaseStart(message.duration);
+            storyVotePhaseStart(message.duration, message.numVotes);
             break;
         case "storyVotePhaseEnd":
             storyVotePhaseEnd();
@@ -85,14 +85,14 @@ function storySubmitPhaseEnd()
     
 }
 
-function storyVotePhaseStart(duration)
+function storyVotePhaseStart(duration, votes)
 {
 
     drawTimer.startTimer(duration);
     $("#title").text("Vote for your favorite story submissions!");
     setStoryVotingEnabled(true);
     setStoryWritingEnabled(false);
-    resetVotes();
+    setVotes(votes);
 
 
 }

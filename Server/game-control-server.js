@@ -243,6 +243,7 @@ function endStorySubmitPhase()
 }
 
 let storyVoteTimer;
+let numVotes = 3;
 function startStoryVotePhase()
 {
     
@@ -255,7 +256,8 @@ function startStoryVotePhase()
             {
                 "messageType":"gameControl",
                 "eventType":"storyVotePhaseStart",
-                "duration": duration
+                "duration": duration,
+                "numVotes": numVotes
             }
         );
     }
@@ -268,6 +270,7 @@ function startStoryVotePhase()
 
 function endStoryVotePhase()
 {
+    clearTimeout(storyVoteTimer);
     server.send_data_to_all_clients(
         {
             "messageType":"gameControl",
@@ -374,6 +377,8 @@ module.exports = {
     interpretGameControlCommand,
     onAllPlayersSubmittedStory,
     gameIsActive,
-    endGame
+    endGame,
+    numVotes,
+    endStoryVotePhase
 
 };

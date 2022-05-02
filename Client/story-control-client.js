@@ -4,8 +4,7 @@ import {networking} from "./networking.js";
 import { setDrawingEnabled } from "./canvas.js";
 import { clearCanvas } from "./canvas.js";
 
-let maxVotes = 3;
-let votes = maxVotes;
+let votes = 0;
 
 let playersList = [];
 
@@ -91,9 +90,9 @@ function voteForAddition(additionId)
     }
 }
 
-export function resetVotes()
+export function setVotes(numVotes)
 {
-    votes = maxVotes;
+    votes = numVotes;
     $("#votes-remaining").text(votes);
 }
 

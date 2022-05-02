@@ -1,4 +1,4 @@
-const { onAllPlayersSubmittedStory } = require("./game-control-server.js");
+const { onAllPlayersSubmittedStory, gameIsActive, numVotes, endStoryVotePhase } = require("./game-control-server.js");
 
 let server;
 let story = "";
@@ -65,10 +65,17 @@ function getStorySubmissionCount()
     return storySubmissions.length;
 }
 
+let submittedVotes = 0;
 function voteForStoryAddition(additionVotedOnId)
 {
     storySubmissions[additionVotedOnId].votes++;
+    submittedVotes++;
     console.log(storySubmissions[additionVotedOnId]);
+    if (submittedVotes >= (numVotes * server.getNumPlayers()))
+    {
+        endStoryVotePhase();
+        submittedVotes = 0;
+    }
 }
 
 function sendStorySubmissions()
