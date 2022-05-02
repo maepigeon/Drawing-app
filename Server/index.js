@@ -10,13 +10,39 @@ console.log("Websocket server starting...");
 
 let connected_client_sockets = []; // extry format: {int id, Socket socket, string username}
 
+//gets the entry in the connected_client_sockets list for a player with the specified socket
+function get_connected_player(socket)
+{
+    let socket_entry = connected_client_sockets.find(s => s.socket == socket);
+    if (socket_entry != null)
+    {
+        return socket_entry;
+    }
+    else
+    {
+        return null;
+    }
+}
 
-//gets the index of a specified socket
-function get_socket_id(socket) {
+//gets the player id of a specified socket
+function get_player_id(socket) {
     let socket_entry = connected_client_sockets.find(s => s.socket == socket);
     if (socket_entry != null)
     {
         return socket_entry.id;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+//gets the index of a specified socket in the connected_client_sockets list
+function get_socket_index(socket) {
+    let socket_entry = connected_client_sockets.find(s => s.socket == socket);
+    if (socket_entry != null)
+    {
+        return connected_client_sockets.indexOf(socket_entry);
     }
     else
     {
@@ -40,7 +66,7 @@ function generate_socket_id()
     {
         id = connected_client_sockets.length;
     }
-    console.log("generated id is " + id);
+    // console.log("generated id is " + id);
     return id;
 }
 
@@ -53,14 +79,19 @@ function send_data_to_client(ws, data)
 // Changes the username stored for the user at the specified socket
 function changeUsername(ws, data) {
     console.log(data.data.username);
-    connected_client_sockets[get_socket_id(ws)].username = data.data.username;
-    console.log("new username change: user id " +  get_socket_id(ws) + "'s name is now "+ connected_client_sockets[get_socket_id(ws)].username);
-    refreshNamesListAllClients();
+    let player = get_connected_player(ws);
+    if (player != null)
+    {
+        player.username = data.data.username;
+        console.log("new username change: user id " +  get_player_id(ws) + "'s name is now " + player.username);
+        refreshNamesListAllClients();
+
+    }
 }
 // Refreshes the names list for all clients
 function refreshNamesListAllClients() {
     let players = getPlayers();
-    console.log("sending players:");
+    console.log("Sending updated player list:");
     console.log(players);
     let message = {
         messageType: "refreshUsernamesList",
@@ -103,7 +134,7 @@ function send_data_to_all_clients(data)
 
 // when a user connected to the server.
 wss.on("connection", ws => {
-    console.log("new client connected!");
+    console.log("New client connected!");
     
 
     // store the new player
@@ -117,17 +148,10 @@ wss.on("connection", ws => {
     );
     changeUsername(ws, {data: {username: "User " + playerID.toString()}});
     
-
-    // display a list of connected clients
-    console.log("connected clients:");
-    for (let i = 0; i < connected_client_sockets.length; i++)
-    {
-        console.log(connected_client_sockets[i].id);
-    }
     let message = {
         messageType: "connectionConfirmation",
-        connectionMessage: "Your user index is: " + get_socket_id(ws).toString(),
-        userId: get_socket_id(ws)
+        connectionMessage: "Your user index is: " + get_player_id(ws).toString(),
+        userId: get_player_id(ws)
     }
     // ws.send(JSON.stringify(message));
     send_data_to_client(ws, message);
@@ -144,15 +168,15 @@ wss.on("connection", ws => {
             case "connecting":
                 let message = {
                     messageType: "userConnectedMessage",
-                    connectionMessage: "another person just joined! Their user index is: " + get_socket_id(ws).toString()
+                    connectionMessage: "another person just joined! Their user index is: " + get_player_id(ws).toString()
                 };
                 send_data_to_all_clients(message);
                 break;
             case "gameControl":
-                gameControl.interpretGameControlCommand(get_socket_id(ws), data);
+                gameControl.interpretGameControlCommand(get_player_id(ws), data);
                 break;
             case "storyControl":
-                storyControl.interpretStoryControlCommand(get_socket_id(ws), data);
+                storyControl.interpretStoryControlCommand(get_player_id(ws), data);
                 break;
             case "changeUsername":
                 changeUsername(ws, data);
@@ -170,11 +194,6 @@ wss.on("connection", ws => {
         if (disconnected_index >= 0)
         {
             connected_client_sockets.splice(disconnected_index, 1);
-            console.log("connected clients:");
-            for (let i = 0; i < connected_client_sockets.length; i++)
-            {
-                console.log(connected_client_sockets[i].id);
-            }
         }
         refreshNamesListAllClients();
         if (gameControl.gameIsActive())
@@ -189,5 +208,5 @@ module.exports =
     connected_client_sockets,
     send_data_to_all_clients,
     send_data_to_client,
-    get_socket_id
+    get_player_id
 };
