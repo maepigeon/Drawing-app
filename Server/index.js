@@ -134,73 +134,86 @@ function send_data_to_all_clients(data)
 
 // when a user connected to the server.
 wss.on("connection", ws => {
-    console.log("New client connected!");
-    
 
-    // store the new player
-    let playerID = generate_socket_id();
-    connected_client_sockets.push(
-        {
-            "id": playerID,
-            "socket":ws,
-            "username": "User " + playerID.toString()
+    if (gameControl.gameIsActive())
+    {
+        let message = {
+            messageType: "connectionFailed",
+            message: "Game already active, can't join game"
         }
-    );
-    changeUsername(ws, {data: {username: "User " + playerID.toString()}});
-    
-    let message = {
-        messageType: "connectionConfirmation",
-        connectionMessage: "Your user index is: " + get_player_id(ws).toString(),
-        userId: get_player_id(ws)
+        send_data_to_client(ws, message);
     }
-    // ws.send(JSON.stringify(message));
-    send_data_to_client(ws, message);
-
-
-    ws.on('message', raw_data => {
-        // console.log('Client has sent us: ' + raw_data.toString());
-        // console.log('message type: ' + JSON.parse(raw_data).messageType);
-
-        let data = JSON.parse(raw_data);
-
-        switch (data.messageType)
-        {
-            case "connecting":
-                let message = {
-                    messageType: "userConnectedMessage",
-                    connectionMessage: "another person just joined! Their user index is: " + get_player_id(ws).toString()
-                };
-                send_data_to_all_clients(message);
-                break;
-            case "gameControl":
-                gameControl.interpretGameControlCommand(get_player_id(ws), data);
-                break;
-            case "storyControl":
-                storyControl.interpretStoryControlCommand(get_player_id(ws), data);
-                break;
-            case "changeUsername":
-                changeUsername(ws, data);
-                break;
-            default:
-                send_data_to_all_clients(data);
-                break;
-        }
-    });
-
-    ws.on("close", () => {
-        console.log("Client has disconnected!");
+    else
+    {
+        console.log("New client connected!");
         
-        let disconnected_index = connected_client_sockets.findIndex(entry => entry.socket == ws);
-        if (disconnected_index >= 0)
-        {
-            connected_client_sockets.splice(disconnected_index, 1);
+    
+        // store the new player
+        let playerID = generate_socket_id();
+        connected_client_sockets.push(
+            {
+                "id": playerID,
+                "socket":ws,
+                "username": "User " + playerID.toString()
+            }
+        );
+        changeUsername(ws, {data: {username: "User " + playerID.toString()}});
+        
+        let message = {
+            messageType: "connectionConfirmation",
+            connectionMessage: "Your user index is: " + get_player_id(ws).toString(),
+            userId: get_player_id(ws)
         }
-        refreshNamesListAllClients();
-        if (gameControl.gameIsActive())
-        {
-            gameControl.endGame();
-        }
-    });
+        // ws.send(JSON.stringify(message));
+        send_data_to_client(ws, message);
+    
+    
+        ws.on('message', raw_data => {
+            // console.log('Client has sent us: ' + raw_data.toString());
+            // console.log('message type: ' + JSON.parse(raw_data).messageType);
+    
+            let data = JSON.parse(raw_data);
+    
+            switch (data.messageType)
+            {
+                case "connecting":
+                    let message = {
+                        messageType: "userConnectedMessage",
+                        connectionMessage: "another person just joined! Their user index is: " + get_player_id(ws).toString()
+                    };
+                    send_data_to_all_clients(message);
+                    break;
+                case "gameControl":
+                    gameControl.interpretGameControlCommand(get_player_id(ws), data);
+                    break;
+                case "storyControl":
+                    storyControl.interpretStoryControlCommand(get_player_id(ws), data);
+                    break;
+                case "changeUsername":
+                    changeUsername(ws, data);
+                    break;
+                default:
+                    send_data_to_all_clients(data);
+                    break;
+            }
+        });
+    
+        ws.on("close", () => {
+            console.log("Client has disconnected!");
+            
+            let disconnected_index = connected_client_sockets.findIndex(entry => entry.socket == ws);
+            if (disconnected_index >= 0)
+            {
+                connected_client_sockets.splice(disconnected_index, 1);
+            }
+            refreshNamesListAllClients();
+            if (gameControl.gameIsActive())
+            {
+                gameControl.endGame();
+            }
+        });
+
+    }
 });
 
 module.exports =

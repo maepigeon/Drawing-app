@@ -7,7 +7,24 @@ import {getMVPArtist} from "./game-control-client.js"
 // Window manager that loads/unloads pages without needing to refresh the page.
 
 
+// Creates a waiting room message.
+function createWaitingRoomMessage() {
+    var div = document.createElement('div');
+    div.id = "waiting-room-container";
+    let htmlText =
+        '<h1>There is a game currently ongoing. Please check back later to join the game.</h1>'
+    div.innerHTML = htmlText.trim();
+    document.getElementById('middle').append(div);
+    $("#instructions-container").removeClass("hidden");
+    $("#players-container").addClass("hidden");
+}
 
+// Removes and deletes the waiting room message
+function deleteWaitingRoomMessage() {
+    document.getElementById("waiting-room-container").remove();
+    $("#players-container").removeClass("hidden");
+
+}
 
 // Creates an enter name box and adds it to the window.
 function createEnterNameBox() {
@@ -64,7 +81,9 @@ export function showPage(pageName) {
         case "endGame":
             deleteEndGameScreen();
             showCanvasFeatures(false);
-
+            break;
+        case "waitingRoom":
+            deleteWaitingRoomMessage();
             break;
         default:
             break;
@@ -87,6 +106,9 @@ export function showPage(pageName) {
         case "endGame":
             showCanvasFeatures(true);
             createEndGameScreen();
+            break;
+        case "waitingRoom":
+            createWaitingRoomMessage();
             break;
         default:
             console.log("Attempted to load an invalid page name: " + pageName);
