@@ -588,7 +588,7 @@ $("#color-salmon").on("click", function()
 
 $("#color-lightbrown").on("click", function()
 {
-    callSetColorAll("#FFD700");
+    callSetColorAll("#bb9a57");
 });
 
 $("#color-yg").on("click", function()

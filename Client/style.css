@@ -280,11 +280,11 @@ body {
 }
 
 #canvas.enabled {
-    outline-color: green;
+    outline-color: rgb(43, 177, 16);
 }
 
 #canvas.disabled {
-    outline-color: red;
+    outline-color: rgb(192, 18, 18);
 }
 
 .hidden {
