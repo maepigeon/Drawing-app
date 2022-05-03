@@ -1,6 +1,4 @@
-Doodllab
-
-doodllab.com
+See doodllab.com for an example of how it should look when run correctly.
 
 An online drawing game by Emily Adams, Marty Hanapole, Jacob Neigh, Michael Pigeon.
 
