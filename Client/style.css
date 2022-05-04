@@ -1,3 +1,7 @@
+/**
+* Styles the background image, disables srolling, sets font style, 
+*  and other basic inheritance
+*/
 body {
     background-color:rgb(148, 148, 148, 1);
     background-image: url('Images/crumpled-paper.jpg');
@@ -9,6 +13,15 @@ body {
     height: 100vh;
     /* overflow: hidden; */
 }
+
+/* Makes h3 font size less for smaller scrolls*/
+@media only screen and (max-width: 1600px) {
+    h3 {
+        font-size: 15px;
+    }
+}
+
+/* Creates 3 column grid for entire page and specifies their width*/
 #app-layout {
     display:grid;
     justify-items: center;
@@ -21,6 +34,9 @@ body {
     grid-template-columns: 4fr 3fr 4fr;
 }
 
+/* LABEL STYLES SECTION*/
+
+/* Basic class rule for how we want all white text-boxes, labels to look*/
 .grid-box {
     display: inline-block;
     background-color: white;
@@ -52,7 +68,30 @@ body {
 {
     margin-bottom: 300px;
 }
+/*prompt styling*/
+#prompt {
+    background-color: white;
+    padding: 5px;
+    border-radius: 12px;
+}
 
+#prompt-container {
+    font-size: x-large;
+    margin: 25px 0px;
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-height: 950px) {
+    #prompt-text {
+        margin-bottom: 2px;
+    }
+
+    #prompt-container {
+        margin-bottom: 15px;
+    }
+}
+
+/* PLAYERS STYLES SECTION*/
 
 #players {
     height: 320px;
@@ -67,6 +106,8 @@ body {
 .scorebox-small {
     margin-right: 2px !important;
 }
+
+/* STORY SUBMISSION STYLES SECTION */
 
 #story-box {
     height: 40vh;
@@ -88,6 +129,13 @@ body {
     margin-top: 10px;
 }
 
+#submitted-story {
+    width: 180px;
+    height:12vh;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+}
+
 #story-submissions-container {
     height: 28vh;
     width:16vw;
@@ -98,19 +146,17 @@ body {
     padding:5px;
 }
 
-#timer-container {
-    font-size: large;
-    position: relative;
-    top: -1vh;
-    margin-bottom: 40px;
-}
-
-
 
 .submission-section {
     width: 64%;
     float: left;
     padding:7px;
+}
+
+@media only screen and (max-width: 1600px) {
+    .submission-section {
+        width: 59%;
+    }
 }
 
 .vote-section {
@@ -120,21 +166,7 @@ body {
     padding:7px;
 }
 
-.tool-button-small {
-    height: 35px !important;
-    width: 35px !important;
-}
-
-
-.tool-box
-{
-    height: 68vh;
-    width: 150px;
-    right: 0;
-    top: 100px;
-    padding-top: 50px;
-}
-
+/* RATING/TIMER STYLE SECTION*/
 #rating {
     width:16vw;
     height:100px;
@@ -150,6 +182,52 @@ body {
     bottom: 10px;
     right: 10px;
 }
+
+#timer-container {
+    font-size: large;
+    position: relative;
+    top: -1vh;
+    margin-bottom: 40px;
+}
+
+.rating-button{
+    border-radius: 50%;
+    height: 40px;
+    width:40px;
+    border:none;
+    cursor:pointer;
+    background-color: #c4c4c4;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+.rating-button:hover {
+    background-color: #c4c4c4b1;
+}
+
+/* ARTIST TOOLS STYLE SECTION */
+
+.tool-button-small {
+    height: 35px !important;
+    width: 35px !important;
+}
+
+
+.tool-box
+{
+    height: 77vh;
+    width: 150px;
+    right: 0;
+    top: 100px;
+    padding-top: 3vh;
+}
+
+@media only screen and (min-height: 950px) {
+    .tool-box {
+        height: 68vh;
+        padding-top: 50px;
+    }
+}
+
 
 #color-red
 {
@@ -244,21 +322,14 @@ body {
     font-size: large;
 }
 
-.rating-button{
-    border-radius: 50%;
-    height: 40px;
-    width:40px;
-    border:none;
-    cursor:pointer;
-    background-color: #c4c4c4;
-    margin-top: 5px;
-    margin-bottom:5px;
-}
-.rating-button:hover {
-    background-color: #c4c4c4b1;
+.selected {
+    /* border-radius: 5px; */
+    outline-color: rgb(85, 201, 85);
+    outline-style: solid;
+    outline-width: 5px;
 }
 
-
+/* CANVAS STYLING SECTION*/
 
 #canvas {
     top: 100;
@@ -287,10 +358,8 @@ body {
     outline-color: rgb(192, 18, 18);
 }
 
-.hidden {
-    display: none;
-}
 
+/* GAME BUTTON STYLING SECTION */
 
 .game-button {
     background-color: white;
@@ -321,18 +390,8 @@ body {
     /* empty */    
 }
 
-#prompt {
-    background-color: white;
-    padding: 5px;
-    border-radius: 12px;
-}
 
-#prompt-container {
-    font-size: x-large;
-    margin: 25px 0px;
-    margin-bottom: 30px;
-}
-
+/* NAME PAGE STYLING SECTION*/
 #enter-name-text {
     font-size: xx-large;
     display:block;
@@ -354,12 +413,9 @@ body {
     font-size: 1.5em;
 }
 
-.selected {
-    /* border-radius: 5px; */
-    outline-color: rgb(85, 201, 85);
-    outline-style: solid;
-    outline-width: 5px;
-}
+
+
+/* THEME PAGE STYLING SECTION*/
 .theme {
     background-color: white;
     z-index: 2;
@@ -373,4 +429,11 @@ body {
     background-color: #bdbdbd;
     cursor: pointer;
     border: none;
+}
+
+
+
+/*Rule to use whenever we want something hidden*/
+.hidden {
+    display: none;
 }

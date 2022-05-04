@@ -107,6 +107,7 @@ function submitStoryAddition(addition)
     );
     $("#submitted-story").text(addition);
     $("#submitted-story-title").removeClass("hidden");
+    $("#submitted-story").removeClass("hidden");
 }
 
 function updateStory(story)
@@ -133,6 +134,7 @@ export function setStoryWritingEnabled(enabled)
         $("#story-submit-container").removeClass("hidden");
         $("#story-input-container").removeClass("hidden");
         $("#submitted-story-title").addClass("hidden");
+        $("#submitted-story").addClass("hidden");
         $("#submitted-story").text("");
         $("#story-input-area").val("");
 
