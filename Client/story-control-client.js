@@ -38,9 +38,15 @@ export function interpretStoryControlCommand(message)
         case "getStorySubmissions":
             showStorySubmissions(message.submissions)
             break;
-        case "":
+        case "votesForSubmissionUpdated":
+            updateVotesForAddition(message.submission, message.numVotes);
             break;
     }
+}
+
+function updateVotesForAddition(submissionId, numVotes)
+{
+    $("#vote-text" + submissionId).text(numVotes);
 }
 
 function showStorySubmissions(submissions)
@@ -52,7 +58,7 @@ function showStorySubmissions(submissions)
         $("#story-submissions-container").html(
             $("#story-submissions-container").html() + 
             '<div class = "submission-section" id = "submission-section'+ idx+'">' + submission.addition + '</div>' +
-            '<div class = "vote-section" id = "vote-section'+idx+'"><span class="scorebox scorebox-small" style="margin: auto;">' + 
+            '<div class = "vote-section" id = "vote-section'+idx+'"><span id="vote-text'+idx+'" class="scorebox scorebox-small" style="margin: auto;">' + 
                 submission.votes + '</span>' +
             '<button class="tool-button-small tool-button" style="margin: auto;" id="vote-for-addition-' + 
                 idx + '-button"><i class="fa-solid fa-thumbs-up fa-lg"></i></button></div>' +

@@ -25,6 +25,7 @@ function interpretStoryControlCommand(player, message)
             break;
         case "storyVote":
             voteForStoryAddition(message.data.additionId);
+            break;
         case "getStorySubmissions":
             sendStorySubmissions();
             break;
@@ -71,6 +72,16 @@ function voteForStoryAddition(additionVotedOnId)
     storySubmissions[additionVotedOnId].votes++;
     submittedVotes++;
     console.log(storySubmissions[additionVotedOnId]);
+
+    server.send_data_to_all_clients(
+        {
+            "messageType": "storyControl",
+            "eventType": "votesForSubmissionUpdated",
+            "submission": additionVotedOnId,
+            "numVotes": storySubmissions[additionVotedOnId].votes
+        }
+    )
+
     if (submittedVotes >= (numVotes * server.getNumPlayers()))
     {
         endStoryVotePhase();
