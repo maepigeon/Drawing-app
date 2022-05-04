@@ -148,20 +148,18 @@ body {
 
 
 .submission-section {
-    width: 64%;
-    float: left;
+    width: 80%;
     padding:7px;
 }
 
-@media only screen and (max-width: 1600px) {
-    .submission-section {
-        width: 59%;
-    }
+.submission-section-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
 .vote-section {
-    width: 24%;
-    float: left;
+    width: 20%;
     display:flex;
     padding:7px;
 }
