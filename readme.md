@@ -7,7 +7,7 @@ Visit [DoodlLab.com](http://doodllab.com) to play the game on the live website.
 - Emily Adams
 - Marty Hanapole
 - Jacob Neigh
-- Michael Pigeon.
+- Mae Pigeon
 
 ## Developer Manual
 To host the game yourself you must download the repository and run a server for the front-end client code and back-end server code.
